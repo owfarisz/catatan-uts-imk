@@ -1,0 +1,1412 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catatan UTS II3131: Interaksi Manusia Komputer</title>
+<style>
+:root{--navy:#263F77;--blue1:#315A96;--blue2:#4076B4;--sky:#5FB6E6;--pale:#8FC5EA;--yellow:#E0DE50;--bg:#F5F9FD;--card:#fff;--ink:#1F2A44;--muted:#55657F;--line:#D5E3F2;--tint:#EAF3FB;--tint2:#F6FAFE;--ytint:#FBFAE0;--good:#1E8A5A;--goodbg:#E3F4EB;--bad:#C0392B;--badbg:#FBE9E7;--mono:ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.62;color:var(--ink);background:var(--bg)}
+h1,h2,h3,h4{color:var(--navy);line-height:1.25;margin:0}
+a{color:var(--blue1)}
+p{margin:.55em 0}
+ul,ol{margin:.45em 0;padding-left:1.25em}li{margin:.22em 0}
+code,.mono{font-family:var(--mono);font-size:.88em;background:var(--tint);padding:.05em .35em;border-radius:4px}
+pre{font-family:var(--mono);font-size:.82rem;background:#1F2A44;color:#EAF3FB;padding:10px 12px;border-radius:10px;overflow-x:auto;line-height:1.5}
+.wrap{max-width:1060px;margin:0 auto}
+.top{background:linear-gradient(120deg,var(--navy),var(--blue1) 55%,var(--blue2));color:#fff;padding:22px 20px 16px}
+.top .wrap{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.top h1{color:#fff;font-size:1.55rem}
+.top .tag{display:inline-block;background:var(--yellow);color:var(--navy);font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:99px;padding:3px 11px;margin-bottom:8px}
+.top .sub{color:#DCEBFA;font-size:.93rem;margin-top:4px;max-width:640px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tools label,.tools .tbtn,.tools .prog{font:inherit;font-size:.82rem;color:#E6F1FC;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.13);padding:6px 10px;border-radius:8px;border:0;cursor:pointer;user-select:none}
+.tools .prog{cursor:default}
+.tools input{accent-color:var(--yellow);margin:0}
+.tools a.go{background:var(--yellow);color:var(--navy);font-weight:700;font-size:.88rem;text-decoration:none;border-radius:99px;padding:8px 16px}
+.hint{color:#DCEBFA;flex-basis:100%;font-size:.84rem}
+nav.tabs{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(38,63,119,.06)}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;padding:0 12px;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;border:0;background:none;font:inherit;font-size:.86rem;font-weight:600;color:var(--muted);padding:12px 12px 10px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px}
+nav.tabs button small{font-weight:600;font-size:.68rem;color:var(--blue2);background:var(--tint);border-radius:99px;padding:1px 6px}
+nav.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--yellow)}
+nav.tabs button[aria-selected="true"] small{background:var(--navy);color:#fff}
+nav.tabs button[hidden]{display:none}
+nav.tabs.more-r::after,nav.tabs.more-l::before{content:"";position:absolute;top:0;bottom:1px;width:34px;pointer-events:none;z-index:2}
+nav.tabs.more-r::after{right:0;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 70%)}
+nav.tabs.more-l::before{left:0;background:linear-gradient(270deg,rgba(255,255,255,0),#fff 70%)}
+main{padding:16px 16px 70px}
+.panel{display:none}.panel.on{display:block}
+.intro{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.intro h2{font-size:1.4rem;margin-bottom:4px}
+.intro .lead{color:var(--muted)}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.toc a{font-size:.8rem;text-decoration:none;color:var(--navy);background:var(--tint2);border:1px solid var(--line);border-radius:99px;padding:3px 10px;display:inline-flex;align-items:center;gap:6px}
+.toc a i{width:9px;height:9px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--navy);display:inline-block}
+.toc a.done i{background:var(--good);border-color:var(--good)}
+details.topic{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--yellow);border-radius:12px;margin:0 0 12px;overflow:hidden}
+details.topic.t2{border-left-color:var(--pale)}
+details.topic>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+details.topic>summary::-webkit-details-marker{display:none}
+details.topic>summary::before{content:"▸";color:var(--blue2);font-size:.9rem;transition:transform .15s}
+details.topic[open]>summary::before{transform:rotate(90deg)}
+details.topic>summary h3{font-size:1.07rem;flex:1 1 240px}
+.badge{font-size:.68rem;font-weight:700;border-radius:99px;padding:2px 9px;background:var(--ytint);color:#6B6A12;border:1px solid #E3E19A;white-space:nowrap}
+.badge.b2{background:var(--tint);color:var(--blue1);border-color:var(--line)}
+.src{font-size:.7rem;color:var(--muted);white-space:nowrap}
+.done{font-size:.72rem;color:var(--muted);display:inline-flex;align-items:center;gap:4px;border:1px dashed var(--line);border-radius:99px;padding:2px 8px;background:#fff;cursor:pointer}
+.done input{accent-color:var(--good);margin:0}
+.body{padding:2px 18px 16px}
+.body h4{font-size:.98rem;margin:1.1em 0 .3em}
+.tw{overflow-x:auto;margin:.7em 0}
+.tw.ov::before,.sx::before{content:"\2194  Geser ke samping";display:block;position:sticky;left:0;width:max-content;font-size:.7rem;font-weight:600;color:var(--blue2);background:var(--tint);border-radius:99px;padding:1px 9px;margin:0 0 5px}
+.sx{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--navy);color:#fff;font-weight:600}
+tbody tr:nth-child(even) td{background:var(--tint2)}
+.note,.warn,.key,.ex{border-radius:10px;padding:9px 13px;margin:.8em 0;font-size:.93rem}
+.note{background:var(--tint);border:1px solid var(--line)}
+.key{background:var(--ytint);border:1px solid #E3E19A}
+.warn{background:var(--badbg);border:1px solid #F0C4BF}
+.ex{background:#fff;border:1px dashed var(--pale)}
+.g2,.g3,.g4{display:grid;gap:10px;margin:.7em 0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.box{background:var(--tint2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.92rem}
+.box h4{margin:0 0 4px;font-size:.95rem}
+.box.y{background:var(--ytint);border-color:#E3E19A}.box.n{background:var(--navy);color:#EAF3FB;border-color:var(--navy)}.box.n h4{color:var(--yellow)}
+.box.g{background:var(--goodbg);border-color:#BFE3CF}.box.r{background:var(--badbg);border-color:#F0C4BF}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:.7em 0;font-size:.88rem}
+.flow span{background:var(--tint);border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-weight:600;color:var(--navy)}
+.flow b{color:var(--blue2);font-weight:700}
+.flow span.y{background:var(--yellow);border-color:#C9C73C}
+.widget{border:1.5px solid var(--pale);border-radius:12px;background:linear-gradient(180deg,#fff,var(--tint2));padding:12px 14px;margin:1em 0}
+.widget>.wt{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--blue1);margin-bottom:8px;display:flex;gap:7px;align-items:center}
+.widget>.wt::before{content:"";width:11px;height:11px;border-radius:3px;background:var(--yellow);border:1.5px solid var(--navy)}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:.4em 0}
+button.btn{font:inherit;font-size:.84rem;font-weight:600;border:1px solid var(--blue2);background:#fff;color:var(--blue1);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.btn.pri,button.btn.on{background:var(--navy);border-color:var(--navy);color:#fff}
+button.btn:disabled{opacity:.45;cursor:default}
+.msg{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:.92rem;min-height:2.6em}
+select{font:inherit;font-size:.86rem;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;color:var(--ink);max-width:100%;min-height:36px}
+.ctl label{display:flex;flex-wrap:wrap;gap:6px;align-items:center;max-width:100%}
+input[type=range]{accent-color:var(--navy)}
+textarea{max-width:100%}
+.dots{display:flex;gap:4px;margin-left:auto}.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--navy)}
+.small{font-size:.84rem}.muted{color:var(--muted)}.good{color:var(--good)}.bad{color:var(--bad)}
+.mcq{border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin:8px 0;background:#fff}
+.mcq.ok{border-color:#BFE3CF}.mcq.no{border-color:#F0C4BF}
+.mcq p{margin:.2em 0 .45em}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts.col{flex-direction:column}
+.opts button{font:inherit;font-size:.86rem;text-align:left;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:7px 12px;cursor:pointer}
+.opts button:hover:not(:disabled){background:var(--tint)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--goodbg);border-color:var(--good);color:#145C3C;font-weight:600}
+.opts button.wrong{background:var(--badbg);border-color:var(--bad);color:#8E2A20;font-weight:600}
+.why{font-size:.88rem;border-top:1px dashed var(--line);margin-top:9px;padding-top:8px}
+.why ul{margin:.3em 0 0;padding-left:1.15em}.why li{margin:.3em 0}.why li.me>b:first-child{color:var(--bad)}
+.kind{font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--blue2)}
+.bar{height:8px;background:var(--tint);border-radius:99px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;width:0;background:var(--blue2);transition:width .25s}
+.pick .item{font-weight:600;font-size:1rem;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:6px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:.6em 0}
+.cards button{font:inherit;text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 11px;cursor:pointer;color:var(--ink);font-size:.86rem}
+.cards button b{display:block;color:var(--navy);font-size:.9rem}
+.cards button.on{background:var(--navy);border-color:var(--navy);color:#DCEBFA}.cards button.on b{color:var(--yellow)}
+.gl{border-bottom:1.5px dotted var(--blue2);cursor:help}
+[data-tip]{cursor:help}
+.tip{position:absolute;z-index:200;max-width:330px;background:#fff;border:1.5px solid var(--navy);border-radius:10px;box-shadow:0 8px 24px rgba(38,63,119,.22);padding:9px 12px;font-size:.84rem;line-height:1.5;color:var(--ink);pointer-events:none}
+.tip.pinned{pointer-events:auto;border-color:#B9B52E;box-shadow:0 0 0 3px var(--yellow),0 8px 24px rgba(38,63,119,.22)}
+.tip b:first-child{color:var(--navy)}.tip .tx{color:var(--muted);font-size:.8rem}
+.hot{background:var(--ytint);border-bottom:1.5px dotted #A9A62A;padding:0 .15em;border-radius:3px}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+svg{max-width:100%;height:auto}
+svg .clk{cursor:pointer}
+.empty{font-size:.86rem;color:var(--muted);margin:.6em 0}
+footer{color:var(--muted);font-size:.8rem;text-align:center;padding:0 16px 40px;max-width:820px;margin:0 auto}
+/* latihan */
+.pkbar{background:var(--navy);padding:0 12px 12px}
+.pkbar .wrap{display:flex;gap:8px;flex-wrap:wrap}
+.pkbar button{flex:1 1 240px;text-align:left;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#DCEBFA;border-radius:10px;padding:8px 14px;font:inherit;cursor:pointer}
+.pkbar button b{display:block;color:#fff;font-size:1rem}.pkbar button span{font-size:.8rem}
+.pkbar button.on{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}.pkbar button.on b{color:var(--navy)}
+.how{background:var(--ytint);border:1px solid #E3E19A;border-radius:12px;padding:11px 15px;margin-bottom:14px;font-size:.93rem}
+.ohead{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 12px}
+.ohead h2{font-size:1.15rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chips button{font:inherit;font-size:.78rem;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--blue1);border-radius:99px;padding:4px 10px;cursor:pointer}
+.chips button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.sect{margin:18px 0 8px;font-size:1.02rem}
+.soal{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 12px}
+.soal.done{border-color:#A9DCC1}
+.soal h3{font-size:1.05rem;margin-bottom:6px}
+.soal .ctx{background:var(--tint2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:8px 0;font-size:.94rem}
+.soal .q{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px}
+.soal .qt{font-weight:600;margin:.2em 0 .5em}
+.ans{position:relative;border:1px solid var(--pale);border-radius:10px;background:var(--tint2);padding:9px 12px;min-height:54px;cursor:pointer}
+.ans .in{filter:blur(6px);opacity:.55;transition:filter .15s,opacity .15s;pointer-events:none}
+.ans .cover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;color:var(--blue1);text-align:center;padding:0 10px}
+.ans.open{cursor:default;background:#fff}.ans.open .in{filter:none;opacity:1;pointer-events:auto}.ans.open .cover{display:none}
+@media (hover:hover){.ans:hover .in{filter:blur(1.2px);opacity:.9}.ans:hover .cover{opacity:.25}}
+@media (hover:none){.ans .cover{font-size:0}.ans .cover::after{content:"Ketuk untuk membuka jawaban";font-size:.85rem}}
+.rub{font-size:.8rem;color:var(--muted);margin-top:6px}
+@media (max-width:640px){
+ body{font-size:15px}
+ .top{padding:14px 14px 11px}.top .wrap{gap:9px}.top .tag{font-size:.6rem;padding:2px 8px}.top h1{font-size:1.12rem}.top .sub{font-size:.8rem;line-height:1.4}
+ .tools{gap:6px;width:100%}.tools label,.tools .tbtn,.tools .prog{font-size:.75rem;padding:6px 9px}.tools a.go{font-size:.8rem;padding:7px 12px}.tools input{width:17px;height:17px}
+ .hint{font-size:.72rem}
+ body.lat .top .sub,body.lat .hint{display:none}
+ .pkbar{padding:0 10px 10px}.pkbar .wrap{flex-wrap:nowrap;gap:6px}.pkbar button{flex:1 1 0;min-width:0;padding:7px 10px}.pkbar button b{font-size:.9rem}.pkbar button span{display:block;font-size:.66rem;line-height:1.3}
+ nav.tabs .wrap{padding:0 6px}nav.tabs button{font-size:.8rem;padding:11px 9px 9px}
+ main{padding:12px 10px 70px}
+ .body{padding:2px 12px 14px}details.topic>summary{padding:12px 12px}
+ .intro{padding:14px 14px}.intro h2{font-size:1.2rem}
+ .g2,.g3,.g4{grid-template-columns:1fr}
+ table{font-size:.8rem}th,td{padding:5px 7px}
+ .done{font-size:.76rem;padding:5px 10px}.done input{width:18px;height:18px}
+ button.btn{min-height:36px;padding:7px 12px}.opts button{min-height:38px;padding:8px 12px}
+ .widget{padding:10px 10px}.tip{max-width:calc(100vw - 20px)}
+ .soal{padding:12px 11px}.cards{grid-template-columns:repeat(2,1fr)}
+ input[type=range]{width:100%;min-height:30px}
+}
+@media print{nav.tabs,.tools,.pkbar{display:none}.panel{display:block!important}.ans .in{filter:none;opacity:1}.ans .cover{display:none}}
+
+.stp span[data-on]{opacity:.4;transition:opacity .15s,background .15s;border-radius:3px}
+.stp span[data-on].lit{opacity:1;background:var(--yellow)}
+</style>
+</head>
+<body class="cat">
+<div class="top"><div class="wrap"><div><span class="tag">Catatan UTS · Semester I 2026/2027</span><h1>II3131 Interaksi Manusia Komputer</h1><div class="sub">Disusun dari 200 slide kuliah (materi 01a sampai 03c). Tiap tab satu materi, lengkap dengan kotak interaktif.</div></div><div class="tools"><label><input type="checkbox" id="openAll"> Buka semua kartu di tab ini</label><a class="go" href="latsol-uts-imk.html">Latihan soal + jawaban →</a><span class="hint">Kata <u style="text-decoration-style:dotted">bergaris titik-titik</u>, teks berlatar kuning, dan bagian diagram bisa di-hover atau diketuk untuk penjelasan tambahan.</span></div></div></div>
+<nav class="tabs"><div class="wrap" role="tablist"><button data-tab="peta">Peta UTS</button><button data-tab="m1a">01a · Desain Interaksi</button><button data-tab="m1b">01b · Heuristik Nielsen</button><button data-tab="m2">02 · Konseptualisasi</button><button data-tab="m3a">03a · Requirements</button><button data-tab="m3b">03b · Scenario &amp; Use Case</button><button data-tab="m3c">03c · Aspek Kognitif</button></div></nav>
+<main><div class="wrap">
+<section class="panel" id="peta">
+<div class="intro"><h2>Peta UTS: enam materi dan cara belajarnya</h2>
+<p class="lead">UTS mata kuliah ini tidak punya arsip soal, jadi halaman ini disusun langsung dari 200 slide kuliah. Mulai dari peta ini, lalu buka tab per materi.</p><div class="toc"></div></div>
+
+<details class="topic" id="p-materi" open><summary><h3>Enam materi yang diujikan</h3><span class="badge">Mulai di sini</span></summary><div class="body">
+<div class="tw"><table><tr><th>Kode</th><th>Materi</th><th>Isi utamanya</th><th>Buka</th></tr>
+<tr><td>01a</td><td>Desain Interaksi &amp; Faktor Manusia</td><td>Usability dan UX, affordance, signifier, mapping, feedback, constraint, conceptual model, Gestalt, dua gulf, tujuh tahap aksi, hukum Fitts dan Hick, HCD, double diamond, slips dan mistakes</td><td><a href="#m1a">Tab 01a</a></td></tr>
+<tr><td>01b</td><td>Usability Heuristics Nielsen</td><td>Guidelines vs heuristics, sepuluh heuristik, cara memakainya untuk evaluasi</td><td><a href="#m1b">Tab 01b</a></td></tr>
+<tr><td>02</td><td>Konseptualisasi Desain Interaksi</td><td>System model, system image, mental model, goal, task, action, diagnosis dengan gulf, asumsi desain, tipe interaksi, tipe antarmuka, metafora</td><td><a href="#m2">Tab 02</a></td></tr>
+<tr><td>03a</td><td>Requirements, Goals, Context of Use</td><td>Requirement vs feature, jenis requirement, context of use, kasus e-commerce Indonesia vs Belanda, isu riset vs isu desain, user research</td><td><a href="#m3a">Tab 03a</a></td></tr>
+<tr><td>03b</td><td>Scenario dan Use Case</td><td>Scenario, persona, user story, use case (essential dan fully-dressed), perbandingan scenario dan use case</td><td><a href="#m3b">Tab 03b</a></td></tr>
+<tr><td>03c</td><td>Aspek Kognitif</td><td>Atensi, persepsi, memori, learning, reading/speaking/listening, problem-solving, beserta implikasi desainnya</td><td><a href="#m3c">Tab 03c</a></td></tr></table></div>
+<div class="note"><b>Tentang soal.</b> Tidak ada soal tahun lalu yang bisa diakses, jadi semua latihan di halaman latihan adalah buatan saya dari isi slide. Bentuk dan bobot soal UTS yang sebenarnya tidak diketahui.</div>
+</div></details>
+
+<details class="topic" id="p-benang" open><summary><h3>Benang merah: satu cerita dari enam materi</h3><span class="badge">Inti</span></summary><div class="body">
+<p>Keenam materi sebenarnya satu alur berpikir. Tiap langkah menjawab pertanyaan yang ditinggalkan langkah sebelumnya.</p>
+<div class="widget stp"><div class="wt">Jalan cerita mata kuliah (klik Lanjut)</div>
+<div class="msg" data-step><b>1. Manusia punya batas (01a).</b> Desain interaksi merancang produk supaya cocok dengan cara manusia bertindak dan berpikir. Dari sini lahir prinsip dasar: affordance, signifier, mapping, feedback, constraint, dan conceptual model. Pertanyaan berikutnya: bagaimana menilai sebuah desain sudah baik atau belum?</div>
+<div class="msg" data-step><b>2. Menilai dengan prinsip umum (01b).</b> Sepuluh heuristik Nielsen adalah alat untuk menemukan dan menjelaskan masalah usability. Pertanyaan berikutnya: keluhan seperti "aplikasinya ribet" belum menjelaskan apa-apa. Bagaimana mengubahnya menjadi diagnosis?</div>
+<div class="msg" data-step><b>3. Mendiagnosis interaksi (02).</b> Interaksi diurai menjadi goal, task, action, lalu dicari di mana jurangnya melebar: gulf of execution (sebelum aksi) atau gulf of evaluation (sesudah sistem merespons). Pertanyaan berikutnya: sebelum merancang solusi, apa sebenarnya yang dibutuhkan?</div>
+<div class="msg" data-step><b>4. Merumuskan kebutuhan (03a).</b> Requirement adalah alasan, feature adalah bentuk. Requirement berakar pada goal dan dibentuk oleh context of use, lalu divalidasi dengan data riset. Pertanyaan berikutnya: daftar requirement itu benar tetapi datar. Bagaimana membuatnya hidup?</div>
+<div class="msg" data-step><b>5. Menghidupkan requirement (03b).</b> Scenario memberi makna (cerita, konteks), use case memberi struktur (langkah aktor dan sistem). Pertanyaan berikutnya: apa dasar ilmiah dari semua anjuran desain ini?</div>
+<div class="msg" data-step><b>6. Dasarnya: kognisi manusia (03c).</b> Atensi terbatas, mengenali lebih mudah daripada mengingat, dan orang lebih suka belajar sambil melakukan. Hampir semua prinsip di langkah 1 dan 2 bisa dijelaskan dari sini.</div>
+</div>
+<div class="key"><b>Satu kalimat.</b> Pahami manusianya (01a, 03c) → nilai desainnya (01b) → diagnosis masalahnya (02) → rumuskan kebutuhannya (03a) → hidupkan dan strukturkan (03b).</div>
+</div></details>
+
+<details class="topic" id="p-tukar" open><summary><h3>Pasangan konsep yang paling sering tertukar</h3><span class="badge">Jebakan</span></summary><div class="body">
+<p>Arahkan kursor (atau ketuk) nama pasangannya untuk melihat cara cepat membedakannya.</p>
+<div class="tw"><table><tr><th>Pasangan</th><th>Yang kiri</th><th>Yang kanan</th></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Affordance = apa yang BISA dilakukan. Signifier = petunjuk DI MANA dan BAGAIMANA melakukannya. Pintu rata bisa didorong (affordance), pelat logam di sisi kanan memberi tahu tempat mendorongnya (signifier).">Affordance vs signifier</span></td><td>Hubungan antara sifat benda dan kemampuan pengguna: tindakan apa yang mungkin.</td><td>Sinyal yang memberi tahu di mana dan bagaimana bertindak.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Tanya: kesulitannya muncul SEBELUM aksi (bingung caranya) atau SESUDAH sistem merespons (bingung hasilnya)?">Gulf of execution vs gulf of evaluation</span></td><td>Sulit mencari tahu cara melakukan sesuatu.</td><td>Sulit memahami apa yang terjadi setelah bertindak.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Slip: niat benar, tangan yang salah. Mistake: niatnya sendiri sudah salah.">Slip vs mistake</span></td><td>Tujuannya benar, eksekusinya gagal. Terjadi di level bawah sadar.</td><td>Tujuan atau rencananya yang salah. Terjadi di level sadar.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Usability bisa diukur dengan kinerja (cepat, akurat, sedikit error). UX menyangkut rasa: senang, percaya, frustrasi.">Usability vs UX</span></td><td>Objektif, berorientasi kinerja. Masalah pada task dan action.</td><td>Lebih luas: emosi, estetika, nilai pribadi, seluruh perjalanan pengguna.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Guideline itu spesifik dan terikat platform. Heuristic itu umum dan berlaku di mana saja.">Design guidelines vs heuristics</span></td><td>Rekomendasi yang relatif spesifik, terkait platform atau organisasi.</td><td>Prinsip umum (rules of thumb), berlaku lintas sistem.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>System model di kepala desainer, mental model di kepala pengguna, system image yang terlihat di layar. Pengguna hanya pernah melihat system image.">System model vs system image vs mental model</span></td><td>Cara sistem sebenarnya bekerja.</td><td>System image: apa yang ditampilkan sistem. Mental model: gambaran pengguna tentang sistem.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Goal tidak menyebut antarmuka sama sekali. Task mulai menyebut kegiatan di sistem. Action menyebut kontrol konkret (ketik, tekan, pilih).">Goal vs task vs action</span></td><td>Goal: keadaan akhir yang diinginkan.</td><td>Task: aktivitas terstruktur. Action: operasi konkret pada antarmuka.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Requirement = alasan. Feature = bentuk. Kalau kalimatnya menyebut tombol, tabel, atau teknologi, itu feature.">Requirement vs feature</span></td><td>Apa yang dibutuhkan agar goal tercapai dalam konteks tertentu.</td><td>Bagaimana kebutuhan itu diwujudkan dalam sistem.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Isu riset: apakah pemahaman kita benar? Isu desain: bagaimana mewujudkannya? Pertanyaan yang sama bisa berpindah dari riset ke desain setelah divalidasi.">Isu riset vs isu desain</span></td><td>Apakah pemahaman kita benar? (problem space)</td><td>Bagaimana solusi terbaik diwujudkan? (solution space)</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Scenario = cerita, memberi makna, eksploratif. Use case = langkah, memberi struktur, preskriptif.">Scenario vs use case</span></td><td>Naratif, kontekstual, eksploratif.</td><td>Struktural, fungsional, preskriptif.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Essential: niat pengguna dan tanggung jawab sistem, tanpa detail. Fully-dressed: langkah bernomor lengkap dengan alur alternatif.">Essential vs fully-dressed use case</span></td><td>Abstrak tetapi terstruktur.</td><td>Rinci dan operasional.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Recognition: pilihannya ada di depan mata, tinggal dikenali. Recall: harus diambil dari ingatan tanpa petunjuk.">Recognition vs recall</span></td><td>Mengenali dari pilihan yang terlihat. Lebih cepat dan andal.</td><td>Mengingat dari memori tanpa bantuan.</td></tr>
+<tr><td><span class="hot" data-tip="<b>Cara ingat</b><br>Fitts soal TANGAN (jarak dan ukuran target). Hick soal KEPALA (jumlah pilihan).">Hukum Fitts vs hukum Hick</span></td><td>Waktu mencapai target: jarak dan ukuran.</td><td>Waktu memutuskan: jumlah dan kerumitan pilihan.</td></tr></table></div>
+</div></details>
+
+<details class="topic t2" id="p-cara"><summary><h3>Cara memakai halaman ini</h3><span class="badge b2">Panduan</span></summary><div class="body">
+<div class="g3"><div class="box"><h4>1. Baca per tab</h4>Tiap tab satu materi. Di tiap kartu ada keterangan nomor slide sumbernya.</div><div class="box"><h4>2. Mainkan kotak interaktif</h4>Kotak bertanda kuning bisa diklik: langkah demi langkah, permainan memilah, kalkulator, dan percobaan kecil.</div><div class="box"><h4>3. Uji di halaman latihan</h4>Lima paket campuran (pilihan ganda dan essay) dan tiga paket pilihan ganda penuh.</div></div>
+<p class="small muted">Kata bergaris titik-titik memunculkan arti istilahnya. Tanda centang "selesai" tersimpan di browser ini saja. Bagian yang bukan dari slide diberi tanda "dari saya".</p>
+</div></details>
+</section>
+<section class="panel" id="m1a">
+<div class="intro"><h2>01a · Desain Interaksi &amp; Faktor Manusia</h2>
+<p class="lead">Materi pembuka: apa itu desain interaksi, prinsip dasar yang membuat benda mudah dipakai, batas manusia (persepsi, motorik, kesalahan), dan proses merancang yang berpusat pada manusia.</p><div class="toc"></div></div>
+
+<details class="topic" id="a-di"><summary><h3>Apa itu desain interaksi</h3><span class="badge">Konsep dasar</span><span class="src">01a · slide 3, 4</span></summary><div class="body">
+<p><b>Desain interaksi</b> adalah disiplin yang berfokus pada perancangan produk dan layanan interaktif yang memfasilitasi interaksi antara manusia dengan sistem.</p>
+<div class="g3"><div class="box"><h4>Fokusnya</h4>Perilaku dan pengalaman, bukan <i>hanya</i> estetika.</div><div class="box"><h4>Bahannya</h4>Memadukan prinsip teknik, psikologi, dan desain.</div><div class="box"><h4>Hasilnya</h4>Sistem yang intuitif, efisien, dan menyenangkan digunakan.</div></div>
+<div class="key">Kalimat slide: <i>"Interaction design is about enabling people, not just operating machines."</i></div>
+<h4>Definisi dan evolusi</h4>
+<ul><li>Desain interaksi berkembang dari UI tradisional menuju pengalaman yang memfasilitasi <b>dialog</b> antara manusia dan produk.</li>
+<li><b>John Kolko:</b> "Desain interaksi adalah penciptaan dialog antara seseorang dan produk, layanan, atau sistem."</li>
+<li>Menekankan hubungan fisik dan emosional serta konteks penggunaan.</li>
+<li>Arah evolusi: mengintegrasikan komputasi yang meresap (<i>pervasive</i>) dan kecerdasan buatan.</li></ul>
+</div></details>
+
+<details class="topic" id="a-ux"><summary><h3>Usability dan UX</h3><span class="badge">Sering diuji</span><span class="src">01a · slide 6, 7</span></summary><div class="body">
+<p><b>Usability goals</b> bersifat objektif dan berorientasi pada kinerja. Ada enam, masing-masing punya pertanyaan penguji.</p>
+<div class="widget sw"><div class="wt">Enam usability goals (klik tiap kartu)</div>
+<div class="cards"><button data-k="1"><b>Effectiveness</b>akurat</button><button data-k="2"><b>Efficiency</b>cepat, upaya kecil</button><button data-k="3"><b>Safety</b>aman dari salah</button><button data-k="4"><b>Utility</b>fiturnya ada</button><button data-k="5"><b>Learnability</b>mudah dipelajari</button><button data-k="6"><b>Memorability</b>mudah diingat lagi</button></div>
+<div class="msg" data-pane="1"><b>Effectiveness.</b> Bisakah pengguna mencapai tujuan mereka secara <b>akurat</b>?<br><span class="muted">Contoh dari saya: 9 dari 10 pengguna berhasil menyelesaikan transfer tanpa salah nominal.</span></div>
+<div class="msg" data-pane="2"><b>Efficiency.</b> Dapatkah mereka melakukannya dengan cepat dan <b>upaya minimal</b>?<br><span class="muted">Contoh dari saya: transfer selesai dalam 4 ketukan, bukan 12.</span></div>
+<div class="msg" data-pane="3"><b>Safety.</b> Apakah kesalahan dapat <b>dicegah</b> atau <b>dipulihkan</b>?<br><span class="muted">Contoh dari saya: ada konfirmasi sebelum menghapus dan ada undo.</span></div>
+<div class="msg" data-pane="4"><b>Utility.</b> Apakah sistem menyediakan fitur-fitur yang <b>dibutuhkan</b>?<br><span class="muted">Contoh dari saya: aplikasi catatan yang tidak bisa mencari isi catatan punya utility rendah, walau tampilannya enak.</span></div>
+<div class="msg" data-pane="5"><b>Learnability.</b> Apakah <b>mudah</b> bagi <b>pengguna baru</b> untuk mulai menggunakannya?</div>
+<div class="msg" data-pane="6"><b>Memorability.</b> Apakah <b>mudah digunakan kembali</b> setelah jeda waktu tertentu?<br><span class="muted">Bedanya dengan learnability: learnability soal pertama kali memakai, memorability soal kembali memakai setelah lama tidak.</span></div>
+</div>
+<p>Usability diukur berdasarkan seberapa <b>mampu</b> dan <b>percaya diri</b> perasaan pengguna.</p>
+<h4>UX lebih luas daripada usability</h4>
+<ul><li>Meliputi aspek emosi, estetika, dan nilai pribadi.</li><li>Mencakup keseluruhan perjalanan pengguna: sebelum, selama, dan sesudah interaksi.</li><li>Mengintegrasikan brand, kepercayaan, dan harapan sosial.</li></ul>
+<div class="g2"><div class="box g"><h4>Desirable aspects</h4>Fun, satisfying, engaging, aesthetically pleasing, emotionally fulfilling.</div><div class="box r"><h4>Undesirable aspects</h4>Boring, frustrating, patronizing, gimmicky, annoying.</div></div>
+<div data-pick="ux"></div>
+</div></details>
+
+<details class="topic" id="a-prinsip"><summary><h3>Prinsip dasar interaksi: affordance, signifier, mapping, feedback, constraint</h3><span class="badge">Sering diuji</span><span class="src">01a · slide 10 sampai 14</span></summary><div class="body">
+<div class="widget sw"><div class="wt">Lima prinsip Norman (klik tiap kartu)</div>
+<div class="cards"><button data-k="a"><b>Affordance</b>apa yang mungkin</button><button data-k="s"><b>Signifier</b>di mana, bagaimana</button><button data-k="m"><b>Mapping</b>kontrol ke efek</button><button data-k="f"><b>Feedback</b>respons</button><button data-k="c"><b>Constraint</b>pembatas</button></div>
+<div class="msg" data-pane="a"><b>Affordance</b> adalah hubungan antara sifat benda dan kemampuan pengguna.<ul><li>Kursi <i>affords</i> diduduki. Kaca <i>affords</i> dilihat tembus, tetapi menghalangi lewat (<b>anti-affordance</b>).</li><li>Bukan sifat benda, melainkan <b>relasional</b>: kursi berat tidak <i>afford</i> diangkat bagi anak kecil.</li><li>Bisa terlihat atau tidak. Kalau tidak terlihat, kita butuh signifier.</li></ul></div>
+<div class="msg" data-pane="s"><b>Signifier</b> adalah sinyal yang memberi tahu <b>di mana</b> dan <b>bagaimana</b> bertindak.<ul><li>Bisa disengaja (label, gagang) atau tidak disengaja (bekas aus, jejak kaki).</li><li>Inti dari slide: <b>signifier lebih penting daripada affordance</b> dalam desain, karena keterlihatan yang paling menentukan.</li><li>Tanda desain buruk: pintu yang butuh tulisan "PUSH".</li></ul></div>
+<div class="msg" data-pane="m"><b>Mapping</b> adalah hubungan antara kontrol dan efeknya.<ul><li><b>Natural mapping:</b> kesesuaian spasial atau budaya. Contoh gambar slide: tombol pengatur kursi mobil yang bentuknya seperti kursi.</li><li>Mapping buruk membuat bingung: kenop kompor yang tidak sejajar dengan tungkunya.</li></ul></div>
+<div class="msg" data-pane="f"><b>Feedback</b> adalah respons yang segera dan jelas terhadap aksi pengguna.<ul><li>Harus informatif, tepat waktu, dan <b>tidak berlebihan</b>.</li><li>Feedback buruk: tombol lift tidak memberi sinyal, orang menekannya berulang-ulang.</li><li>Feedback terlalu banyak: mesin cuci piring berbunyi pukul 3 pagi.</li></ul></div>
+<div class="msg" data-pane="c"><b>Constraint</b> membatasi aksi yang mungkin, sehingga mencegah kesalahan.<ul><li>Empat jenis: <b>physical, logical, cultural, semantic</b>.</li><li>Contoh: bentuk USB Type-A/B hanya masuk dengan satu arah.</li></ul></div>
+</div>
+<div data-pick="prinsip"></div>
+</div></details>
+
+<details class="topic" id="a-model"><summary><h3>Conceptual model</h3><span class="badge">Konsep dasar</span><span class="src">01a · slide 15 sampai 17</span></summary><div class="body">
+<p><b>Conceptual model</b> adalah penjelasan di kepala pengguna tentang cara kerja sesuatu. Model ini dibangun dari <b>system image</b>, yaitu semua yang dikomunikasikan produk lewat desain, manual, dan lainnya.</p>
+<div class="g2"><div class="box g"><h4>Model baik</h4>Pemakaian bisa diprediksi dan masalah mudah ditelusuri.</div><div class="box r"><h4>Model buruk</h4>Frustrasi. Contoh: kulkas dengan dua kontrol yang saling bergantung, berlabel "Freezer" dan "Fridge".</div></div>
+<div class="ex"><b>Contoh kulkas (gambar slide).</b> Dari dua kenop itu pengguna mengira ada dua pendingin terpisah. Kenyataannya hanya ada satu pendingin: satu kenop mengatur termostat, kenop lain mengatur pembagian udara dingin. Mengubah satu kenop ikut mengubah suhu ruang lainnya, dan pengguna tidak bisa menebaknya.</div>
+<div class="ex"><b>Contoh jam Junghans Mega 1000.</b> Lima tombol tanpa petunjuk, dan fungsi tombolnya berbeda di tiap mode. Jamnya bagus dan selalu tepat waktu, tetapi tidak ada conceptual model yang baik untuk memahami cara mengoperasikannya.</div>
+</div></details>
+
+<details class="topic" id="a-gestalt"><summary><h3>Antarmuka: navigasi, tata letak, hierarki, dan Gestalt</h3><span class="badge">Konsep dasar</span><span class="src">01a · slide 18 sampai 20</span></summary><div class="body">
+<div class="key">Kalimat slide: <i>"People see structure, not pixels. Structure guides understanding."</i></div>
+<ul><li><b>Navigasi</b> harus jelas dan konsisten: struktur menu logis dan mudah ditemukan.</li><li><b>Tata letak</b> memanfaatkan grid. Kedekatan fisik menyiratkan hubungan.</li><li><b>Hierarki</b> informasi dibangun lewat ukuran, warna, dan posisi untuk memandu perhatian.</li><li><b>Whitespace</b> meningkatkan keterbacaan dan mengurangi beban kognitif.</li></ul>
+<p class="small muted">Tiga aturan dari gambar Krug di slide: makin penting sesuatu, makin menonjol. Hal yang berhubungan secara logika dikelompokkan secara visual. Hal yang "bersarang" secara visual menunjukkan bagian dari apa.</p>
+<div class="widget sw"><div class="wt">Empat prinsip Gestalt di slide (klik)</div>
+<div class="cards"><button data-k="s"><b>Similarity</b>serupa</button><button data-k="p"><b>Proximity</b>dekat</button><button data-k="c"><b>Closure</b>dilengkapi</button><button data-k="k"><b>Continuity</b>garis halus</button></div>
+<div class="msg" data-pane="s"><svg viewBox="0 0 300 70" width="300"><g fill="#B8C4D4"><rect x="10" y="8" width="18" height="14"/><rect x="40" y="8" width="18" height="14"/><rect x="70" y="8" width="18" height="14"/><rect x="100" y="8" width="18" height="14"/><rect x="130" y="8" width="18" height="14"/><rect x="10" y="48" width="18" height="14"/><rect x="40" y="48" width="18" height="14"/><rect x="70" y="48" width="18" height="14"/><rect x="100" y="48" width="18" height="14"/><rect x="130" y="48" width="18" height="14"/></g><g fill="#4076B4"><rect x="10" y="28" width="18" height="14"/><rect x="40" y="28" width="18" height="14"/><rect x="70" y="28" width="18" height="14"/><rect x="100" y="28" width="18" height="14"/><rect x="130" y="28" width="18" height="14"/></g></svg><br><b>Similarity.</b> Elemen serupa dipersepsikan sebagai kelompok. Baris biru terbaca sebagai satu kelompok walau jaraknya sama dengan baris lain.</div>
+<div class="msg" data-pane="p"><svg viewBox="0 0 300 70" width="300"><g fill="#B8C4D4"><rect x="10" y="20" width="16" height="16"/><rect x="30" y="20" width="16" height="16"/><rect x="10" y="40" width="16" height="16"/><rect x="30" y="40" width="16" height="16"/><rect x="110" y="20" width="16" height="16"/><rect x="130" y="20" width="16" height="16"/><rect x="110" y="40" width="16" height="16"/><rect x="130" y="40" width="16" height="16"/></g></svg><br><b>Proximity.</b> Elemen yang berdekatan dipersepsikan satu kelompok. Di sini terlihat dua kelompok, bukan delapan kotak.</div>
+<div class="msg" data-pane="c"><svg viewBox="0 0 300 70" width="300"><circle cx="50" cy="35" r="26" fill="none" stroke="#263F77" stroke-width="5" stroke-dasharray="30 12"/><path d="M130 58 L160 12 L190 58" fill="none" stroke="#263F77" stroke-width="5"/></svg><br><b>Closure.</b> Otak melengkapi bentuk yang tidak lengkap. Contoh slide: logo IBM (garis-garis) dan WWF (panda dari bercak hitam).</div>
+<div class="msg" data-pane="k"><svg viewBox="0 0 300 70" width="300"><path d="M10 15 C 110 15, 150 55, 260 55" fill="none" stroke="#263F77" stroke-width="3"/><path d="M10 55 C 110 55, 150 15, 260 15" fill="none" stroke="#5FB6E6" stroke-width="3" stroke-dasharray="6 5"/></svg><br><b>Continuity.</b> Perhatian mengikuti garis yang halus. Kita melihat dua garis yang bersilang, bukan dua bentuk "V" yang bertemu.</div>
+</div>
+<p class="small muted">Slide menulis "dst." setelah empat prinsip ini, artinya masih ada prinsip Gestalt lain yang tidak dibahas.</p>
+</div></details>
+
+<details class="topic" id="a-gulf"><summary><h3>Dua gulf dan tujuh tahap aksi</h3><span class="badge">Sering diuji</span><span class="src">01a · slide 22, 23</span></summary><div class="body">
+<div class="g2"><div class="box y"><h4>Gulf of execution</h4>Sulit mencari tahu <b>cara memakai</b> sesuatu. "Bagaimana cara kerjanya? Apa yang bisa kulakukan?"<br><b>Dijembatani:</b> signifier, constraint, mapping, conceptual model.</div><div class="box y"><h4>Gulf of evaluation</h4>Sulit memahami <b>apa yang terjadi</b> setelah bertindak. "Apa yang terjadi? Ini yang kuinginkan?"<br><b>Dijembatani:</b> feedback dan conceptual model yang baik.</div></div>
+<div class="widget stp"><div class="wt">Tujuh tahap aksi pada contoh "butuh cahaya lebih" (klik Lanjut)</div>
+<svg viewBox="0 0 560 150" width="560"><rect x="205" y="6" width="150" height="26" rx="6" fill="#263F77"/><text x="280" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" data-on="1,7">1. GOAL</text>
+<g font-size="11.5" font-weight="700"><g data-on="2"><rect x="60" y="44" width="120" height="24" rx="6" fill="#EAF3FB" stroke="#4076B4"/><text x="120" y="60" text-anchor="middle" fill="#263F77">2. Plan</text></g><g data-on="3"><rect x="60" y="74" width="120" height="24" rx="6" fill="#EAF3FB" stroke="#4076B4"/><text x="120" y="90" text-anchor="middle" fill="#263F77">3. Specify</text></g><g data-on="4"><rect x="60" y="104" width="120" height="24" rx="6" fill="#EAF3FB" stroke="#4076B4"/><text x="120" y="120" text-anchor="middle" fill="#263F77">4. Perform</text></g>
+<g data-on="7"><rect x="380" y="44" width="120" height="24" rx="6" fill="#FBFAE0" stroke="#B9B52E"/><text x="440" y="60" text-anchor="middle" fill="#263F77">7. Compare</text></g><g data-on="6"><rect x="380" y="74" width="120" height="24" rx="6" fill="#FBFAE0" stroke="#B9B52E"/><text x="440" y="90" text-anchor="middle" fill="#263F77">6. Interpret</text></g><g data-on="5"><rect x="380" y="104" width="120" height="24" rx="6" fill="#FBFAE0" stroke="#B9B52E"/><text x="440" y="120" text-anchor="middle" fill="#263F77">5. Perceive</text></g></g>
+<text x="120" y="146" text-anchor="middle" font-size="10.5" fill="#55657F">eksekusi (doing) ↓</text><text x="440" y="146" text-anchor="middle" font-size="10.5" fill="#55657F">evaluasi (interpreting) ↑</text><rect x="205" y="122" width="150" height="22" rx="6" fill="#55657F"/><text x="280" y="137" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">WORLD</text></svg>
+<div class="msg" data-step><b>1. Goal.</b> Membentuk tujuan: "Saya butuh cahaya lebih."</div>
+<div class="msg" data-step><b>2. Plan.</b> Memilih urutan aksi: "Nyalakan lampu." Di slide materi 02 tahap ini disebut membentuk niat.</div>
+<div class="msg" data-step><b>3. Specify.</b> Menentukan langkah persisnya: "Ulurkan tangan kanan ke sakelar."</div>
+<div class="msg" data-step><b>4. Perform.</b> Melaksanakan aksi. Di sinilah tindakan menyentuh dunia.</div>
+<div class="msg" data-step><b>5. Perceive.</b> Mengamati keadaan sistem: "Apakah lampunya menyala?"</div>
+<div class="msg" data-step><b>6. Interpret.</b> Menafsirkan apa yang diamati.</div>
+<div class="msg" data-step><b>7. Compare.</b> Membandingkan hasil dengan tujuan. Kalau belum cocok, siklus berulang.</div>
+</div>
+<div class="note">Sebagian besar tahap berlangsung <b>bawah sadar</b> pada tugas rutin. Tahap-tahap ini baru terasa saat terjadi <b>kesalahan</b> atau menghadapi <b>hal baru</b>. Tahap 2 sampai 4 adalah sisi eksekusi, tahap 5 sampai 7 sisi evaluasi.</div>
+<div class="mcq" data-s><p>Kamu menekan tombol "Simpan", layar tidak berubah sama sekali, dan kamu tidak yakin datanya tersimpan. Ini masalah di gulf mana?</p><div class="opts"><button data-why="Kamu sudah tahu cara menyimpan dan sudah melakukannya. Yang tidak jelas adalah hasilnya.">Gulf of execution</button><button data-ok>Gulf of evaluation</button></div><div class="why" hidden>Aksinya berhasil dilakukan, tetapi tidak ada feedback sehingga hasilnya tidak bisa dinilai. Itu jurang di sisi evaluasi (tahap perceive, interpret, compare).</div></div>
+</div></details>
+
+<details class="topic" id="a-fitts"><summary><h3>Hukum Fitts dan hukum Hick</h3><span class="badge">Hitungan</span><span class="src">01a · slide 25, 26</span></summary><div class="body">
+<div class="g2"><div class="box"><h4>Hukum Fitts (motorik)</h4><span class="mono">T = a + b · log₂(D / S + 1)</span><br>Waktu mencapai target <b>naik</b> dengan jarak (D) dan <b>turun</b> dengan ukuran target (S).<br><b>Desain:</b> buat target besar dan dekat, pakai tepi layar untuk target "tak terbatas", minimalkan perjalanan pointer.</div><div class="box"><h4>Hukum Hick (keputusan)</h4><span class="mono">T = a + b · log₂(n + 1)</span><br>Makin <b>banyak</b> dan makin <b>kompleks</b> pilihan, makin lama waktu memutuskan.<br><b>Desain:</b> batasi jumlah opsi, pecah tugas kompleks jadi langkah kecil, beri highlight opsi rekomendasi, pakai <i>progressive disclosure</i>.</div></div>
+<div class="widget" id="wFitts"><div class="wt">Kalkulator Fitts: geser jarak dan ukuran</div>
+<div class="ctl"><label class="small">Jarak D = <b id="fD">400</b> px <input type="range" id="fDr" min="20" max="800" value="400"></label><label class="small">Ukuran S = <b id="fS">40</b> px <input type="range" id="fSr" min="8" max="200" value="40"></label></div>
+<svg viewBox="0 0 560 70" width="560" id="fSvg"></svg><div class="msg" id="fOut"></div>
+<p class="small muted">Nilai a = 50 dan b = 150 milidetik dipakai hanya sebagai ilustrasi (dari saya). Slide tidak memberi angka a dan b.</p></div>
+<div class="widget" id="wHick"><div class="wt">Kalkulator Hick: geser jumlah pilihan</div>
+<div class="ctl"><label class="small">Jumlah pilihan n = <b id="hN">7</b> <input type="range" id="hNr" min="1" max="31" value="7"></label></div><div class="msg" id="hOut"></div></div>
+<div class="note"><b>Cara membedakan di soal.</b> Kalau soalnya tentang tombol kecil, jauh, pojok layar, atau ibu jari: Fitts. Kalau tentang menu panjang, terlalu banyak opsi, atau bingung memilih: Hick. Keduanya logaritmik: menggandakan jarak atau jumlah pilihan tidak menggandakan waktunya.</div>
+</div></details>
+
+<details class="topic" id="a-hcd"><summary><h3>Human-centered design, double diamond, task vs activity</h3><span class="badge">Sering diuji</span><span class="src">01a · slide 28 sampai 32</span></summary><div class="body">
+<p><b>Premis HCD:</b> teknologi harus melayani manusia, bukan sebaliknya.</p>
+<div class="g2"><div class="box r"><h4>Cara pikir lama</h4>"User error". Salahkan orangnya.</div><div class="box g"><h4>Cara pikir HCD</h4>"Design failure". Perbaiki sistemnya.</div></div>
+<p><b>Tujuan:</b> produk yang <i>usable, understandable, enjoyable,</i> dan <i>resilient to error</i>.</p>
+<h4>Double diamond (British Design Council)</h4>
+<svg viewBox="0 0 560 150" width="560"><path d="M30 75 L150 20 L270 75 L150 130 Z" fill="#EAF3FB" stroke="#4076B4" stroke-width="2"/><path d="M290 75 L410 20 L530 75 L410 130 Z" fill="#FBFAE0" stroke="#B9B52E" stroke-width="2"/><text x="150" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#263F77">Masalah yang tepat</text><text x="150" y="88" text-anchor="middle" font-size="11" fill="#55657F">find the right problem</text><text x="410" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="#263F77">Solusi yang tepat</text><text x="410" y="88" text-anchor="middle" font-size="11" fill="#55657F">find the right solution</text><g font-size="10.5" fill="#55657F"><text x="88" y="16" text-anchor="middle">diverge</text><text x="212" y="16" text-anchor="middle">converge</text><text x="348" y="16" text-anchor="middle">diverge</text><text x="472" y="16" text-anchor="middle">converge</text></g></svg>
+<div class="tw"><table><tr><th>Berlian</th><th>Diverge (melebar)</th><th>Converge (menyempit)</th></tr><tr><td>Pertama: masalah yang tepat</td><td>Menjelajah luas: mengamati, mempertanyakan asumsi, menemukan kebutuhan tersembunyi.</td><td>Mendefinisikan masalah inti yang mendasari.</td></tr><tr><td>Kedua: solusi yang tepat</td><td>Menghasilkan banyak ide (ideation), mendorong konsep liar.</td><td>Memilih dan menyempurnakan solusi terbaik.</td></tr></table></div>
+<p class="small muted">Kedua fase butuh waktu, iterasi, dan toleransi terhadap ambiguitas.</p>
+<h4>Proses HCD: empat tahap yang berulang di dalam double diamond</h4>
+<div class="widget sw"><div class="wt">Empat tahap HCD (klik)</div><div class="cards"><button data-k="1"><b>1. Observation</b></button><button data-k="2"><b>2. Idea generation</b></button><button data-k="3"><b>3. Prototyping</b></button><button data-k="4"><b>4. Testing</b></button></div>
+<div class="msg" data-pane="1"><b>Observation.</b> Pelajari orang di konteks alaminya (<i>applied ethnography</i>). Fokus pada <b>aktivitas</b>, bukan sekadar demografi. Pahami tujuan, frustrasi, dan <i>workaround</i> mereka.</div>
+<div class="msg" data-pane="2"><b>Idea generation (ideation).</b> Brainstorm tanpa menghakimi. Dorong "pertanyaan bodoh" yang menantang asumsi. Utamakan kuantitas dulu, kualitas belakangan.</div>
+<div class="msg" data-pane="3"><b>Prototyping.</b> Bangun mockup cepat dan <i>low-fidelity</i> (sketsa, kardus, role-play). <b>Wizard of Oz:</b> sistem rumit disimulasikan oleh manusia di balik layar. Uji konsep sebelum berinvestasi penuh.</div>
+<div class="msg" data-pane="4"><b>Testing.</b> Amati pengguna sasaran memakai prototipe. Pakai berpasangan: satu mengoperasikan, satu menceritakan pikirannya. Uji sejak awal dan sesering mungkin. <b>5 pengguna per iterasi</b> sering sudah cukup.</div></div>
+<p><b>Iterate:</b> putari keempat tahap berulang kali sampai solusinya pas.</p>
+<h4>Task vs activity</h4>
+<div class="g2"><div class="box"><h4>Activity</h4>Tujuan tingkat tinggi. Contoh: "menikmati musik".</div><div class="box"><h4>Task</h4>Aksi komponen. Contoh: "membeli lagu", "membuat playlist".</div></div>
+<div class="key">Desain hebat mendukung <b>seluruh activity</b>, bukan sekadar task yang terpisah-pisah. Contoh slide: keberhasilan iPod datang dari gabungan hardware, software, toko, dan ekosistem untuk activity menikmati musik.</div>
+</div></details>
+
+<details class="topic" id="a-error"><summary><h3>Human error: slips, mistakes, dan cara merancang untuk kesalahan</h3><span class="badge">Sering diuji</span><span class="src">01a · slide 34 sampai 38</span></summary><div class="body">
+<div class="g2"><div class="box"><h4>Slips</h4>Tujuannya benar, tetapi <b>eksekusinya gagal</b>.<br>Contoh: menuang susu ke kopi, lalu menaruh cangkir kopinya di kulkas.<br>Terjadi di level <b>bawah (bawah sadar)</b> siklus aksi.<br><span class="small muted">Jenis di gambar: action-based, memory-lapse.</span></div><div class="box"><h4>Mistakes</h4><b>Tujuan atau rencananya</b> yang salah.<br>Contoh: memakai pound, bukan kilogram, untuk bahan bakar (Boeing 767 "Gimli Glider").<br>Terjadi di level <b>atas (sadar)</b> kognisi.<br><span class="small muted">Jenis di gambar: rule-based, knowledge-based, memory-lapse.</span></div></div>
+<div class="note">Di gambar slide, <b>mistakes</b> ditempatkan pada tahap goal, plan, dan compare. <b>Slips</b> ditempatkan pada tahap specify, perform, perceive, dan interpret.</div>
+<div data-pick="slip"></div>
+<h4>Mengapa kesalahan terjadi: penyebab sistemik</h4>
+<ul><li><b>Tuntutan tugas yang tidak alami:</b> butuh perhatian terus-menerus, presisi, multitasking.</li><li><b>Interupsi:</b> memutus siklus aksi, ingatan gagal melanjutkan dengan benar.</li><li><b>Tekanan waktu:</b> terburu-buru membuat langkah terlewat atau salah menilai.</li><li><b>Feedback buruk:</b> tidak ada cara memverifikasi aksi atau mendeteksi kesalahan.</li><li><b>Tekanan sosial dan institusi:</b> jangan tunda penerbangan, jangan matikan pabrik. Kasus: bencana bandara Tenerife (1977), KLM lepas landas tanpa izin karena tekanan waktu dan cuaca.</li></ul>
+<h4>Strategi desain untuk mencegah dan meredam kesalahan</h4>
+<div class="tw"><table><tr><th>Strategi</th><th>Isi</th><th>Contoh slide</th></tr>
+<tr><td>Add constraints</td><td>Physical, logical, semantic, cultural.</td><td></td></tr>
+<tr><td>Forcing function: <b>interlock</b></td><td>Memaksakan urutan.</td><td>Microwave tidak jalan jika pintu terbuka.</td></tr>
+<tr><td>Forcing function: <b>lock-in</b></td><td>Menjaga sistem tetap aktif sampai tugas selesai.</td><td>Dialog "simpan sebelum keluar".</td></tr>
+<tr><td>Forcing function: <b>lockout</b></td><td>Mencegah masuk atau bertindak.</td><td>Tutup botol obat anti-anak, pagar tangga.</td></tr>
+<tr><td>Provide undo</td><td>Membatalkan aksi dengan mudah. Banyak tingkat lebih baik.</td><td></td></tr>
+<tr><td>Sensibility checks</td><td>Menolak masukan yang tidak masuk akal.</td><td>Dosis radiasi 1000 kali normal.</td></tr>
+<tr><td>Minimize mode errors</td><td>Hilangkan mode kalau bisa. Kalau tidak, buat mode aktif sangat terlihat.</td><td></td></tr>
+<tr><td>Support interruptions</td><td>Simpan konteks supaya pengguna mudah melanjutkan.</td><td></td></tr></table></div>
+<div data-pick="force"></div>
+<h4>Prinsip sistem yang toleran terhadap kesalahan</h4>
+<ul><li>Anggap kesalahan <b>pasti terjadi</b>, rancang untuk ketahanan.</li><li>Taruh pengetahuan <b>di dunia</b>, jangan hanya di kepala.</li><li>Jembatani kedua gulf. Eksekusi: signifier, constraint, natural mapping. Evaluasi: feedback yang jelas dan segera.</li><li>Ganti menyalahkan dengan rasa ingin tahu: dari "apa yang menyebabkan ini?" menjadi "bagaimana mencegahnya?".</li></ul>
+</div></details>
+</section>
+<section class="panel" id="m1b">
+<div class="intro"><h2>01b · Usability Heuristics Nielsen</h2>
+<p class="lead">Sepuluh prinsip umum untuk menilai usability. Yang diuji biasanya dua hal: hafal isi tiap heuristik, dan bisa menentukan heuristik mana yang dilanggar atau dipenuhi oleh sebuah kasus.</p><div class="toc"></div></div>
+
+<details class="topic" id="h-vs"><summary><h3>Design guidelines vs design heuristics</h3><span class="badge">Konsep dasar</span><span class="src">01b · slide 2, 3</span></summary><div class="body">
+<div class="g2"><div class="box"><h4>Design guidelines</h4>Rekomendasi desain yang <b>relatif spesifik</b>. Sering terkait platform, organisasi, atau konteks tertentu.<br><span class="small muted">Contoh dari saya: "tombol utama di aplikasi Android memakai tinggi minimal 48 dp".</span></div><div class="box"><h4>Design heuristics</h4>Prinsip umum (<i>rules of thumb</i>). Berlaku <b>lintas sistem dan konteks</b>.<br><span class="small muted">Contoh: "sistem harus selalu memberi tahu apa yang sedang terjadi".</span></div></div>
+<p>Keduanya dipakai untuk mendukung kualitas interaksi dan membantu pengambilan keputusan desain.</p>
+<h4>Heuristik Nielsen</h4>
+<div class="g3"><div class="box"><h4>Dikembangkan dari</h4>Observasi banyak sistem, temuan usability testing, teori persepsi dan kognisi manusia.</div><div class="box"><h4>Digunakan untuk</h4>Evaluasi, diagnosis masalah, diskusi desain.</div><div class="box"><h4>Dirancang agar</h4>Jumlahnya kecil, mudah dipelajari, dapat diterapkan lintas sistem.</div></div>
+</div></details>
+
+<details class="topic" id="h-10" open><summary><h3>Sepuluh heuristik, satu per satu</h3><span class="badge">Wajib hafal</span><span class="src">01b · slide 5 sampai 14</span></summary><div class="body">
+<div class="widget sw"><div class="wt">Klik nomor heuristik</div>
+<div class="cards"><button data-k="1"><b>1. Visibility of system status</b></button><button data-k="2"><b>2. Match between system and real world</b></button><button data-k="3"><b>3. User control and freedom</b></button><button data-k="4"><b>4. Consistency and standards</b></button><button data-k="5"><b>5. Error prevention</b></button><button data-k="6"><b>6. Recognition rather than recall</b></button><button data-k="7"><b>7. Flexibility and efficiency of use</b></button><button data-k="8"><b>8. Aesthetic and minimalist design</b></button><button data-k="9"><b>9. Help users recognize, diagnose, recover from errors</b></button><button data-k="10"><b>10. Help and documentation</b></button></div>
+<div class="msg" data-pane="1"><b>1. Visibility of system status.</b> Sistem harus selalu memberi tahu apa yang sedang terjadi dan bagaimana responsnya terhadap aksi pengguna.<ul><li><b>Melalui:</b> feedback, indikator status, progress untuk operasi lama.</li><li><b>Membantu:</b> mengurangi kebingungan dan menjembatani gulf of execution dan evaluation.</li><li><b>Contoh baik di slide:</b> notifikasi "12 conversations have been marked as read", tombol yang dinonaktifkan saat tidak ada teks terpilih, indikator ukuran dan sisa waktu unduhan.</li></ul><div class="note small">Pedoman waktu respons di gambar slide: usahakan di bawah 100 milidetik. Sampai 1 detik tidak perlu indikator. 1 sampai 10 detik pakai <i>wait cursor</i>. Lebih dari 10 detik: selesaikan di latar belakang, pakai <i>progress indicator</i> dan estimasi.</div></div>
+<div class="msg" data-pane="2"><b>2. Match between system and real world.</b> Sistem harus memakai <b>bahasa pengguna</b> dan mengikuti <b>logika dunia nyata</b>.<ul><li><b>Menghindari:</b> istilah teknis internal dan urutan tindakan yang tidak alami.</li><li><b>Membantu:</b> pembentukan mental model yang benar.</li><li><b>Contoh buruk di slide:</b> pesan "Error: Node was not found". <b>Contoh baik:</b> ikon keranjang belanja.</li></ul></div>
+<div class="msg" data-pane="3"><b>3. User control and freedom.</b> Pengguna sering melakukan kesalahan, jadi sistem perlu menyediakan <b>jalan keluar yang jelas</b> serta <b>undo dan redo</b>.<ul><li><b>Mendukung:</b> eksplorasi, trial and error, pemulihan dari kesalahan.</li><li><b>Contoh baik di slide:</b> tombol Stop saat instalasi berjalan, menu Undo/Redo, tautan "Undo" di notifikasi.</li></ul></div>
+<div class="msg" data-pane="4"><b>4. Consistency and standards.</b> Hal yang sama seharusnya <b>terlihat sama</b> dan <b>berperilaku sama</b>.<ul><li><b>Tiga tingkat konsistensi:</b> dalam satu sistem, antar produk terkait, dan dengan standar platform.</li><li><b>Manfaat:</b> mengurangi beban belajar pengguna.</li><li><b>Contoh baik di slide:</b> toolbar pengolah kata, spreadsheet, dan dokumen daring yang susunannya serupa.</li></ul></div>
+<div class="msg" data-pane="5"><b>5. Error prevention.</b> Lebih baik <b>mencegah</b> kesalahan daripada hanya menanganinya.<ul><li><b>Cara:</b> constraint, validasi input, konfirmasi untuk aksi berisiko.</li><li><b>Manfaat:</b> mengurangi kesalahan akibat <b>slips</b>.</li><li><b>Contoh di slide:</b> dialog konfirmasi hapus permanen. Input tanggal: teks bebas dengan pesan error (buruk), petunjuk format (lebih baik), tiga kotak atau pilihan terpisah (terbaik).</li></ul></div>
+<div class="msg" data-pane="6"><b>6. Recognition rather than recall.</b> Minimalkan kebutuhan mengingat. Buat opsi, aksi, dan informasi <b>terlihat dan mudah dikenali</b>.<ul><li>Recognition lebih cepat dan andal daripada recall.</li><li><b>Contoh buruk di slide:</b> terminal baris perintah. <b>Contoh baik:</b> asisten suara yang menampilkan contoh pertanyaan yang bisa diajukan.</li></ul></div>
+<div class="msg" data-pane="7"><b>7. Flexibility and efficiency of use.</b> Sistem perlu mendukung <b>pemula</b> dan <b>pengguna berpengalaman</b> sekaligus.<ul><li><b>Melalui:</b> shortcut atau akselerator, dan personalisasi.</li><li><b>Tujuan:</b> efisiensi tanpa mengorbankan kemudahan belajar.</li><li><b>Contoh di slide:</b> menu yang menampilkan shortcut keyboard di samping tiap perintah.</li></ul></div>
+<div class="msg" data-pane="8"><b>8. Aesthetic and minimalist design.</b> Hindari informasi yang tidak relevan atau jarang dibutuhkan.<ul><li>Setiap elemen tambahan <b>bersaing</b> dengan informasi penting.</li><li>Visual yang bersih membantu fokus dan meningkatkan keterpakaian.</li><li><b>Catatan gambar slide:</b> pakai prinsip Gestalt untuk pembacaan non-linear.</li></ul><div class="warn small">Jebakan: minimalis bukan berarti "sesedikit mungkin" atau "harus cantik". Intinya membuang yang tidak relevan supaya yang penting menonjol.</div></div>
+<div class="msg" data-pane="9"><b>9. Help users recognize, diagnose, and recover from errors.</b> Pesan kesalahan harus <b>jelas</b>, memakai <b>bahasa pengguna</b>, dan <b>menjelaskan apa yang salah</b>.<ul><li><b>Sertakan:</b> saran perbaikan dan langkah lanjutan.</li><li><b>Tujuan:</b> membantu pengguna melanjutkan tugas.</li><li><b>Contoh buruk di slide:</b> "The action could not be completed", "Unknown error".</li></ul></div>
+<div class="msg" data-pane="10"><b>10. Help and documentation.</b> Idealnya sistem dapat digunakan <b>tanpa bantuan</b>. Jika bantuan diperlukan, ia harus:<ul><li>mudah dicari,</li><li>berorientasi tugas,</li><li>berisi langkah konkret.</li></ul>Mendukung pengguna saat interaksi gagal.</div>
+</div>
+<div class="tw"><table><tr><th>No</th><th>Heuristik</th><th>Kata kunci untuk mengenalinya di soal</th></tr>
+<tr><td>1</td><td>Visibility of system status</td><td>feedback, progress bar, indikator, "sedang memproses"</td></tr>
+<tr><td>2</td><td>Match between system and real world</td><td>bahasa pengguna, istilah teknis, metafora dunia nyata, urutan alami</td></tr>
+<tr><td>3</td><td>User control and freedom</td><td>undo, redo, batal, keluar, kembali</td></tr>
+<tr><td>4</td><td>Consistency and standards</td><td>sama di semua halaman, mengikuti konvensi platform</td></tr>
+<tr><td>5</td><td>Error prevention</td><td>constraint, validasi, konfirmasi sebelum aksi berisiko</td></tr>
+<tr><td>6</td><td>Recognition rather than recall</td><td>pilihan terlihat, tidak perlu menghafal, riwayat, saran</td></tr>
+<tr><td>7</td><td>Flexibility and efficiency of use</td><td>shortcut, akselerator, personalisasi, pemula dan mahir</td></tr>
+<tr><td>8</td><td>Aesthetic and minimalist design</td><td>tidak relevan, berantakan, terlalu ramai</td></tr>
+<tr><td>9</td><td>Help users recognize, diagnose, recover from errors</td><td>pesan error, apa yang salah, saran perbaikan</td></tr>
+<tr><td>10</td><td>Help and documentation</td><td>bantuan, panduan, dokumentasi, FAQ</td></tr></table></div>
+</div></details>
+
+<details class="topic" id="h-beda"><summary><h3>Heuristik yang sering tertukar</h3><span class="badge">Jebakan</span><span class="src">dari saya, berdasarkan slide 5 sampai 14</span></summary><div class="body">
+<div class="tw"><table><tr><th>Pasangan</th><th>Cara membedakan</th></tr>
+<tr><td><b>5 Error prevention</b> vs <b>9 Recover from errors</b></td><td>Nomor 5 bekerja <b>sebelum</b> kesalahan terjadi (mencegah). Nomor 9 bekerja <b>sesudah</b> kesalahan terjadi (pesan error yang membantu).</td></tr>
+<tr><td><b>3 User control</b> vs <b>5 Error prevention</b></td><td>Dialog konfirmasi sebelum menghapus: nomor 5. Tombol undo setelah terlanjur menghapus: nomor 3.</td></tr>
+<tr><td><b>3 User control</b> vs <b>9 Recover from errors</b></td><td>Nomor 3 memberi <b>jalan keluar</b> (undo, batal). Nomor 9 soal <b>isi pesan</b> kesalahannya.</td></tr>
+<tr><td><b>1 Visibility</b> vs <b>9 Recover from errors</b></td><td>Nomor 1 memberi tahu keadaan sistem kapan pun, termasuk saat semuanya lancar. Nomor 9 khusus saat terjadi kesalahan.</td></tr>
+<tr><td><b>2 Match real world</b> vs <b>4 Consistency</b></td><td>Nomor 2: cocok dengan <b>dunia di luar komputer</b> (bahasa sehari-hari). Nomor 4: cocok dengan <b>bagian lain sistem atau platform</b>.</td></tr>
+<tr><td><b>6 Recognition</b> vs <b>10 Help</b></td><td>Nomor 6 membuat pilihan terlihat di antarmuka sehingga bantuan tidak diperlukan. Nomor 10 adalah bantuan terpisah saat pengguna tetap butuh.</td></tr>
+<tr><td><b>7 Flexibility</b> vs <b>3 User control</b></td><td>Nomor 7 soal <b>kecepatan</b> bagi yang mahir (shortcut). Nomor 3 soal <b>kebebasan membatalkan</b>.</td></tr></table></div>
+<div data-pick="heur"></div>
+</div></details>
+
+<details class="topic" id="h-eval"><summary><h3>Memakai heuristik untuk evaluasi</h3><span class="badge">Sering diuji</span><span class="src">01b · slide 15</span></summary><div class="body">
+<div class="g3"><div class="box g"><h4>Heuristik dipakai untuk</h4>Mengidentifikasi masalah usability, menjelaskan penyebab masalah, membandingkan alternatif desain.</div><div class="box r"><h4>Heuristik bukan</h4>Ceklis pass atau fail. Bukan pula resep solusi.</div><div class="box y"><h4>Tujuan evaluasi</h4>Memahami masalah, bukan langsung membenarkan desain.</div></div>
+<div class="note"><b>Pola jawaban essay evaluasi heuristik (dari saya).</b> Untuk tiap temuan tulis tiga hal: (1) apa yang terjadi di antarmuka, (2) heuristik mana yang terkait dan mengapa, (3) akibatnya bagi pengguna. Kalau diminta, tambahkan arah perbaikan, tetapi ingat bahwa heuristik sendiri tidak memberi resep solusi.</div>
+<div class="mcq" data-s><p>Seorang evaluator menulis: "Halaman ini lulus 8 dari 10 heuristik, jadi desainnya sudah baik." Apa yang keliru menurut slide?</p><div class="opts col"><button data-why="Jumlah heuristiknya memang sepuluh, itu bukan masalahnya.">Seharusnya ada lebih dari sepuluh heuristik yang diperiksa</button><button data-ok>Heuristik diperlakukan sebagai ceklis lulus atau gagal dan dipakai untuk membenarkan desain</button><button data-why="Heuristik justru dirancang agar bisa diterapkan lintas sistem, tidak perlu disesuaikan dulu.">Heuristik harus disesuaikan dulu dengan platform sebelum dipakai</button></div><div class="why" hidden>Heuristik bukan ceklis pass atau fail, dan tujuan evaluasi adalah memahami masalah, bukan langsung membenarkan desain.</div></div>
+</div></details>
+</section>
+<section class="panel" id="m2">
+<div class="intro"><h2>02 · Konseptualisasi Desain Interaksi</h2>
+<p class="lead">Cara mengubah keluhan ("aplikasinya ribet") menjadi diagnosis yang bisa dipakai untuk desain, tanpa menyalahkan pengguna. Fokus sesi ini: <b>problem space</b>, bukan solution space.</p><div class="toc"></div></div>
+
+<details class="topic" id="k-kenapa"><summary><h3>Mengapa perlu konseptualisasi interaksi</h3><span class="badge">Konsep dasar</span><span class="src">02 · slide 2 sampai 6</span></summary><div class="body">
+<p><b>Tujuan sesi menurut slide:</b> melihat interaksi sebagai proses berniat, bertindak, menafsirkan. Memakai gulf of execution dan gulf of evaluation. Mendiagnosis masalah interaksi yang nyata (bukan keluhan). Membedakan masalah usability dan UX. Menjelaskan kesulitan tanpa menyalahkan pengguna.</p>
+<div class="g2"><div class="box r"><h4>Keluhan umum</h4>"Aplikasinya ribet." "Web-nya bikin bingung." "User-nya salah pakai."</div><div class="box"><h4>Masalahnya</h4>Tidak menjelaskan <b>apa</b> yang gagal. Tidak menjelaskan <b>di mana</b> gagal. Tidak berguna untuk desain.</div></div>
+<p>Konseptualisasi interaksi membantu kita: <b>memberi struktur</b> pada pengalaman, <b>memisahkan keluhan dari diagnosis</b>, dan <b>menjelaskan kegagalan tanpa menyalahkan pengguna</b>.</p>
+<div class="ex"><b>Gambar ayunan pohon di slide.</b> Kartun terkenal: pelanggan menjelaskan satu hal, manajer proyek memahami hal lain, analis merancang lain lagi, pemrogram menulis yang berbeda, dan yang sebenarnya dibutuhkan pelanggan ternyata hanya ban yang digantung di pohon. Pesannya: tanpa konsep bersama, tiap pihak membayangkan hal yang berbeda.</div>
+</div></details>
+
+<details class="topic" id="k-model"><summary><h3>System model, system image, mental model</h3><span class="badge">Sering diuji</span><span class="src">02 · slide 7 sampai 9, 50</span></summary><div class="body">
+<svg viewBox="0 0 560 170" width="560"><ellipse cx="90" cy="34" rx="68" ry="24" fill="#EAF3FB" stroke="#4076B4" stroke-width="1.6" data-tip="<b>System model</b><br>Cara sistem sebenarnya bekerja. Ada di kepala desainer. Pengguna tidak pernah melihatnya."/><text x="90" y="39" text-anchor="middle" font-size="12" font-weight="700" fill="#263F77" pointer-events="none">System model</text>
+<ellipse cx="470" cy="34" rx="68" ry="24" fill="#FBFAE0" stroke="#B9B52E" stroke-width="1.6" data-tip="<b>Mental model</b><br>Gambaran pengguna tentang sistem. Dibawa sendiri oleh pengguna, unik, dan terus berubah."/><text x="470" y="39" text-anchor="middle" font-size="12" font-weight="700" fill="#263F77" pointer-events="none">Mental model</text>
+<text x="280" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#C0392B">≠</text>
+<rect x="215" y="96" width="130" height="46" rx="8" fill="#263F77" data-tip="<b>System image</b><br>Apa yang ditampilkan sistem: antarmuka, label, respons, manual. Satu-satunya hal yang dilihat pengguna."/><text x="280" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" pointer-events="none">System image</text><text x="280" y="132" text-anchor="middle" font-size="10.5" fill="#DCEBFA" pointer-events="none">(interface)</text>
+<circle cx="90" cy="112" r="16" fill="#fff" stroke="#263F77" stroke-width="2"/><text x="90" y="148" text-anchor="middle" font-size="11" fill="#55657F">Designer</text><circle cx="470" cy="112" r="16" fill="#fff" stroke="#263F77" stroke-width="2"/><text x="470" y="148" text-anchor="middle" font-size="11" fill="#55657F">User</text>
+<path d="M108 116 H210" stroke="#4076B4" stroke-width="2" marker-end="url(#ar)"/><text x="160" y="108" text-anchor="middle" font-size="10.5" fill="#55657F">designs</text><path d="M452 116 H350" stroke="#4076B4" stroke-width="2" marker-end="url(#ar)"/><path d="M350 124 H452" stroke="#4076B4" stroke-width="2" marker-end="url(#ar)"/><text x="400" y="108" text-anchor="middle" font-size="10.5" fill="#55657F">interacts with</text>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#4076B4"/></marker></defs></svg>
+<p class="small muted">Arahkan kursor ke tiap bentuk. Diagram dari slide, digambar ulang.</p>
+<div class="tw"><table><tr><th>Istilah</th><th>Arti</th><th>Milik siapa</th></tr><tr><td><b>System model</b></td><td>Cara sistem sebenarnya bekerja.</td><td>Desainer</td></tr><tr><td><b>System image</b></td><td>Apa yang ditampilkan sistem.</td><td>Antarmuka</td></tr><tr><td><b>Mental model</b></td><td>Gambaran pengguna tentang sistem.</td><td>Pengguna</td></tr></table></div>
+<div class="key"><b>Tiga fakta tentang pengguna.</b> Ia <b>tidak pernah</b> melihat system model. Ia <b>selalu</b> bertindak lewat system image. Ia membawa mental model <b>sendiri</b>.</div>
+<h4>Sifat mental model</h4>
+<ul><li><b>Terus berkembang dan berubah</b>, dipengaruhi pengalaman baru dari produkmu, teknologi lain, dan kehidupan sehari-hari.</li><li><b>Unik</b> untuk tiap individu, jadi yang perlu dicari adalah <b>pola umumnya</b>.</li><li>Memahami konsep mental model membantu memahami masalah usability dalam desain.</li></ul>
+<h4>Implikasinya ke desain</h4>
+<div class="g2"><div class="box r"><h4>Bukan</h4>Menyamakan mental model dengan system model. Itu tidak <i>feasible</i> dan tidak perlu.</div><div class="box g"><h4>Melainkan</h4>Mencapai <b>keselarasan fungsional</b>: cukup agar pengguna bisa bertindak, menafsirkan respons, dan mencapai goal tanpa usaha berlebihan.</div></div>
+<div class="mcq" data-s><p>Pengguna mengira tombol "Arsipkan" di aplikasi email akan menghapus pesan selamanya, padahal pesan hanya dipindah. Apa yang perlu diperbaiki menurut kerangka ini?</p><div class="opts col"><button data-why="System model (cara kerja sebenarnya) tidak bermasalah. Pesan memang hanya dipindah.">System model, karena cara kerja sistemnya salah</button><button data-ok>System image, karena tampilannya tidak membantu pengguna membentuk mental model yang selaras</button><button data-why="Slide menegaskan kesulitan dijelaskan tanpa menyalahkan pengguna, dan menyamakan mental model dengan system model tidak feasible.">Pengguna, karena mental model-nya harus disamakan dengan system model</button></div><div class="why" hidden>Pengguna hanya melihat system image. Kalau mental model-nya meleset, yang bisa dan perlu diperbaiki desainer adalah system image (label, penjelasan, feedback), sampai tercapai keselarasan fungsional.</div></div>
+</div></details>
+
+<details class="topic" id="k-gta"><summary><h3>Interaksi sebagai proses, dan bahasa goal, task, action</h3><span class="badge">Wajib paham</span><span class="src">02 · slide 10 sampai 17</span></summary><div class="body">
+<p><b>Interaksi bukan aksi tunggal.</b> Bukan hanya klik tombol, geser layar, atau pilih menu. Interaksi adalah <b>proses yang berlangsung dalam waktu</b> dan melibatkan niat, persepsi, interpretasi, evaluasi.</p>
+<div class="g2"><div class="box"><h4>Sebelum aksi</h4>Pengguna punya tujuan, membentuk niat, dan memperkirakan apa yang bisa dilakukan sistem.</div><div class="box"><h4>Sesudah aksi</h4>Sistem merespons, pengguna mengamati, menafsirkan, lalu mengevaluasi hasil terhadap tujuan.</div></div>
+<h4>Tiga kata yang harus presisi</h4>
+<div class="tw"><table><tr><th></th><th>Goal</th><th>Task</th><th>Action</th></tr>
+<tr><td><b>Arti</b></td><td>Keadaan akhir yang ingin dicapai pengguna.</td><td>Aktivitas terstruktur untuk mencapai goal.</td><td>Operasi konkret pada antarmuka.</td></tr>
+<tr><td><b>Ciri</b></td><td>Berorientasi hasil. <b>Tidak bergantung</b> pada antarmuka.</td><td><b>Mulai dipengaruhi</b> sistem. Masih konseptual.</td><td><b>Sepenuhnya bergantung</b> pada desain.</td></tr>
+<tr><td><b>Contoh</b></td><td>"Saya ingin mengirim uang." "Saya ingin memastikan tugas sudah terkumpul."</td><td>Mengisi formulir transfer, mengunggah file, memeriksa status pesanan.</td><td>Mengetik angka, menekan "Submit", memilih item dari dropdown.</td></tr>
+<tr><td><b>Pasangan di sisi sistem</b></td><td>Supported outcome</td><td>Feature atau flow</td><td>UI control</td></tr></table></div>
+<p class="small muted">Baris terakhir dari gambar slide: Human Intentions (goal, task, action) berhadapan dengan System Operations (supported outcome, feature/flow, UI control).</p>
+<div class="warn"><b>Kesalahan umum:</b> menyebut task atau action sebagai goal. Contoh salah: "goal saya mengisi formulir". Mengisi formulir adalah task. Goal-nya adalah hasil akhirnya, misalnya "uang terkirim".</div>
+<div class="key">Kesulitan interaksi hampir selalu muncul di <b>peralihan antar level</b>: goal → task, task → action, dan action → evaluasi.</div>
+<div data-pick="gta"></div>
+</div></details>
+
+<details class="topic" id="k-7"><summary><h3>Tujuh tahap aksi Norman (versi materi 02)</h3><span class="badge">Sering diuji</span><span class="src">02 · slide 19, 20</span></summary><div class="body">
+<div class="tw"><table><tr><th>Fase</th><th>No</th><th>Rumusan slide</th><th>Contoh</th></tr>
+<tr><td rowspan="4"><b>Eksekusi</b> (doing)</td><td>1</td><td>Pengguna membentuk tujuan</td><td>"I need more light"</td></tr><tr><td>2</td><td>Pengguna membentuk niat</td><td>"Turn on lamp"</td></tr><tr><td>3</td><td>Pengguna menentukan aksi</td><td>"Reach right hand to switch"</td></tr><tr><td>4</td><td>Pengguna mengeksekusi aksi</td><td></td></tr>
+<tr><td rowspan="3"><b>Evaluasi</b> (interpreting)</td><td>5</td><td>Sistem berubah, pengguna memersepsi keadaan sistem</td><td>"Is the light on?"</td></tr><tr><td>6</td><td>Pengguna menafsirkan keadaan tersebut</td><td></td></tr><tr><td>7</td><td>Pengguna mengevaluasi apakah tujuan tercapai</td><td></td></tr></table></div>
+<div class="note">Di materi 01a ketujuh tahap diberi nama goal, plan, specify, perform, perceive, interpret, compare. Di gambar materi 02 namanya goal, intention, action specification, execution, perception, interpretation, evaluation. Isinya sama.</div>
+<ul><li>Sebagian besar tahap berlangsung <b>bawah sadar</b> untuk task rutin.</li><li>Baru terasa jelas ketika terjadi <b>kesalahan</b> atau pengguna menghadapi <b>situasi baru</b>.</li><li><b>Kegunaannya:</b> saat pengguna kesulitan, tanyakan apakah kesulitan muncul <b>sebelum aksi dilakukan</b> atau <b>setelah sistem merespons</b>.</li></ul>
+</div></details>
+
+<details class="topic" id="k-gulf" open><summary><h3>Gulf of execution, gulf of evaluation, dan cara mendiagnosis</h3><span class="badge">Wajib paham</span><span class="src">02 · slide 24 sampai 30</span></summary><div class="body">
+<p>Setiap interaksi punya <b>jarak kognitif</b> antara manusia dan sistem. Jurang itu <b>selalu ada</b>. Desain <b>tidak menghilangkan</b> jurang, desain menyediakan <b>jembatan</b> dengan memperhitungkan tujuh tahap aksi.</p>
+<div class="tw"><table><tr><th></th><th>Gulf of execution</th><th>Gulf of evaluation</th></tr>
+<tr><td><b>Jarak antara</b></td><td>Goal atau task pengguna dan action yang tersedia di sistem.</td><td>Perubahan keadaan sistem dan pemahaman pengguna terhadap status goal.</td></tr>
+<tr><td><b>Masalah muncul ketika</b></td><td>Action sulit ditemukan. Hubungan niat dan aksi tidak jelas. Pengguna harus menebak.</td><td>Respons sistem tidak jelas. Makna perubahan tidak bisa ditafsirkan.</td></tr>
+<tr><td><b>Dijembatani oleh</b></td><td>Affordance, signifier, mapping.</td><td>Feedback, status, representasi sistem.</td></tr>
+<tr><td><b>Tandanya di diagnosis</b></td><td>Goal dan task jelas, tetapi action tidak jelas.</td><td>Action dilakukan, tetapi pengguna tidak bisa menilai status goal.</td></tr></table></div>
+<div class="note small">Di materi 01a daftar jembatan gulf of execution ditulis: signifier, constraint, mapping, conceptual model. Di materi 02 ditulis: affordance, signifier, mapping. Hafalkan keduanya dan sebutkan sesuai materi yang ditanya.</div>
+<h4>Enam langkah diagnosis</h4>
+<div class="widget stp"><div class="wt">Kasus slide: keluhan "Form ini ribet" (klik Lanjut)</div>
+<div class="msg" data-step><b>1. Goal pengguna.</b> Keadaan akhir yang ingin dicapai. <br>Pada kasus ini: <b>mengirim data</b>.</div>
+<div class="msg" data-step><b>2. Task yang dibayangkan.</b> Aktivitas yang menurut pengguna perlu dilakukan. <br>Pada kasus ini: <b>mengisi dan mengirim formulir</b>.</div>
+<div class="msg" data-step><b>3. Action yang dipilih.</b> Operasi konkret pada antarmuka. <br>Pada kasus ini: <b>menekan "Submit"</b>.</div>
+<div class="msg" data-step><b>4. Ekspektasi.</b> Apa yang pengguna kira akan terjadi setelah action. <br>Pada kasus ini (dari saya): muncul tanda bahwa data terkirim.</div>
+<div class="msg" data-step><b>5. Respons sistem.</b> Apa yang benar-benar terjadi atau ditampilkan (system image). <br>Pada kasus ini: <b>halaman reload tanpa pesan</b>.</div>
+<div class="msg" data-step><b>6. Interpretasi.</b> Bagaimana pengguna memahami respons itu terhadap goal. <br>Pada kasus ini: <b>status goal tidak jelas</b>.</div>
+<div class="msg" data-step><b>Kesimpulan.</b> Action sudah dilakukan, tetapi pengguna tidak bisa menilai status goal. Maka yang lebar adalah <b>gulf of evaluation</b>. Baru setelah enam langkah itu kita boleh menyebut gulf-nya.</div>
+</div>
+<div class="widget" id="wDiag"><div class="wt">Latihan diagnosis: gulf mana yang melebar?</div><div id="diagBox"></div></div>
+<div class="g2"><div class="box"><h4>Usability</h4>Masalah pada <b>task atau action</b>.</div><div class="box"><h4>UX</h4><b>Pola pengalaman jangka panjang</b>.</div></div>
+<p>Keduanya harus ditopang analisis goal, task, action. Bukan opini atau selera.</p>
+</div></details>
+
+<details class="topic" id="k-asumsi"><summary><h3>Asumsi desain dan gulf sebagai penyingkap asumsi</h3><span class="badge">Analisis</span><span class="src">02 · slide 22, 23, 31</span></summary><div class="body">
+<p>Setiap desain mengandung asumsi tentang <b>goal</b> pengguna, <b>task</b> yang dibayangkan, dan <b>action</b> yang dianggap "jelas" (obvious). Asumsi itu <b>sering implisit</b>, <b>jarang disadari</b>, dan <b>selalu terwujud dalam system image</b>.</p>
+<div class="g2"><div class="box"><h4>Gulf of execution yang lebar mengisyaratkan asumsi</h4>Pengguna akan membayangkan task tertentu. Pengguna akan mengenali action tertentu untuk mencapai goal.</div><div class="box"><h4>Gulf of evaluation yang lebar mengisyaratkan asumsi</h4>Pengguna akan menafsirkan respons sistem dengan cara tertentu. Pengguna mampu menghubungkan perubahan sistem ke status goal.</div></div>
+<div class="key"><b>Kalimat diagnosis presisi dari slide:</b> "System image ini mengasumsikan pemahaman tertentu tentang goal, task, atau action pengguna, tetapi tidak memberikan dukungan yang cukup agar mental model tersebut dapat terbentuk dan digunakan secara andal."</div>
+<h4>Membuat asumsi eksplisit</h4>
+<ul><li>"Desain ini mengasumsikan pengguna punya goal X."</li><li>"Desain ini mengasumsikan task Y."</li><li>"Desain ini mengasumsikan action Z dikenali."</li></ul>
+<p><b>Manfaat:</b> asumsi menjadi <b>objek analisis</b>, sehingga dapat <b>diuji dan direvisi</b>.</p>
+<div class="ex"><b>Contoh dari saya.</b> Ikon tiga garis (hamburger) tanpa label. Asumsinya: pengguna mengenali ikon itu sebagai menu (asumsi action). Kalau pengguna lansia tidak pernah menemukannya, gulf of execution melebar, dan asumsi itulah yang perlu direvisi, misalnya dengan memberi label "Menu".</div>
+</div></details>
+
+<details class="topic" id="k-tipe"><summary><h3>Lima tipe interaksi dan tipe antarmuka</h3><span class="badge">Sering diuji</span><span class="src">02 · slide 37 sampai 44</span></summary><div class="body">
+<p><b>Tipe interaksi</b> mendeskripsikan <b>apa yang dilakukan pengguna</b> saat berinteraksi dengan sistem. <b>Tipe antarmuka</b> adalah jenis antarmuka yang dipakai untuk mendukung interaksi itu. Keduanya berbeda.</p>
+<div class="widget sw"><div class="wt">Lima tipe interaksi (klik)</div><div class="cards"><button data-k="1"><b>1. Instructing</b>memerintah</button><button data-k="2"><b>2. Conversing</b>bercakap</button><button data-k="3"><b>3. Manipulating</b>memanipulasi</button><button data-k="4"><b>4. Exploring</b>menjelajah</button><button data-k="5"><b>5. Responding</b>sistem memulai</button></div>
+<div class="msg" data-pane="1"><b>Instructing.</b> Mengeluarkan <b>perintah</b> dan <b>memilih</b> opsi. Pengguna memberi tahu sistem apa yang harus dilakukan.<br>Contoh: memberi tahu waktu, mencetak file, menyimpan file. Model konseptual yang sangat umum: pengolah kata, perangkat rumah, mesin penjual otomatis.</div>
+<div class="msg" data-pane="2"><b>Conversing.</b> Berinteraksi dengan sistem seolah-olah sedang <b>bercakap</b>. Dari menu berbasis pengenalan suara sederhana sampai dialog bahasa alami yang kompleks.<br>Contoh: search engine, virtual agent, chatbot, mainan dan robot peliharaan yang dirancang untuk berkomunikasi.</div>
+<div class="msg" data-pane="3"><b>Manipulating.</b> Berinteraksi dengan <b>objek</b> di ruang virtual atau fisik dengan memanipulasinya: menyeret, memilih, membuka, menutup, memperbesar.<br>Bisa juga dengan pengontrol fisik (Nintendo Wii) atau <i>air gestures</i> (Microsoft Kinect) untuk menggerakkan avatar.</div>
+<div class="msg" data-pane="4"><b>Exploring.</b> <b>Bergerak</b> melalui lingkungan virtual atau ruang fisik.<br>Contoh: melihat hal yang lebih besar dari kehidupan di VR, menjelajahi data dalam VR (CAVE).</div>
+<div class="msg" data-pane="5"><b>Responding.</b> <b>Sistem</b> yang memulai interaksi, dan pengguna memilih apakah akan merespons. Sistem mengambil inisiatif mengingatkan sesuatu yang "dianggapnya" menarik.<br>Contoh: memberi tahu ada teman berkumpul di warung kopi terdekat, fitness tracker memberi tahu pencapaian.</div></div>
+<h4>Memilih tipe interaksi</h4>
+<div class="tw"><table><tr><th>Tipe</th><th>Cocok untuk</th><th>Contoh</th></tr><tr><td>Manipulasi langsung</td><td>Task tertentu</td><td>Designing, drawing, driving, sizing windows</td></tr><tr><td>Memberikan instruksi</td><td>Task yang berulang</td><td>Spell-checking, manajemen file</td></tr><tr><td>Percakapan (conversation)</td><td>Service tertentu</td><td>Mencari informasi, meminta musik</td></tr><tr><td><b>Konseptual hibrid</b></td><td colspan="2">Mendukung berbagai cara melakukan tindakan yang sama.</td></tr></table></div>
+<div data-pick="tipe"></div>
+<h4>Tipe antarmuka</h4>
+<p>Command, menu-based, gesture, voice, tangible, augmented reality, virtual reality, wearable, brain-computer, dan seterusnya.</p>
+<div class="warn small"><b>Jebakan.</b> "Voice" adalah tipe <b>antarmuka</b>, sedangkan "conversing" adalah tipe <b>interaksi</b>. Satu antarmuka suara bisa dipakai untuk instructing ("nyalakan lampu") maupun conversing (tanya jawab).</div>
+</div></details>
+
+<details class="topic" id="k-meta"><summary><h3>Metafora antarmuka</h3><span class="badge">Sering diuji</span><span class="src">02 · slide 46 sampai 48</span></summary><div class="body">
+<p><b>Metafora antarmuka:</b> antarmuka dirancang agar mirip dengan entitas fisik, tetapi juga memiliki propertinya sendiri. Contoh: metafora desktop dan portal web. Bisa berdasarkan <b>aktivitas</b>, <b>objek</b>, atau kombinasi keduanya.</p>
+<div class="g3"><div class="box"><h4>Aktivitas</h4>"Berselancar" di web.</div><div class="box"><h4>Objek</h4>Desktop: meja kerja, folder, berkas.</div><div class="box"><h4>Ikon</h4>Keranjang belanja di toko online.</div></div>
+<div class="g2"><div class="box g"><h4>Manfaat</h4><ul><li>Memanfaatkan pengetahuan yang sudah familiar untuk memahami hal yang belum dikenal.</li><li>Membuat pembelajaran sistem baru lebih mudah.</li><li>Membantu pengguna memahami model konseptual yang mendasarinya.</li><li>Bisa sangat inovatif dan membuat dunia komputer lebih mudah diakses oleh pengguna yang lebih beragam.</li></ul></div><div class="box r"><h4>Persoalan</h4><ul><li>Melanggar aturan konvensional dan budaya (contoh: recycle bin ditaruh di atas desktop).</li><li>Konflik dengan prinsip desain.</li><li>Desainer bisa tanpa sengaja memakai desain buruk yang sudah ada dan ikut memindahkan bagian buruknya.</li><li>Membatasi imajinasi desainer dalam menghasilkan model konseptual baru.</li><li>Memaksa pengguna memahami sistem hanya dalam konteks metafora.</li></ul></div></div>
+</div></details>
+
+<details class="topic" id="k-take"><summary><h3>Takeaway materi 02</h3><span class="badge">Rangkuman</span><span class="src">02 · slide 50</span></summary><div class="body">
+<p>Setiap kali melihat interaksi bermasalah:</p>
+<div class="flow"><span>1. Nyatakan goal-nya</span><b>→</b><span>2. Uraikan task dan action-nya</span><b>→</b><span class="y">3. Lihat di mana jurangnya melebar</span></div>
+<div class="key">Mulai berpikir sebagai <b>analis interaksi</b>, bukan sekadar pengguna yang beropini.</div>
+</div></details>
+</section>
+<section class="panel" id="m3a">
+<div class="intro"><h2>03a · Requirements, Goals, dan Context of Use</h2>
+<p class="lead">Sebelum mendesain solusi, pastikan dulu tiga hal: apa kebutuhan yang sebenarnya, goal siapa yang didukung, dan dalam konteks apa interaksi terjadi. Fokus: disiplin berpikir dalam <b>problem space</b>.</p><div class="toc"></div></div>
+
+<details class="topic" id="r-fitur"><summary><h3>Mengapa tidak mulai dari fitur: requirement vs feature</h3><span class="badge">Wajib paham</span><span class="src">03a · slide 3 sampai 5</span></summary><div class="body">
+<p>Dalam praktik orang sering langsung berkata: "Tambahkan search." "Perlu filter." "Harus ada notifikasi." Kalimat seperti itu <b>langsung berada di solution space</b>, padahal belum tentu kita memahami problem yang tepat.</p>
+<div class="g2"><div class="box y"><h4>Requirement</h4><b>Apa</b> yang dibutuhkan agar goal tercapai dalam konteks tertentu.<br><b>Requirement = alasan.</b></div><div class="box"><h4>Feature</h4><b>Bagaimana</b> kebutuhan itu diwujudkan dalam sistem.<br><b>Feature = bentuk.</b></div></div>
+<div class="g2"><div class="box r"><h4>Kalau tercampur</h4><ul><li>Diskusi berubah menjadi debat preferensi.</li><li>Tidak jelas apakah masalah ada pada pemahaman atau implementasi.</li><li>Evaluasi kehilangan pijakan.</li></ul></div><div class="box g"><h4>Pemisahan menjaga</h4><ul><li>Ketepatan diagnosis.</li><li>Fleksibilitas desain.</li></ul></div></div>
+<div data-pick="reqfeat"></div>
+</div></details>
+
+<details class="topic" id="r-apa"><summary><h3>Apa itu requirement, dan hubungannya dengan goal</h3><span class="badge">Sering diuji</span><span class="src">03a · slide 6, 7, 13 sampai 15</span></summary><div class="body">
+<p><b>Requirement</b> menyatakan <b>kemampuan sistem</b> dalam mendukung goal pengguna dalam konteks tertentu. Requirement berbicara tentang <b>kapabilitas sistem</b>.</p>
+<div class="warn">Requirement <b>tidak</b> berbicara tentang: kontrol UI spesifik, teknologi, atau detail visual.</div>
+<p>Ingat struktur dari materi 02: <span class="mono">Goal → Task → Action</span>. Requirement memastikan struktur ini berjalan <b>efektif</b> dan dapat <b>dievaluasi</b>.</p>
+<div class="ex"><b>Contoh slide.</b> Goal: menyelesaikan pembayaran dengan aman. Requirement: sistem harus memungkinkan verifikasi status transaksi secara jelas. Requirement ini menjembatani <b>gulf of evaluation</b>.</div>
+<h4>Empat tingkat pada satu kasus</h4>
+<div class="tw"><table><tr><th>Tingkat</th><th>Kasus perbandingan produk (slide)</th></tr><tr><td><b>Goal</b></td><td>Membuat keputusan pembelian yang tepat.</td></tr><tr><td><b>Task</b></td><td>Membandingkan alternatif.</td></tr><tr><td><b>Requirement</b></td><td>Pengguna harus dapat membandingkan produk.</td></tr><tr><td><b>Feature</b></td><td>Tombol "Compare" dengan tabel.</td></tr></table></div>
+<p>Requirement yang sama (membandingkan alternatif) bisa diwujudkan dengan <b>feature yang berbeda</b>: tampilan berdampingan, highlight otomatis, ringkasan naratif, atau visualisasi grafik.</p>
+<div class="key">Requirement <b>membuka ruang kemungkinan</b>. Feature <b>memilih satu realisasi</b>. Feature dapat berubah meskipun requirement tetap.</div>
+<h4>Requirement berakar pada goal</h4>
+<p>Setiap requirement harus menjawab: <b>goal siapa yang sedang didukung?</b> Tanpa goal, requirement menjadi <b>spekulatif</b>.</p>
+<div class="ex"><b>Contoh slide.</b> Goal: melacak status pengiriman. Requirement: sistem menyediakan status yang dapat dipahami dan diperbarui konsisten.</div>
+<p><b>Goal memberi arah, requirement memberi dukungan struktural.</b></p>
+<p class="small muted">Gambar di slide 6 menunjukkan siklus desain interaksi: discovering requirements, designing alternatives, prototyping, evaluating, lalu final product.</p>
+</div></details>
+
+<details class="topic" id="r-jenis"><summary><h3>Enam jenis requirement</h3><span class="badge">Wajib hafal</span><span class="src">03a · slide 9 sampai 11</span></summary><div class="body">
+<p>Requirement bersifat <b>berlapis</b>: merepresentasikan pemahaman tentang <b>manusia, sistem, dan konteks</b>. Bukan hanya fungsi.</p>
+<div class="tw"><table><tr><th>Jenis</th><th>Rumusan slide</th><th>Contoh (dari saya) pada aplikasi ojek online</th></tr>
+<tr><td><b>Functional requirements</b></td><td>Sistem mampu mendukung task.</td><td>Sistem harus memungkinkan pengguna memesan kendaraan.</td></tr>
+<tr><td><b>Data requirements</b></td><td>Informasi tersedia untuk pengambilan keputusan.</td><td>Sistem harus menyediakan estimasi tarif dan waktu tiba sebelum pengguna memesan.</td></tr>
+<tr><td><b>User characteristics requirements</b></td><td>Selaras dengan kemampuan dan mental model pengguna.</td><td>Sistem harus bisa dipakai pengguna yang baru pertama kali memakai aplikasi pemesanan.</td></tr>
+<tr><td><b>Context-of-use requirements</b></td><td>Respons terhadap lingkungan fisik, sosial, teknis, organisasi.</td><td>Sistem harus bisa dioperasikan dengan satu tangan saat pengguna berdiri di pinggir jalan.</td></tr>
+<tr><td><b>Usability goals</b></td><td>Efektivitas, efisiensi, error rate.</td><td>Pemesanan selesai dalam waktu singkat dengan tingkat salah pilih titik jemput yang rendah.</td></tr>
+<tr><td><b>UX goals</b></td><td>Trust, confidence, engagement.</td><td>Pengguna merasa yakin pengemudi benar-benar akan datang.</td></tr></table></div>
+<div class="key">Kalimat slide: <b>requirement adalah model konseptual kebutuhan interaksi.</b></div>
+<div data-pick="jenisreq"></div>
+</div></details>
+
+<details class="topic" id="r-konteks" open><summary><h3>Context of use sebagai constraint</h3><span class="badge">Wajib paham</span><span class="src">03a · slide 17, 18</span></summary><div class="body">
+<p>Konteks bersifat <b>multidimensional</b>. Empat dimensi yang disebut slide:</p>
+<div class="widget sw"><div class="wt">Empat dimensi konteks (klik)</div><div class="cards"><button data-k="f"><b>Fisik</b></button><button data-k="s"><b>Sosial</b></button><button data-k="t"><b>Teknis</b></button><button data-k="o"><b>Organisasi</b></button></div>
+<div class="msg" data-pane="f"><b>Fisik.</b> Berdebu? Bising? Getaran? Lampu? Panas?<br><span class="muted">Contoh dari saya: kasir di pasar yang terik butuh layar yang tetap terbaca di bawah sinar matahari.</span></div>
+<div class="msg" data-pane="s"><b>Sosial.</b> Berbagi data, kolaborasi, sinkron, privasi.<br><span class="muted">Contoh dari saya: memesan obat di depan orang lain, sehingga nama obat tidak boleh tampil besar di layar.</span></div>
+<div class="msg" data-pane="t"><b>Teknis.</b> Pada teknologi apa sistem akan dijalankan, atau harus kompatibel dengan apa?<br><span class="muted">Contoh dari saya: harus berjalan di ponsel lama dengan koneksi lambat.</span></div>
+<div class="msg" data-pane="o"><b>Organisasi.</b> Dukungan pengguna, struktur dan infrastruktur komunikasi, ketersediaan pelatihan.<br><span class="muted">Contoh dari saya: tidak ada pelatihan untuk petugas baru, sehingga sistem harus bisa dipelajari sendiri.</span></div></div>
+<div class="key" style="text-align:center;font-size:1.05rem"><span class="mono">Requirement = f(Goal, Context)</span></div>
+<div class="ex"><b>Contoh slide.</b> Goal: dokter mengakses data pasien.<ul><li>Di <b>ruang operasi</b>: harus cepat dan minim distraksi.</li><li>Di <b>ruang administrasi</b>: harus detail dengan dokumentasi lengkap.</li></ul><b>Goal sama, requirement berbeda.</b></div>
+<div class="widget" id="wCtx"><div class="wt">Mesin requirement: pilih goal dan konteks</div><div class="ctl"><label class="small">Goal <select id="cxG"></select></label><label class="small">Konteks <select id="cxC"></select></label></div><div class="msg" id="cxOut"></div><p class="small muted">Contoh-contoh di kotak ini dari saya, untuk melatih pola pikir Requirement = f(Goal, Context).</p></div>
+</div></details>
+
+<details class="topic" id="r-ecom"><summary><h3>Studi kasus: e-commerce Indonesia vs Belanda</h3><span class="badge">Sering diuji</span><span class="src">03a · slide 19 sampai 22</span></summary><div class="body">
+<p><b>Goal sama:</b> pembeli ingin membeli produk dengan aman.</p>
+<div class="tw"><table><tr><th></th><th>Indonesia (contoh: Tokopedia)</th><th>Belanda (contoh: Bol.com)</th></tr>
+<tr><td><b>Yang tampil di UI</b></td><td><b>Escrow</b> dikomunikasikan secara eksplisit: UI menyampaikan bahwa dana baru ditransfer ke penjual setelah pembeli mengonfirmasi penerimaan paket.</td><td>Fokus pada prosedur <b>retur dan refund</b>. Pembeli tidak diberi tahu mekanisme kapan uang ditransfer ke penjual.</td></tr>
+<tr><td><b>Requirement</b></td><td>Sistem harus <b>mengkomunikasikan mekanisme perlindungan transaksi</b>.</td><td>Sistem harus <b>menyediakan prosedur pengembalian yang jelas</b>.</td></tr>
+<tr><td><b>Trust dibangun melalui</b></td><td><b>Transparansi</b></td><td><b>Kejelasan prosedural</b></td></tr>
+<tr><td><b>Konteksnya</b></td><td>Marketplace dengan banyak penjual independen. Persepsi risiko transaksi relatif lebih tinggi. Platform berperan sebagai mediator escrow.</td><td>Sistem hukum yang kuat. Regulasi perlindungan konsumen. Reputasi merek yang mapan.</td></tr></table></div>
+<div class="key"><b>Moral cerita.</b> Requirement tertanam dalam <b>ekosistem sosio-teknis</b>. Analisisnya meliputi: goal manusia, struktur interaksi, dan kondisi lingkungan yang membentuk ekspektasi dan risiko.</div>
+<div class="mcq" data-s><p>Sebuah marketplace Indonesia ingin ekspansi ke Belanda dan berencana memindahkan seluruh tampilan escrow apa adanya. Menurut kerangka slide, apa tanggapan yang paling tepat?</p><div class="opts col"><button data-why="Goal pembelinya sama di kedua negara: membeli dengan aman. Yang berbeda adalah konteksnya.">Tidak perlu, karena goal pembeli di Belanda berbeda</button><button data-ok>Perlu diperiksa dulu, karena requirement adalah fungsi dari goal dan konteks, dan konteks Belanda membangun trust dengan cara lain</button><button data-why="Ini langsung melompat ke feature. Belum ada dasar bahwa pembeli di sana membutuhkannya.">Pindahkan saja dan tambahkan fitur retur supaya lengkap</button></div><div class="why" hidden>Goal sama, konteks berbeda, maka requirement bisa berbeda. Apakah pembeli Belanda butuh penjelasan escrow masih merupakan isu riset, belum isu desain.</div></div>
+</div></details>
+
+<details class="topic" id="r-isu"><summary><h3>Isu riset vs isu desain</h3><span class="badge">Sering diuji</span><span class="src">03a · slide 24, 25</span></summary><div class="body">
+<div class="g2"><div class="box"><h4>Isu riset</h4>"Apakah <b>pemahaman</b> kita benar?"<br><span class="small">Problem space, diperdalam melalui <b>riset</b>.</span></div><div class="box y"><h4>Isu desain</h4>"Bagaimana <b>solusi terbaik</b> diwujudkan?"<br><span class="small">Solution space, dieksplorasi melalui <b>desain</b>.</span></div></div>
+<div class="ex"><b>Contoh slide:</b> "Perlukah bol.com menampilkan escrow?"<ul><li>Tahap awal → <b>isu riset</b> (kita belum tahu apakah pembeli butuh).</li><li>Setelah validasi → <b>isu desain</b> (tinggal memutuskan cara menampilkannya).</li></ul></div>
+<div class="note">Satu pertanyaan yang sama bisa <b>berpindah</b> dari isu riset ke isu desain. Yang menentukan adalah apakah pemahamannya sudah divalidasi dengan data.</div>
+<div data-pick="isu"></div>
+</div></details>
+
+<details class="topic" id="r-riset"><summary><h3>User research dan data gathering</h3><span class="badge">Sering diuji</span><span class="src">03a · slide 27 sampai 31</span></summary><div class="body">
+<p><b>User research</b> membantu menempatkan manusia sebagai pusat dari proses desain dan produk. Tiga perannya di slide: <b>inspire</b> design, <b>evaluate</b> solutions, <b>measure</b> impact.</p>
+<h4>Kapan dilakukan? Tergantung alasannya</h4>
+<div class="g3"><div class="box"><h4>Relevan</h4>Riset untuk memastikan desain benar-benar relevan.</div><div class="box"><h4>Mudah dan menyenangkan</h4>Riset untuk memastikan desain menyenangkan dan mudah digunakan.</div><div class="box"><h4>Dampak</h4>Riset untuk memahami pengembalian investasi (ROI) dari desain UX.</div></div>
+<p class="small muted">Di gambar slide ketiganya diletakkan sepanjang garis waktu: ideation atau concept development, development, lalu release.</p>
+<h4>Peta metode riset (gambar NN/g di slide)</h4>
+<div class="tw"><table><tr><th>Sumbu</th><th>Ujung pertama</th><th>Ujung kedua</th></tr><tr><td>Tegak</td><td><b>Behavioral:</b> apa yang <i>dilakukan</i> orang. Contoh: eyetracking, clickstream atau analytics, A/B testing, usability testing.</td><td><b>Attitudinal:</b> apa yang <i>dikatakan</i> orang. Contoh: interview, focus group, survei.</td></tr><tr><td>Datar</td><td><b>Qualitative (direct):</b> contoh field studies, interview.</td><td><b>Quantitative (indirect):</b> contoh survei, analytics, A/B testing.</td></tr></table></div>
+<h4>Lima prinsip data gathering</h4>
+<div class="flow"><span>Pertanyaan riset jelas</span><span>Partisipan relevan</span><span>Metode sesuai</span><span>Etika dijaga</span><span class="y">Triangulasi</span></div>
+<div class="key"><b>Requirement adalah inferensi</b>, jadi harus dapat <b>ditelusuri ke data</b>. Bukan hanya intuisi atau asumsi.</div>
+<h4>Metode</h4>
+<div class="tw"><table><tr><th>Metode</th><th>Catatan</th></tr><tr><td><b>Wawancara</b></td><td>Structured (pertanyaan dan urutan tetap), semi-structured (ada panduan, boleh menggali), unstructured (terbuka mengikuti percakapan). <span class="muted small">Penjelasan dalam kurung dari saya.</span></td></tr><tr><td><b>Observasi</b></td><td>Mengamati orang saat beraktivitas.</td></tr><tr><td><b>Kuesioner</b></td><td>Banyak responden sekaligus.</td></tr><tr><td><b>Focus group</b></td><td>Diskusi kelompok terpandu.</td></tr><tr><td><b>Diary study</b></td><td>Partisipan mencatat pengalamannya selama suatu periode.</td></tr><tr><td><b>Log &amp; analytics</b></td><td>Data pemakaian yang direkam sistem.</td></tr></table></div>
+<p><b>Output:</b> goal yang lebih akurat dan requirement yang tervalidasi.</p>
+<div class="note"><b>Triangulasi</b> (penjelasan dari saya): memeriksa satu temuan dengan lebih dari satu sumber atau metode. Misalnya keluhan di wawancara dicek dengan data log.</div>
+</div></details>
+
+<details class="topic" id="r-take"><summary><h3>Takeaway materi 03a</h3><span class="badge">Rangkuman</span><span class="src">03a · slide 33</span></summary><div class="body">
+<ul><li>Requirement dan feature berada pada <b>level berbeda</b>.</li><li>Requirement berakar pada <b>goal</b> dan <b>context</b>.</li><li>Requirement <b>divalidasi melalui data</b>.</li><li>Isu riset dan isu desain harus <b>dibedakan</b>.</li></ul>
+<p>Pertanyaan berikutnya: bagaimana requirement direpresentasikan? Jawabannya di tab 03b: scenario dan use case.</p>
+</div></details>
+</section>
+<section class="panel" id="m3b">
+<div class="intro"><h2>03b · Scenario dan Use Case</h2>
+<p class="lead">Dua artefak untuk "menghidupkan" requirement. Scenario memberi makna lewat cerita, use case memberi struktur lewat langkah aktor dan sistem.</p><div class="toc"></div></div>
+
+<details class="topic" id="s-hidup"><summary><h3>Mengapa requirement perlu "dihidupkan"</h3><span class="badge">Konsep dasar</span><span class="src">03b · slide 3 sampai 7</span></summary><div class="body">
+<p>Dari materi 03a kita sudah memastikan: requirement ≠ feature, requirement berakar pada goal, dibentuk oleh context of use, dan divalidasi melalui data. <b>Secara konseptual fondasinya kokoh. Secara representasional belum cukup.</b></p>
+<div class="ex"><b>Daftar requirement yang tepat tetapi datar:</b><ul><li>Sistem harus memungkinkan pengguna memesan transportasi.</li><li>Sistem harus menampilkan estimasi waktu kedatangan.</li><li>Sistem harus memungkinkan pembayaran non-tunai.</li></ul>Strukturnya benar, level abstraksinya tepat, tidak mencampur requirement dan feature. Tetapi...</div>
+<div class="g2"><div class="box r"><h4>Kelemahan daftar seperti itu</h4><ul><li>Bersifat abstrak.</li><li>Tidak menghadirkan pengguna konkret.</li><li>Tidak memperlihatkan tekanan fisik atau sosial.</li><li>Mudah ditafsirkan berbeda oleh stakeholder.</li></ul>Masih merepresentasikan <b>kebutuhan</b>, belum <b>pengalaman</b>.</div><div class="box g"><h4>Menghidupkan requirement berarti</h4><ul><li>Menghadirkan pengguna secara konkret.</li><li>Memperlihatkan konteks fisik dan sosial.</li><li>Mengaitkan goal dengan situasi nyata.</li><li>Membuat konsekuensi interaksi dapat dibayangkan.</li></ul></div></div>
+<p>Kita tidak hanya ingin tahu "apa yang harus dilakukan sistem?", tetapi juga: dalam situasi apa interaksi terjadi, goal siapa yang sedang dikejar, dan apa konsekuensinya jika gagal.</p>
+<div class="key">Dua artefak utama untuk itu: <b>scenario</b> dan <b>use case</b>.</div>
+</div></details>
+
+<details class="topic" id="s-scen" open><summary><h3>Scenario</h3><span class="badge">Wajib paham</span><span class="src">03b · slide 9 sampai 11, 16</span></summary><div class="body">
+<p><b>Scenario</b> adalah <b>narasi informal</b> tentang seseorang menggunakan sistem dalam situasi nyata.</p>
+<div class="g3"><div class="box">Berbentuk <b>cerita</b>.</div><div class="box">Menghadirkan <b>manusia</b>, bukan sistem.</div><div class="box">Menampilkan <b>situasi</b>, bukan spesifikasi.</div></div>
+<p>Scenario membawa requirement kembali ke kehidupan sehari-hari.</p>
+<h4>Fungsi</h4>
+<ul><li>Memperdalam problem space.</li><li>Membantu evaluasi konseptual desain.</li><li>Mengungkap kebutuhan tersembunyi.</li></ul>
+<p>Sifatnya <b>eksploratif</b>: memperluas pemahaman sebelum struktur diformalkan.</p>
+<h4>Struktur konseptual: empat unsur</h4>
+<div class="flow"><span>Goal pengguna</span><span>Task yang dilakukan</span><span>Action konkret</span><span class="y">Context of use</span></div>
+<div class="key">Tanpa struktur ini scenario menjadi <b>anekdot</b>. Dengan struktur ini ia menjadi <b>alat analitis</b>.</div>
+<div class="widget stp"><div class="wt">Bedah scenario Rina dari slide (klik Lanjut)</div>
+<div class="ex nogl" style="margin-top:0"><i>"<span data-on="1">Rina keluar kantor pukul 18.30 saat hujan deras.</span> <span data-on="1">Anaknya sedang sakit di rumah.</span> <span data-on="2,3">Ia membuka aplikasi ride-hailing</span> <span data-on="1,3">dengan satu tangan karena tangan lain memegang payung.</span> <span data-on="4">Ia ingin melihat estimasi waktu kedatangan yang akurat.</span>"</i></div>
+<div class="msg" data-step><b>Context of use.</b> Pukul 18.30, hujan deras, satu tangan memegang payung, anak sakit di rumah. Ini konteks fisik (hujan, satu tangan) dan sosial atau emosional (anak sakit, ingin cepat pulang).</div>
+<div class="msg" data-step><b>Task.</b> Memesan kendaraan lewat aplikasi ride-hailing.</div>
+<div class="msg" data-step><b>Action.</b> Membuka aplikasi dan mengoperasikannya dengan satu tangan.</div>
+<div class="msg" data-step><b>Goal.</b> Di cerita tertulis ia ingin melihat estimasi waktu kedatangan yang akurat. Goal yang lebih dalam (dari user story di slide berikutnya): bisa memperkirakan kapan sampai di rumah untuk merawat anaknya.</div>
+<div class="msg" data-step><b>Implikasi desain yang muncul (slide).</b> Keterbacaan, ukuran kontrol, kecepatan respons, kejelasan estimasi. Requirement menjadi bermakna karena konteksnya jelas.</div>
+</div>
+</div></details>
+
+<details class="topic" id="s-persona"><summary><h3>Persona</h3><span class="badge">Sering diuji</span><span class="src">03b · slide 12 sampai 15</span></summary><div class="body">
+<p><b>Persona</b> adalah cara untuk <b>memodelkan, meringkas, dan mengkomunikasikan riset</b> tentang orang-orang yang telah diamati atau diteliti.</p>
+<ul><li>Deskripsi yang kaya tentang <b>pengguna tipikal</b>, <b>bukan orang tertentu</b>.</li><li>Mewakili sebagian besar orang di dunia nyata.</li><li>Memungkinkan desainer fokus pada kelompok karakter yang mudah dikelola dan diingat, alih-alih ribuan individu.</li><li>Membantu membuat desain berbeda untuk jenis orang berbeda, dan mendesain untuk seseorang yang <b>spesifik</b>, bukan untuk semua orang secara umum.</li></ul>
+<h4>Karakteristik</h4>
+<ul><li>Mengumpulkan serangkaian karakteristik pengguna (profil pengguna).</li><li><b>Disintesis dari orang-orang nyata</b> berdasarkan riset pengguna.</li><li>Dikembangkan dalam <b>jumlah kecil</b>, masing-masing dengan satu karakteristik utama.</li><li>Dihidupkan dengan nama, karakteristik, tujuan, dan latar belakang pribadi yang relevan dengan produk.</li><li>Persona yang baik membantu pengambilan keputusan desain dan mengingatkan tim siapa yang akan memakai produk.</li></ul>
+<p class="small muted">Contoh di slide: persona "Family traveler" dengan foto, goals, frustrations, bio, personality, motivation, dan favourite destinations.</p>
+<h4>Lima langkah membuat persona</h4>
+<div class="flow"><span>1. Wawancarai atau amati cukup banyak orang</span><b>→</b><span>2. Temukan pola dari tanggapan</span><b>→</b><span>3. Buat archetypical models</span><b>→</b><span>4. Ambil pemahaman tentang pengguna</span><b>→</b><span class="y">5. Bagikan ke anggota tim</span></div>
+<div class="warn small"><b>Jebakan.</b> Persona bukan orang sungguhan dan bukan karangan bebas. Ia tokoh rekaan yang <b>disusun dari data riset</b> orang nyata.</div>
+</div></details>
+
+<details class="topic" id="s-story"><summary><h3>User story sebagai scenario minimal</h3><span class="badge">Implementasi</span><span class="src">03b · slide 17, 18</span></summary><div class="body">
+<p>Elemen user story: <b>Who, What, Why</b>.</p>
+<pre>As a [role],
+I want [goal],
+so that [reason/value].</pre>
+<div class="ex"><b>Contoh Rina dalam bentuk user story:</b><br><i>As a</i> commuter and parent, <i>I want</i> to see an accurate arrival time for my ride, <i>so that</i> I can estimate when I will reach home and take care of my child.</div>
+<div class="warn">User story <b>kehilangan konteks, situasi, dan berbagai constraint</b>: hujan, interaksi dengan satu tangan karena memegang payung, dan lainnya. Itulah sebabnya ia disebut scenario <b>minimal</b>.</div>
+<div class="ex"><b>Dua contoh lain di slide:</b><br><i>As a</i> traveler, <i>I want</i> to save my favorite airline for all my flights <i>so that</i> I will be able to collect air miles.<br><i>As a</i> travel agent, <i>I want</i> my special discount rates to be displayed to me <i>so that</i> I can offer my clients competitive rates.</div>
+<div class="widget" id="wStory"><div class="wt">Perakit user story</div><div class="ctl"><label class="small">Who <select id="usW"></select></label><label class="small">What <select id="usA"></select></label><label class="small">Why <select id="usY"></select></label></div><div class="msg" id="usOut"></div></div>
+</div></details>
+
+<details class="topic" id="s-uc" open><summary><h3>Use case</h3><span class="badge">Wajib paham</span><span class="src">03b · slide 20 sampai 26</span></summary><div class="body">
+<p>Jika scenario berangkat dari <b>situasi manusia</b>, use case berangkat dari <b>struktur interaksi</b>.</p>
+<p><b>Use case</b> adalah deskripsi <b>langkah demi langkah</b> antara <b>aktor</b> dan <b>sistem</b> untuk mencapai goal. Tetap berpusat pada goal, mulai memformalkan respons sistem, dan <b>mendekati batas solution space</b>.</p>
+<h4>Enam bagian use case</h4>
+<div class="widget sw"><div class="wt">Struktur use case (klik)</div><div class="cards"><button data-k="1"><b>1. Actor</b></button><button data-k="2"><b>2. Goal</b></button><button data-k="3"><b>3. Preconditions</b></button><button data-k="4"><b>4. Main success scenario</b></button><button data-k="5"><b>5. Alternative flows</b></button><button data-k="6"><b>6. Postconditions</b></button></div>
+<div class="msg" data-pane="1"><b>Actor.</b> Pihak yang berinteraksi dengan sistem. <span class="muted">Contoh dari saya untuk pemesanan ojek: Penumpang.</span></div>
+<div class="msg" data-pane="2"><b>Goal.</b> Hasil yang ingin dicapai aktor. <span class="muted">Contoh dari saya: mendapat kendaraan ke tujuan.</span></div>
+<div class="msg" data-pane="3"><b>Preconditions.</b> Hal yang harus sudah benar sebelum use case dimulai. <span class="muted">Contoh dari saya: penumpang sudah login dan lokasi aktif.</span></div>
+<div class="msg" data-pane="4"><b>Main success scenario.</b> Urutan langkah saat semuanya berjalan lancar. <span class="muted">Contoh slide: user enters destination, system validates destination, system calculates fare estimate, user confirms booking, system sends request.</span></div>
+<div class="msg" data-pane="5"><b>Alternative flows.</b> Cabang ketika ada yang tidak sesuai. <span class="muted">Contoh slide: if no driver available, system notifies user.</span></div>
+<div class="msg" data-pane="6"><b>Postconditions.</b> Keadaan sistem setelah use case selesai. <span class="muted">Contoh dari saya: pesanan tercatat dan pengemudi ditugaskan.</span></div></div>
+<p>Use case menjawab tiga pertanyaan: <b>urutan interaksi</b> seperti apa, <b>respons sistem</b> apa, dan <b>apa yang terjadi jika gagal</b>.</p>
+<h4>Dua gaya penulisan</h4>
+<div class="tw"><table><tr><th></th><th>Essential use case</th><th>Fully-dressed use case</th></tr>
+<tr><td><b>Fokus</b></td><td>Niat pengguna dan tanggung jawab sistem.</td><td>Lebih rinci dan operasional.</td></tr>
+<tr><td><b>Sifat</b></td><td>Abstrak, tetapi terstruktur.</td><td>Tanggung jawab sistem menjadi eksplisit.</td></tr>
+<tr><td><b>Contoh ride-hailing</b></td><td>User requests ride.<br>System shows available drivers.<br>User confirms selection.<br>System dispatches driver.</td><td>1. User enters destination.<br>2. System validates destination.<br>3. System calculates fare estimate.<br>4. User confirms booking.<br>5. System sends request.<br>6. If no driver available → system notifies user.</td></tr></table></div>
+<h4>Contoh Travel Organizer: essential use case "RetrieveVisa"</h4>
+<div class="tw"><table><tr><th>User intention</th><th>System responsibility</th></tr><tr><td>Find visa requirements</td><td>Request destination and nationality</td></tr><tr><td>Supply required information</td><td>Obtain appropriate visa info</td></tr><tr><td>Obtain copy of visa info</td><td>Offer info in different formats</td></tr><tr><td>Choose suitable format</td><td>Provide info in chosen format</td></tr></table></div>
+<h4>Contoh yang sama sebagai fully-dressed use case</h4>
+<div class="widget stp"><div class="wt">Sembilan langkah utama (klik Lanjut)</div>
+<div class="msg" data-step><b>1.</b> The product asks for the name of the destination country. <span class="muted">(sistem)</span></div>
+<div class="msg" data-step><b>2.</b> The user provides the country's name. <span class="muted">(aktor)</span></div>
+<div class="msg" data-step><b>3.</b> The product checks that the country is valid. <span class="muted">(sistem)</span></div>
+<div class="msg" data-step><b>4.</b> The product asks the user for their nationality. <span class="muted">(sistem)</span><br><span class="small">Alternatif 4: jika nama negara tidak valid → 4.1 sistem memberi pesan error, 4.2 kembali ke langkah 1.</span></div>
+<div class="msg" data-step><b>5.</b> The user provides their nationality. <span class="muted">(aktor)</span></div>
+<div class="msg" data-step><b>6.</b> The product checks the visa requirements of that country for a passport holder of the user's nationality. <span class="muted">(sistem)</span><br><span class="small">Alternatif 6: jika kewarganegaraan tidak valid → 6.1 pesan error, 6.2 kembali ke langkah 4.</span></div>
+<div class="msg" data-step><b>7.</b> The product provides the visa requirements. <span class="muted">(sistem)</span><br><span class="small">Alternatif 7: jika informasi visa tidak ditemukan → 7.1 pesan yang sesuai, 7.2 kembali ke langkah 1.</span></div>
+<div class="msg" data-step><b>8.</b> The product asks whether the user wants to share the visa requirements on social media. <span class="muted">(sistem)</span></div>
+<div class="msg" data-step><b>9.</b> The user provides appropriate social media information. <span class="muted">(aktor)</span></div>
+</div>
+<div class="note small"><b>Cara membaca alur alternatif.</b> Nomor alternatif menunjuk langkah utama tempat cabang itu terjadi. "4. If the country name is invalid" berarti pemeriksaan di langkah 3 gagal, sehingga langkah 4 diganti 4.1 dan 4.2.</div>
+<h4>Fungsi use case</h4>
+<ul><li>Memformalkan interaksi.</li><li>Menyelaraskan tim desain dan developer.</li><li>Menguji kelengkapan requirement.</li><li>Mengidentifikasi titik kegagalan.</li></ul>
+<p>Use case bersifat <b>preskriptif</b> dan memastikan interaksi berjalan konsisten.</p>
+</div></details>
+
+<details class="topic" id="s-vs" open><summary><h3>Scenario vs use case</h3><span class="badge">Wajib hafal</span><span class="src">03b · slide 27 sampai 29</span></summary><div class="body">
+<div class="tw"><table><tr><th>Dimensi</th><th>Scenario</th><th>Use case</th></tr>
+<tr><td>Bentuk representasi</td><td>Naratif. Menghadirkan konteks dan makna.</td><td>Struktural. Langkah dan respons dapat ditelusuri.</td></tr>
+<tr><td>Fokus utama</td><td>Kontekstual</td><td>Fungsional</td></tr>
+<tr><td>Orientasi</td><td>Problem space</td><td>Struktur interaksi</td></tr>
+<tr><td>Tujuan konseptual</td><td>Mengeksplorasi realitas penggunaan</td><td>Memformalkan respons sistem</td></tr>
+<tr><td>Peran dalam desain</td><td>Memberi makna</td><td>Memberi struktur</td></tr>
+<tr><td>Sifat analitis</td><td>Eksploratif</td><td>Preskriptif</td></tr>
+<tr><td>Fungsi dalam proses</td><td>Memperdalam pemahaman</td><td>Memastikan konsistensi</td></tr></table></div>
+<div class="g2"><div class="box r">Tanpa scenario → use case bisa <b>kering</b> dan terlepas dari konteks.</div><div class="box r">Tanpa use case → scenario bisa berhenti pada <b>narasi tanpa struktur operasional</b>.</div></div>
+<div class="key">Scenario <b>memperdalam</b>. Use case <b>mengorganisasi</b>.</div>
+<h4>Kapan memakai yang mana</h4>
+<div class="g2"><div class="box"><h4>Gunakan scenario ketika</h4><ul><li>Problem space masih dieksplorasi.</li><li>Requirement belum sepenuhnya diyakini.</li><li>Konteks sosial dan emosional perlu dipahami.</li><li>Diskusi lintas stakeholder diperlukan.</li></ul>Scenario memperluas pemahaman.</div><div class="box"><h4>Gunakan use case ketika</h4><ul><li>Interaksi perlu diformalisasi.</li><li>Alur perlu diuji kelengkapannya.</li><li>Tanggung jawab sistem perlu eksplisit.</li><li>Komunikasi teknis diperlukan.</li></ul>Use case mengkonsolidasikan struktur interaksi.</div></div>
+<div data-pick="scuc"></div>
+</div></details>
+
+<details class="topic" id="s-take"><summary><h3>Takeaway materi 03b</h3><span class="badge">Rangkuman</span><span class="src">03b · slide 31</span></summary><div class="body">
+<p>Tiga kebiasaan berpikir yang dibentuk:</p>
+<div class="flow"><span>Requirement ≠ Feature</span><span>Problem space ≠ Solution space</span><span class="y">Memahami masalah ≠ Merancang solusi</span></div>
+<p>Scenario memperdalam pemahaman, use case menyusun struktur interaksi.</p>
+<div class="key">Seperti desain perangkat lunak yang dimulai dari pemahaman persoalan, bukan dari menulis kode: <b>desain interaksi dimulai dari pemahaman yang hidup, bukan dari membuat wireframe.</b></div>
+</div></details>
+</section>
+<section class="panel" id="m3c">
+<div class="intro"><h2>03c · Aspek Kognitif</h2>
+<p class="lead">Bagaimana manusia berpikir, mengingat, belajar, dan memproses informasi saat memakai teknologi, dan apa akibatnya bagi desain. Enam proses kognitif, masing-masing dengan implikasi desain.</p><div class="toc"></div></div>
+
+<details class="topic" id="c-apa"><summary><h3>Apa itu kognisi, dan enam proses kognitif</h3><span class="badge">Konsep dasar</span><span class="src">03c · slide 2 sampai 4</span></summary><div class="body">
+<p><b>Aspek kognitif</b> dalam IMK berkaitan dengan bagaimana manusia <b>berpikir, mengingat, belajar, dan memproses informasi</b> saat menggunakan teknologi.</p>
+<div class="key"><b>Tujuan utama:</b> menyesuaikan antarmuka sistem dengan <b>kemampuan serta keterbatasan otak manusia</b>, sehingga aplikasi terasa mudah, intuitif, dan tidak membuat stres.</div>
+<h4>Dua cara mengelompokkan kognisi</h4>
+<div class="g2"><div class="box"><h4>Norman (1993)</h4>Kognisi <b>eksperiensial</b> vs <b>reflektif</b>.</div><div class="box"><h4>Kahneman (2011)</h4>Pemikiran <b>cepat</b> vs <b>lambat</b>.</div></div>
+<div data-pick="cepat"></div>
+<p class="small muted">Slide hanya memberi enam pertanyaan itu tanpa kunci. Jawaban di permainan di atas dari saya, memakai arti umum pemikiran cepat (otomatis, tanpa usaha) dan lambat (butuh usaha dan langkah).</p>
+<h4>Enam proses kognitif</h4>
+<div class="flow"><span class="y">01 Attention</span><span>02 Perception</span><span class="y">03 Memory</span><span>04 Learning</span><span>05 Reading, speaking, listening</span><span>06 Problem-solving, planning, reasoning, decision-making</span></div>
+<ul><li>Banyak proses kognitif <b>saling bergantung</b>. Jarang sekali berdiri sendiri-sendiri.</li><li>Contoh: saat belajar untuk ujian, kamu perlu memperhatikan materi, memahami dan mengenalinya, membacanya, memikirkannya, dan mencoba mengingatnya.</li><li>Yang <b>paling relevan</b> untuk desain interaksi: <b>atensi dan memori</b>.</li></ul>
+</div></details>
+
+<details class="topic" id="c-atensi" open><summary><h3>1. Atensi</h3><span class="badge">Wajib paham</span><span class="src">03c · slide 5 sampai 11</span></summary><div class="body">
+<p><b>Atensi</b> adalah memilih hal-hal yang akan dikonsentrasikan pada suatu titik waktu, dari sekian banyak rangsangan di sekitar kita.</p>
+<ul><li>Memungkinkan fokus pada informasi yang relevan dengan apa yang sedang dilakukan.</li><li>Melibatkan indera audio dan/atau visual.</li><li>Membuat kita bisa selektif, tetapi <b>membatasi</b> kemampuan melacak semua peristiwa.</li></ul>
+<h4>Tiga karakteristik perhatian manusia</h4>
+<div class="g3"><div class="box"><h4>Kapasitas terbatas</h4>Manusia tidak bisa memperhatikan semua hal dalam satu waktu. Terlalu banyak elemen di layar membuat bingung.</div><div class="box"><h4>Selektif</h4>Pengguna menyaring informasi yang dianggap relevan dan mengabaikan gangguan visual, seperti iklan atau animasi berlebihan.</div><div class="box"><h4>Dipengaruhi stimulus</h4>Perhatian mudah ditarik oleh perubahan visual mendadak, warna mencolok, atau suara.</div></div>
+<h4>Tiga jenis atensi</h4>
+<div class="tw"><table><tr><th>Jenis</th><th>Arti</th><th>Contoh slide</th></tr><tr><td><b>Focused attention</b></td><td>Merespons secara spesifik pada satu stimulus visual atau audio.</td><td>Membaca tombol "Submit".</td></tr><tr><td><b>Divided attention</b></td><td>Melakukan dua atau lebih tugas bersamaan. Rawan kesalahan jika antarmuka terlalu rumit.</td><td>Mendengarkan instruksi suara GPS sambil tetap melihat peta.</td></tr><tr><td><b>Selective attention</b></td><td>Memilih satu informasi penting di antara banyak gangguan.</td><td>Mencari pesan penting di tengah notifikasi yang menumpuk.</td></tr></table></div>
+<div data-pick="atensi"></div>
+<h4>Percobaan Tullis (1987)</h4>
+<p>Dua layar daftar hotel dengan <b>kepadatan informasi yang sama (31%)</b> menghasilkan waktu cari yang sangat berbeda: layar 1 rata-rata <b>5,5 detik</b>, layar 2 hanya <b>3,2 detik</b>. Penyebabnya <b>jarak dan pengelompokan</b>: di layar 1 informasi menggumpal, di layar 2 karakter dikelompokkan ke dalam kolom kategori vertikal.</p>
+<div class="widget" id="wCari"><div class="wt">Coba sendiri: cari harga kamar</div><div class="ctl"><button class="btn pri" data-m="1" type="button">Layar menggumpal</button><button class="btn pri" data-m="2" type="button">Layar berkolom</button></div><div id="cariQ" class="small" style="margin:6px 0"></div><div id="cariBox" class="nogl"></div><div class="msg small" id="cariOut">Pilih salah satu layar, lalu klik harga yang diminta secepat mungkin. Waktumu dihitung.</div><p class="small muted">Data hotel di kotak ini karangan saya. Percobaan aslinya memakai daftar hotel di Pennsylvania dan South Carolina.</p></div>
+<h4>Implikasi desain untuk atensi</h4>
+<ul><li><b>Konteks:</b> buat informasi menonjol <b>ketika</b> ia perlu diperhatikan, pada tahap tugas tertentu.</li><li>Tekniknya: warna, pengurutan, spasi, garis bawah, dan animasi.</li><li>Hindari mengacaukan antarmuka dengan terlalu banyak informasi.</li><li>Rancang cara untuk mendukung <b>peralihan</b> yang efektif dan kembali ke antarmuka.</li><li><b>Batasi beban visual (clutter):</b> kurangi teks panjang, ikon berlebih, animasi yang tidak perlu.</li><li><b>Gunakan whitespace</b> di sekitar elemen penting.</li><li><b>Kelompokkan informasi (grouping)</b> yang berkaitan, memakai prinsip kedekatan (proximity).</li></ul>
+</div></details>
+
+<details class="topic" id="c-persepsi"><summary><h3>2. Persepsi</h3><span class="badge">Sering diuji</span><span class="src">03c · slide 12 sampai 16</span></summary><div class="body">
+<p><b>Persepsi</b> adalah bagaimana informasi diperoleh dari dunia dan ditransformasikan menjadi pengalaman. Implikasinya: rancang representasi yang <b>siap dipahami</b>. Teks harus terbaca, ikon harus mudah dibedakan.</p>
+<div class="ex"><b>Percobaan Weller (2004).</b> Orang butuh waktu <b>lebih sedikit</b> untuk menemukan item pada informasi yang dikelompokkan dengan <b>pembatas</b> (border) dibandingkan dengan <b>kontras warna</b>. Ada yang berpendapat terlalu banyak ruang putih di halaman web justru merugikan pencarian. Slide menutupnya dengan pertanyaan terbuka: "Apa setuju?"</div>
+<div class="widget" id="wWarna"><div class="wt">Kombinasi warna: mana yang terbaca?</div><div class="ctl" id="wnBtn"></div><div id="wnBox" style="border-radius:10px;padding:18px;text-align:center;font-size:1.25rem;font-weight:700;border:1px solid var(--line)">Contoh teks antarmuka</div><div class="msg small" id="wnOut"></div></div>
+<h4>Implikasi desain untuk persepsi</h4>
+<ul><li>Ikon harus memungkinkan pengguna <b>membedakan artinya</b> dengan mudah.</li><li><b>Batas dan spasi</b> adalah cara visual yang efektif untuk mengelompokkan informasi.</li><li>Suara harus <b>terdengar</b> dan <b>dapat dibedakan</b>.</li><li>Teliti teknik kontras warna: <b>kuning pada hitam atau biru baik-baik saja</b>, <b>kuning pada hijau atau putih tidak baik</b>.</li><li>Umpan balik <b>haptic</b> (indra peraba) harus digunakan dengan bijaksana.</li></ul>
+</div></details>
+
+<details class="topic" id="c-memori" open><summary><h3>3. Memori</h3><span class="badge">Wajib paham</span><span class="src">03c · slide 17 sampai 26</span></summary><div class="body">
+<p><b>Memori</b> melibatkan mengingat berbagai jenis pengetahuan yang memungkinkan orang bertindak dengan tepat, misalnya mengenali wajah atau mengingat nama.</p>
+<ul><li>Pertama <b>encode</b>, kemudian <b>ambil</b> (retrieve) pengetahuan.</li><li>Kita <b>tidak mengingat semuanya</b>: ada penyaringan dan pemrosesan atas apa yang diperhatikan.</li><li><b>Konteks</b> penting untuk cara kita mengingat (di mana, kapan, bagaimana).</li><li><b>Mengenali jauh lebih baik daripada mengingat.</b></li><li>Orang lebih sedikit mengingat objek yang <b>difoto</b> daripada yang diamati dengan mata telanjang (Henkel, 2014).</li></ul>
+<h4>Pemrosesan dalam memori</h4>
+<div class="flow"><span>Encoding: menentukan informasi mana yang diperhatikan dan bagaimana ditafsirkan</span><b>→</b><span>Makin banyak perhatian</span><b>→</b><span>Makin banyak diproses dan dibandingkan dengan pengetahuan lain</span><b>→</b><span class="y">Makin mungkin diingat</span></div>
+<p class="small">Contoh slide: saat belajar HCI, jauh lebih baik merenungkannya, mengerjakan latihan, berdiskusi, dan menulis catatan daripada hanya membaca, mendengarkan ceramah, atau menonton video secara pasif.</p>
+<h4>Recognition vs recall</h4>
+<div class="tw"><table><tr><th>Antarmuka</th><th>Yang dituntut</th></tr><tr><td><b>Berbasis perintah</b></td><td>Pengguna harus <b>mengingat</b> (recall) satu nama dari kemungkinan ratusan nama.</td></tr><tr><td><b>Grafis</b></td><td>Menyediakan opsi visual (menu, ikon) yang cukup ditelusuri sampai pengguna <b>mengenalinya</b> (recognition).</td></tr><tr><td><b>Browser web</b></td><td>Tab dan daftar riwayat URL mendukung memori pengenalan.</td></tr></table></div>
+<div class="widget" id="wMem"><div class="wt">Coba sendiri: recall dan recognition</div><div id="memBox"></div></div>
+<h4>Masalah klasik "7 ± 2"</h4>
+<p>Teori <b>George Miller (1956)</b>: kapasitas memori langsung manusia sangat terbatas, sekitar <b>7 ± 2</b> item. Teori ini sering diterapkan untuk menentukan berapa banyak opsi yang ditampilkan. Slide lalu bertanya: apakah itu penggunaan teori yang baik?</p>
+<div class="warn"><b>Jawaban slide: belum tentu.</b> Jangan menyimpulkan menu harus 7 opsi, toolbar 7 ikon, atau halaman 7 tab.<ul><li>Orang bisa <b>memindai</b> daftar, tab, dan menu untuk mencari item yang diinginkan.</li><li>Mereka tidak perlu mengingatnya, cukup melihat atau mendengarnya sebentar.</li><li>Jadi antarmuka <b>boleh punya lebih dari sembilan</b> item, misalnya daftar riwayat situs.</li><li>Kadang jumlah kecil justru bagus, misalnya tampilan jam tangan pintar.</li><li>Semuanya <b>tergantung tugas dan layar yang tersedia</b>.</li></ul></div>
+<div class="mcq" data-s><p>Seorang desainer memangkas menu pengaturan dari 12 item menjadi 7 dengan alasan "hukum Miller 7 ± 2". Menurut slide, mengapa alasan itu lemah?</p><div class="opts col"><button data-why="Angka Miller memang 7 plus minus 2. Yang dipersoalkan slide adalah penerapannya, bukan angkanya.">Karena angka yang benar adalah 5 ± 2</button><button data-ok>Karena item menu terlihat di layar dan cukup dipindai, sehingga pengguna tidak perlu mengingatnya</button><button data-why="Slide tidak mengatakan makin banyak makin baik. Jumlahnya tergantung tugas dan layar.">Karena makin banyak item menu selalu makin baik</button></div><div class="why" hidden>7 ± 2 adalah batas memori langsung (recall). Menu adalah soal recognition: pilihannya tampil dan tinggal dikenali. Jumlah yang tepat tergantung tugas dan layar yang tersedia.</div></div>
+<h4>Manajemen informasi personal</h4>
+<ul><li>Masalah yang makin besar: orang menumpuk sangat banyak dokumen, gambar, musik, video, email, lampiran, dan bookmark. Di mana dan bagaimana menyimpannya, lalu mengingat namanya dan tempatnya.</li><li>Memberi nama file dan folder adalah cara paling umum untuk menyandikannya, tetapi sulit diingat saat jumlahnya ribuan.</li><li><b>Bergman dan Whittaker (2016):</b> tiga proses yang saling bergantung: (1) memutuskan objek apa yang <b>disimpan</b>, (2) bagaimana <b>mengaturnya</b> saat menyimpan, (3) strategi apa untuk <b>mengambilnya</b> nanti.</li><li>Pendekatan paling umum: folder dan penamaan. Orang lebih suka <b>memindai</b> antar dan di dalam folder saat mencari.</li><li>Search engine yang pintar membantu dengan menampilkan file yang relevan dari nama parsial atau huruf pertama.</li></ul>
+<h4>Memory load</h4>
+<ul><li>Perbankan online meminta banyak informasi untuk masuk: kode pos, tempat lahir, tanggal penting, sekolah pertama. Ini disebut <b>otentikasi multifaktor (MFA)</b>, muncul karena masalah keamanan yang meningkat.</li><li><b>Pengelola kata sandi</b> (seperti LastPass) hanya butuh satu kata sandi utama, sehingga mengurangi stres dan beban memori.</li><li>Kata sandi bisa punah dengan meluasnya <b>biometrik</b> dan algoritma computer vision.</li></ul>
+<h4>Implikasi desain untuk memori</h4>
+<ul><li>Kurangi beban kognitif: hindari prosedur yang <b>panjang dan rumit</b>.</li><li>Rancang antarmuka yang mengutamakan <b>pengenalan daripada mengingat</b>.</li><li>Beri pengguna berbagai cara <b>melabeli</b> informasi digital supaya mudah dikenali kembali: folder, kategori, warna, penandaan, timestamp.</li></ul>
+</div></details>
+
+<details class="topic" id="c-learn"><summary><h3>4. Learning</h3><span class="badge">Sering diuji</span><span class="src">03c · slide 27, 28</span></summary><div class="body">
+<p><b>Learning</b> berkaitan dengan akumulasi keterampilan dan pengetahuan yang melibatkan memori.</p>
+<div class="g2"><div class="box"><h4>Pembelajaran insidental</h4>Terjadi tanpa niat belajar. Contoh: mengenali wajah orang, apa yang kamu lakukan hari ini.</div><div class="box"><h4>Pembelajaran disengaja (intensional)</h4>Contoh: belajar untuk ujian, belajar memasak. <b>Jauh lebih sulit.</b></div></div>
+<ul><li>Banyak teknologi dikembangkan untuk membantu: multimedia, animasi, VR.</li><li>Orang merasa <b>sulit belajar dengan mengikuti petunjuk di manual</b>. Orang lebih suka <b>belajar sambil melakukan</b>.</li></ul>
+<h4>Implikasi desain</h4>
+<ul><li>Rancang antarmuka yang <b>mendorong eksplorasi</b>.</li><li>Rancang antarmuka yang <b>membatasi dan memandu</b> peserta didik.</li><li>Menghubungkan konsep dan representasi secara <b>dinamis</b> dapat memfasilitasi pembelajaran materi yang kompleks.</li></ul>
+<div class="note small">Dua butir pertama tampak berlawanan tetapi saling melengkapi (penjelasan dari saya): biarkan pengguna mencoba-coba, tetapi beri pagar supaya percobaannya tidak tersesat atau merusak. Ini sejalan dengan undo dan constraint di materi 01a.</div>
+</div></details>
+
+<details class="topic" id="c-baca"><summary><h3>5. Reading, speaking, dan listening</h3><span class="badge">Sering diuji</span><span class="src">03c · slide 29 sampai 31</span></summary><div class="body">
+<p>Kemudahan orang membaca, mendengarkan, atau berbicara berbeda-beda:</p>
+<ul><li>Banyak yang <b>lebih suka mendengarkan</b> daripada membaca.</li><li><b>Membaca bisa lebih cepat</b> daripada berbicara atau mendengarkan.</li><li><b>Mendengarkan butuh lebih sedikit upaya kognitif</b> daripada membaca atau berbicara.</li><li>Penderita <b>disleksia</b> kesulitan memahami dan mengenali kata tertulis.</li></ul>
+<div class="tw"><table><tr><th>Aplikasi</th><th>Cara kerja</th><th>Contoh</th></tr><tr><td>Antarmuka pengguna suara</td><td>Pengguna berinteraksi dengan mengajukan pertanyaan.</td><td>Google Voice, Siri, Alexa</td></tr><tr><td>Sistem keluaran ucapan</td><td>Memakai ucapan yang dihasilkan secara artifisial.</td><td>Text-to-speech untuk tunanetra</td></tr><tr><td>Sistem bahasa alami</td><td>Pengguna mengetik pertanyaan, sistem membalas dengan teks.</td><td>Chatbot</td></tr></table></div>
+<h4>Implikasi desain</h4>
+<ul><li>Menu dan instruksi berbasis ucapan harus <b>singkat</b>.</li><li><b>Tonjolkan intonasi</b> suara ucapan buatan, karena lebih sulit dimengerti daripada suara manusia.</li><li>Beri peluang membuat <b>teks menjadi besar</b> di layar.</li></ul>
+</div></details>
+
+<details class="topic" id="c-ps"><summary><h3>6. Problem-solving, planning, reasoning, decision-making</h3><span class="badge">Sering diuji</span><span class="src">03c · slide 32, 33</span></summary><div class="body">
+<ul><li>Semua proses ini melibatkan <b>kognisi reflektif</b>: memikirkan apa yang harus dilakukan, apa pilihannya, dan konsekuensinya.</li><li>Sering melibatkan <b>proses sadar</b>, diskusi dengan orang lain (atau diri sendiri), dan penggunaan <b>artefak</b> seperti peta, buku, pena, dan kertas.</li><li>Mungkin melibatkan bekerja melalui skenario yang berbeda dan memutuskan pilihan terbaik.</li><li>Menimbang alternatif.</li></ul>
+<h4>Implikasi desain</h4>
+<ul><li>Sediakan halaman <b>informasi dan bantuan</b> yang mudah diakses bagi orang yang ingin lebih memahami cara melakukan suatu aktivitas secara lebih efektif (misalnya pencarian web).</li><li>Gunakan fungsi yang <b>sederhana dan mudah diingat</b> untuk mendukung pengambilan keputusan dan perencanaan.</li></ul>
+</div></details>
+
+<details class="topic" id="c-ring" open><summary><h3>Ringkasan: enam proses dan implikasi desainnya</h3><span class="badge">Rangkuman</span><span class="src">dari saya, merangkum slide 5 sampai 33</span></summary><div class="body">
+<div class="tw"><table><tr><th>Proses</th><th>Inti</th><th>Implikasi desain utama</th></tr>
+<tr><td>Atensi</td><td>Terbatas, selektif, dipengaruhi stimulus</td><td>Tonjolkan yang penting pada saat diperlukan, kurangi clutter, pakai whitespace dan grouping</td></tr>
+<tr><td>Persepsi</td><td>Informasi diubah menjadi pengalaman</td><td>Teks terbaca, ikon mudah dibedakan, batas dan spasi untuk mengelompokkan, kontras warna tepat</td></tr>
+<tr><td>Memori</td><td>Mengenali lebih baik daripada mengingat</td><td>Recognition daripada recall, hindari prosedur panjang, beri cara melabeli informasi</td></tr>
+<tr><td>Learning</td><td>Orang lebih suka belajar sambil melakukan</td><td>Dorong eksplorasi, batasi dan pandu, hubungkan konsep dan representasi secara dinamis</td></tr>
+<tr><td>Reading, speaking, listening</td><td>Tiap orang berbeda kemudahannya</td><td>Instruksi suara singkat, tonjolkan intonasi suara buatan, teks bisa diperbesar</td></tr>
+<tr><td>Problem-solving dkk.</td><td>Kognisi reflektif, proses sadar</td><td>Informasi dan bantuan mudah diakses, fungsi sederhana dan mudah diingat</td></tr></table></div>
+<div data-pick="proses"></div>
+</div></details>
+</section>
+</div></main>
+<footer>Catatan belajar pribadi untuk II3131 Interaksi Manusia Komputer. Isi mengikuti slide kuliah Adi Mulyanto, Fitra Arifiansyah, dan Maya Nabila. Bagian yang bukan dari slide diberi tanda "dari saya". Kalau ada yang berbeda dengan penjelasan dosen, ikuti dosen.</footer>
+<script>
+/* ===== inti bersama: utilitas, popover, glosarium, tab, widget dasar ===== */
+(function () {
+  'use strict';
+  var T = window.T = {};
+  var $ = T.$ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = T.$$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  T.esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); };
+  T.H = function (tag, attrs, html) { var e = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (html != null) e.innerHTML = html; return e; };
+  T.store = { get: function (k, d) { try { var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  T.shuffle = function (a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), t = a[k]; a[k] = a[j]; a[j] = t; } return a; };
+
+  /* ---------- popover ---------- */
+  T.tips = function () {
+    var tip = T.H('div', { class: 'tip', role: 'tooltip' }); tip.hidden = true; document.body.appendChild(tip);
+    var pinned = null, shown = null;
+    function find(t) { return t && t.closest ? t.closest('[data-tip]') : null; }
+    function show(el) {
+      shown = el; tip.innerHTML = el.getAttribute('data-tip'); tip.hidden = false; tip.style.left = '0px'; tip.style.top = '0px';
+      var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, vw = document.documentElement.clientWidth;
+      var x = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, vw - w - 8)), y = r.bottom + 8;
+      if (y + h > window.innerHeight - 8 && r.top - h - 8 > 0) y = r.top - h - 8;
+      tip.style.left = (x + window.pageXOffset) + 'px'; tip.style.top = (y + window.pageYOffset) + 'px';
+      tip.classList.toggle('pinned', pinned === el);
+    }
+    function hide() { tip.hidden = true; shown = null; tip.classList.remove('pinned'); }
+    document.addEventListener('mouseover', function (e) { if (pinned) return; var el = find(e.target); if (el) { if (el !== shown) show(el); } else if (!tip.contains(e.target)) hide(); });
+    document.addEventListener('click', function (e) {
+      if (tip.contains(e.target)) return; var el = find(e.target);
+      if (!el) { pinned = null; hide(); return; }
+      if (pinned === el) { pinned = null; hide(); } else { pinned = el; show(el); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { pinned = null; hide(); } });
+    window.addEventListener('resize', function () { pinned = null; hide(); });
+    T.tipState = function () { return { hidden: tip.hidden, pinned: !!pinned, html: tip.innerHTML }; };
+  };
+
+  /* ---------- glosarium: tandai istilah sekali per blok ---------- */
+  T.gloss = function (blocks) {
+    var G = window.IMK_GLOSS || []; if (!G.length) return;
+    var re0 = function (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+    try {
+      var entries = []; G.forEach(function (g) { g[0].forEach(function (t) { entries.push({ t: t, key: g[0][0], html: '<b>' + g[0][0] + '</b><br>' + g[1] + (g[2] ? '<br><span class="tx">Contoh: ' + g[2] + '</span>' : '') }); }); });
+      entries.sort(function (a, b) { return b.t.length - a.t.length; });
+      var by = {}; entries.forEach(function (e) { by[e.t.toLowerCase()] = e; });
+      var SKIP = 'button,select,label,a,summary,pre,code,svg,th,h2,h3,h4,input,textarea,.gl,.ctl,.wt,.opts,.badge,.src,.cards,.kind,.nogl,[data-tip]';
+      (typeof blocks === 'string' ? $$(blocks) : blocks).forEach(function (body) {
+        var used = {};
+        var mk = function () { var left = entries.filter(function (e) { return !used[e.key]; }); return left.length ? new RegExp('(?<![\\p{L}\\p{N}_/-])(' + left.map(function (e) { return re0(e.t); }).join('|') + ')(?![\\p{L}\\p{N}_*(/-])', 'iu') : null; };
+        var re = mk(), w = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return n.parentElement && n.parentElement.closest(SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } });
+        var nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
+        nodes.forEach(function (node) {
+          var cur = node;
+          while (re && cur && cur.nodeValue.length > 2) {
+            var m = re.exec(cur.nodeValue); if (!m) break; var e = by[m[1].toLowerCase()]; if (!e) break;
+            var mid = cur.splitText(m.index), rest = mid.splitText(m[1].length), sp = document.createElement('span');
+            sp.className = 'gl'; sp.tabIndex = 0; sp.setAttribute('data-tip', e.html); mid.parentNode.replaceChild(sp, mid); sp.appendChild(mid);
+            used[e.key] = 1; re = mk(); cur = rest;
+          }
+        });
+      });
+    } catch (err) { /* browser lama: glosarium dilewati */ }
+  };
+
+  /* ---------- tab ---------- */
+  T.tabs = function (key, onShow) {
+    var nav = $('nav.tabs'), wrap = $('.wrap', nav), btns = $$('button', wrap);
+    function edge() { nav.classList.toggle('more-l', wrap.scrollLeft > 4); nav.classList.toggle('more-r', wrap.scrollLeft + wrap.clientWidth < wrap.scrollWidth - 4); }
+    function show(id, keep) {
+      var b = btns.filter(function (x) { return x.getAttribute('data-tab') === id; })[0]; if (!b) return false;
+      btns.forEach(function (x) { x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      $$('.panel').forEach(function (p) { p.classList.toggle('on', p.id === id); });
+      T.store.set(key, id); wrap.scrollLeft = b.offsetLeft - (wrap.clientWidth - b.offsetWidth) / 2; edge();
+      if (!keep) window.scrollTo(0, 0); if (onShow) onShow(id); T.fit(); return true;
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { show(b.getAttribute('data-tab')); history.replaceState(null, '', '#' + b.getAttribute('data-tab')); }); });
+    wrap.addEventListener('scroll', edge, { passive: true }); window.addEventListener('resize', edge);
+    function hash() {
+      var id = location.hash.slice(1); if (!id) return false; var el = document.getElementById(id); if (!el) return false;
+      if (el.classList.contains('panel')) return show(id);
+      var p = el.closest('.panel'); if (!p) return false; show(p.id, true); if (el.tagName === 'DETAILS') el.open = true;
+      setTimeout(function () { var y = el.getBoundingClientRect().top + window.pageYOffset - 60; window.scrollTo(0, y); }, 60); return true;
+    }
+    window.addEventListener('hashchange', hash);
+    T.showTab = show;
+    if (!hash()) show(T.store.get(key, btns[0].getAttribute('data-tab')), true) || show(btns[0].getAttribute('data-tab'), true);
+  };
+
+  /* ---------- layar kecil: diagram dan tabel bisa digeser ---------- */
+  T.fit = function () {
+    $$('.tw').forEach(function (w) { if (w.clientWidth) w.classList.toggle('ov', w.scrollWidth > w.clientWidth + 2); });
+    if (!window.matchMedia('(max-width:640px)').matches) return;
+    $$('svg[viewBox]').forEach(function (s) {
+      if (s.dataset.mfit || s.closest('button,.tip,nav')) return; var vb = s.viewBox.baseVal, p = s.parentElement;
+      if (!vb || vb.width < 380 || !p || !p.clientWidth) return; s.dataset.mfit = '1';
+      if (p.clientWidth < vb.width * 0.8) { s.style.minWidth = Math.round(vb.width * 0.9) + 'px'; s.style.maxWidth = 'none'; if (p.children.length > 1) { var bx = document.createElement('div'); bx.className = 'sx'; p.insertBefore(bx, s); bx.appendChild(s); } else p.classList.add('sx'); }
+    });
+  };
+
+  /* ---------- widget: kuis kecil di dalam catatan ---------- */
+  T.mcq = function () {
+    $$('.mcq[data-s]').forEach(function (q) {
+      var why = $('.why', q), base = why.innerHTML, bs = $$('.opts button', q);
+      bs.forEach(function (b) {
+        b.type = 'button';
+        b.addEventListener('click', function () {
+          var ok = b.hasAttribute('data-ok'); bs.forEach(function (x) { x.classList.remove('right', 'wrong'); }); b.classList.add(ok ? 'right' : 'wrong');
+          if (ok) bs.forEach(function (x) { if (x !== b) x.disabled = true; });
+          var others = bs.filter(function (x) { return x.getAttribute('data-why'); });
+          why.hidden = false;
+          why.innerHTML = ok ? '<b class="good">Benar.</b> ' + base + (others.length ? '<div style="margin-top:6px"><b>Kenapa pilihan lain salah</b><ul>' + others.map(function (x) { return '<li><b>' + x.innerHTML + '</b><br>' + T.esc(x.getAttribute('data-why')) + '</li>'; }).join('') + '</ul></div>' : '')
+            : '<b class="bad">Belum tepat.</b> ' + (b.getAttribute('data-why') ? '<b>' + b.innerHTML + '</b>: ' + T.esc(b.getAttribute('data-why')) + ' ' : '') + '<span class="muted">Coba pilihan lain.</span>';
+        });
+      });
+    });
+  };
+
+  /* ---------- widget: kartu pilih (klik untuk melihat detail) ---------- */
+  T.sw = function () {
+    $$('.sw').forEach(function (w) {
+      var bs = $$('.cards button, .ctl button[data-k]', w), panes = $$('[data-pane]', w);
+      function show(k) { bs.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-k') === k); }); panes.forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== k; }); T.fit(); }
+      bs.forEach(function (b) { b.type = 'button'; b.addEventListener('click', function () { show(b.getAttribute('data-k')); }); });
+      if (bs.length) show(bs[0].getAttribute('data-k'));
+    });
+  };
+
+  /* ---------- widget: langkah demi langkah ---------- */
+  T.steps = function () {
+    $$('.stp').forEach(function (w) {
+      var items = $$('[data-step]', w), i = 0;
+      var ctl = T.H('div', { class: 'ctl' }), prev = T.H('button', { class: 'btn', type: 'button' }, '‹ Mundur'), next = T.H('button', { class: 'btn pri', type: 'button' }, 'Lanjut ›'), reset = T.H('button', { class: 'btn', type: 'button' }, 'Ulang'), dots = T.H('div', { class: 'dots' });
+      items.forEach(function () { dots.appendChild(T.H('i')); }); [prev, next, reset, dots].forEach(function (x) { ctl.appendChild(x); });
+      var wt = $('.wt', w); if (wt) wt.after(ctl); else w.insertBefore(ctl, w.firstChild);
+      function show() {
+        items.forEach(function (it, k) { it.hidden = k !== i; });
+        $$('[data-on]', w).forEach(function (el) { var on = el.getAttribute('data-on').split(',').indexOf(String(i + 1)) >= 0; el.classList.toggle('lit', on); el.setAttribute('opacity', on ? '1' : '.28'); });
+        prev.disabled = i === 0; next.disabled = i === items.length - 1; $$('i', dots).forEach(function (d, k) { d.classList.toggle('on', k <= i); });
+      }
+      prev.addEventListener('click', function () { if (i > 0) { i--; show(); } }); next.addEventListener('click', function () { if (i < items.length - 1) { i++; show(); } }); reset.addEventListener('click', function () { i = 0; show(); });
+      show();
+    });
+  };
+
+  /* ---------- widget: permainan memilah ---------- */
+  T.picks = function (DATA) {
+    $$('[data-pick]').forEach(function (w) {
+      var d = DATA[w.getAttribute('data-pick')]; if (!d) { w.setAttribute('data-missing', '1'); return; }
+      w.classList.add('widget', 'pick'); var order, i, score;
+      function build() {
+        order = T.shuffle(d.items); i = 0; score = 0;
+        w.innerHTML = '<div class="wt">' + d.t + '</div><div class="small muted">Soal <b class="pi">1</b> dari ' + order.length + ' · benar <b class="ps">0</b></div><div class="bar"><i></i></div><div class="item nogl"></div><div class="opts"></div><div class="msg small" hidden></div><div class="ctl"><button class="btn pri nx" type="button" hidden>Soal berikutnya ›</button><button class="btn rs" type="button">Ulangi dari awal</button></div>';
+        $('.rs', w).addEventListener('click', build); $('.nx', w).addEventListener('click', function () { i++; show(); }); show();
+      }
+      function show() {
+        var msg = $('.msg', w), nx = $('.nx', w), item = $('.item', w), opts = $('.opts', w);
+        $('.bar i', w).style.width = (i / order.length * 100) + '%'; nx.hidden = true; msg.hidden = true;
+        if (i >= order.length) { item.innerHTML = 'Selesai. Skor kamu <b>' + score + ' dari ' + order.length + '</b>. ' + (score === order.length ? 'Sempurna.' : 'Ulangi untuk yang masih salah.'); opts.innerHTML = ''; $('.pi', w).textContent = order.length; return; }
+        var it = order[i]; $('.pi', w).textContent = i + 1; item.innerHTML = it[0]; opts.innerHTML = '';
+        d.b.forEach(function (lab, k) {
+          var b = T.H('button', { type: 'button' }, lab);
+          b.addEventListener('click', function () {
+            if (b.disabled) return; var ok = k === it[1]; if (ok) score++; $('.ps', w).textContent = score;
+            $$('button', opts).forEach(function (x, kk) { x.disabled = true; if (kk === it[1]) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); });
+            msg.hidden = false; msg.innerHTML = (ok ? '<b class="good">Benar.</b> ' : '<b class="bad">Belum tepat.</b> Jawabannya <b>' + d.b[it[1]] + '</b>. ') + it[2]; nx.hidden = false; nx.textContent = i === order.length - 1 ? 'Lihat skor ›' : 'Soal berikutnya ›';
+          });
+          opts.appendChild(b);
+        });
+      }
+      build();
+    });
+  };
+})();
+
+</script>
+<script>
+/* ===== Glosarium IMK: [[istilah, variasi...], arti, contoh] ===== */
+window.IMK_GLOSS = [
+  [["usability"], "Seberapa mudah dan efektif sebuah produk dipakai. Objektif dan berorientasi kinerja.", "Tugas selesai dengan benar, cepat, dan sedikit kesalahan."],
+  [["UX", "user experience", "pengalaman pengguna"], "Keseluruhan pengalaman pengguna: emosi, estetika, nilai pribadi, sebelum, selama, dan sesudah interaksi. Lebih luas daripada usability.", ""],
+  [["affordance", "affordances"], "Hubungan antara sifat benda dan kemampuan pengguna yang menentukan tindakan apa yang mungkin dilakukan.", "Kursi affords diduduki."],
+  [["anti-affordance"], "Sifat benda yang justru mencegah suatu tindakan.", "Kaca menghalangi orang lewat."],
+  [["signifier", "signifiers"], "Sinyal yang memberi tahu di mana dan bagaimana bertindak. Bisa disengaja atau tidak.", "Label, gagang pintu, jalan setapak yang aus."],
+  [["natural mapping"], "Mapping yang memanfaatkan kesesuaian spasial atau budaya, sehingga hubungan kontrol dan efeknya langsung terlihat.", "Tombol pengatur kursi mobil berbentuk kursi."],
+  [["mapping"], "Hubungan antara kontrol dan efeknya.", "Kenop kompor dengan tungkunya."],
+  [["feedback", "umpan balik"], "Respons sistem yang segera dan jelas terhadap aksi pengguna.", "Tombol lift menyala saat ditekan."],
+  [["constraint", "constraints"], "Pembatas aksi yang mungkin, sehingga kesalahan tercegah. Empat jenis: physical, logical, cultural, semantic.", "USB hanya masuk dengan satu arah."],
+  [["conceptual model", "conceptual models", "model konseptual"], "Penjelasan di kepala pengguna tentang cara kerja sesuatu. Dibangun dari system image.", ""],
+  [["system image"], "Apa yang ditampilkan sistem kepada pengguna: antarmuka, label, respons, manual. Satu-satunya yang dilihat pengguna.", ""],
+  [["system model"], "Cara sistem sebenarnya bekerja. Ada di sisi desainer, tidak pernah dilihat pengguna.", ""],
+  [["mental model", "model mental"], "Gambaran pengguna tentang cara kerja sistem. Unik per orang dan terus berubah.", ""],
+  [["Gestalt"], "Prinsip psikologi tentang cara manusia mengelompokkan dan menafsirkan elemen visual: similarity, proximity, closure, continuity, dan lainnya.", ""],
+  [["whitespace"], "Ruang kosong di antara elemen. Meningkatkan keterbacaan dan mengurangi beban kognitif.", ""],
+  [["gulf of execution"], "Jarak antara goal atau task pengguna dan action yang tersedia di sistem. Terasa sebagai 'bagaimana caranya?'.", ""],
+  [["gulf of evaluation"], "Jarak antara perubahan keadaan sistem dan pemahaman pengguna tentang status goal. Terasa sebagai 'apa yang terjadi?'.", ""],
+  [["progressive disclosure"], "Menampilkan pilihan atau informasi sedikit demi sedikit, hanya saat dibutuhkan, supaya pengguna tidak dibanjiri opsi.", "Tombol 'Pengaturan lanjutan' yang membuka opsi tambahan."],
+  [["Human-Centered Design", "HCD"], "Pendekatan desain yang berangkat dari kebutuhan dan kemampuan manusia. Premis: teknologi melayani manusia, bukan sebaliknya.", ""],
+  [["double diamond", "double-diamond"], "Model proses desain dari British Design Council: dua berlian, masing-masing melebar (diverge) lalu menyempit (converge). Berlian pertama mencari masalah yang tepat, berlian kedua mencari solusi yang tepat.", ""],
+  [["diverge"], "Fase melebar: menjelajah banyak kemungkinan.", ""],
+  [["converge"], "Fase menyempit: memilih dan memfokuskan.", ""],
+  [["applied ethnography"], "Mengamati orang di lingkungan alaminya untuk memahami apa yang sebenarnya mereka lakukan.", ""],
+  [["ideation"], "Tahap menghasilkan banyak ide tanpa menghakimi dulu.", ""],
+  [["low-fidelity"], "Prototipe kasar dan murah: sketsa, kardus, role-play. Tujuannya menguji konsep, bukan tampilan akhir.", ""],
+  [["Wizard of Oz"], "Teknik prototyping: sistem yang rumit disimulasikan oleh manusia di balik layar, sehingga pengguna merasa memakai sistem sungguhan.", ""],
+  [["workaround"], "Cara akal-akalan pengguna untuk mengatasi kekurangan sistem.", "Menempel catatan kata sandi di monitor."],
+  [["slips", "slip"], "Kesalahan saat tujuan sudah benar tetapi pelaksanaannya gagal. Terjadi di level bawah sadar.", "Salah tekan tombol di sebelahnya."],
+  [["mistakes", "mistake"], "Kesalahan saat tujuan atau rencananya sendiri yang salah. Terjadi di level sadar.", "Memakai satuan yang salah."],
+  [["forcing function", "forcing functions"], "Mekanisme yang memaksa suatu kondisi dipenuhi sebelum bisa lanjut. Tiga jenis: interlock, lock-in, lockout.", ""],
+  [["interlock", "interlocks"], "Forcing function yang memaksakan urutan.", "Microwave tidak jalan jika pintu terbuka."],
+  [["lock-in", "lock-ins"], "Forcing function yang menjaga sistem tetap aktif sampai tugas selesai.", "Dialog 'simpan sebelum keluar'."],
+  [["lockout", "lockouts"], "Forcing function yang mencegah masuk atau bertindak.", "Tutup botol obat anti-anak."],
+  [["mode error", "mode errors"], "Kesalahan karena pengguna mengira sistem berada di mode lain.", "Mengetik dengan Caps Lock menyala."],
+  [["sensibility check", "sensibility checks"], "Pemeriksaan yang menolak masukan tidak masuk akal.", "Dosis 1000 kali normal ditolak."],
+  [["heuristics", "heuristic", "heuristik"], "Prinsip umum (rules of thumb) untuk menilai usability. Berlaku lintas sistem dan konteks.", ""],
+  [["design guidelines", "guidelines", "guideline"], "Rekomendasi desain yang relatif spesifik, sering terkait platform, organisasi, atau konteks tertentu.", ""],
+  [["rules of thumb"], "Aturan praktis yang umum, bukan rumus pasti.", ""],
+  [["akselerator", "accelerator"], "Jalan pintas untuk pengguna mahir.", "Shortcut keyboard."],
+  [["recognition", "pengenalan"], "Mengenali sesuatu dari pilihan yang terlihat. Lebih cepat dan andal daripada recall.", "Memilih dari menu."],
+  [["recall"], "Mengambil informasi dari ingatan tanpa petunjuk.", "Mengetik nama perintah dari hafalan."],
+  [["problem space"], "Wilayah memahami masalah: kebutuhan, goal, konteks. Diperdalam melalui riset.", ""],
+  [["solution space"], "Wilayah merancang jawaban: fitur, alur, tampilan. Dieksplorasi melalui desain.", ""],
+  [["goal"], "Keadaan akhir yang ingin dicapai pengguna. Berorientasi hasil dan tidak bergantung pada antarmuka.", "'Saya ingin mengirim uang.'"],
+  [["task"], "Aktivitas terstruktur untuk mencapai goal. Mulai dipengaruhi sistem, masih konseptual.", "Mengisi formulir transfer."],
+  [["action"], "Operasi konkret pada antarmuka. Sepenuhnya bergantung pada desain.", "Menekan 'Submit'."],
+  [["keselarasan fungsional"], "Mental model pengguna cukup cocok dengan sistem untuk bisa bertindak, menafsirkan respons, dan mencapai goal, tanpa harus sama persis dengan system model.", ""],
+  [["instructing"], "Tipe interaksi: pengguna memberi perintah dan memilih opsi.", "Mencetak file."],
+  [["conversing"], "Tipe interaksi: berinteraksi seolah bercakap dengan sistem.", "Chatbot."],
+  [["manipulating"], "Tipe interaksi: memanipulasi objek di ruang virtual atau fisik.", "Menyeret berkas."],
+  [["exploring"], "Tipe interaksi: bergerak melalui lingkungan virtual atau ruang fisik.", "Menjelajah di VR."],
+  [["responding"], "Tipe interaksi: sistem yang memulai, pengguna memilih apakah merespons.", "Notifikasi pencapaian dari fitness tracker."],
+  [["metafora antarmuka", "metafora"], "Antarmuka yang dirancang mirip entitas fisik yang sudah dikenal, sambil punya propertinya sendiri.", "Desktop, keranjang belanja."],
+  [["tangible"], "Antarmuka yang dioperasikan lewat benda fisik yang bisa dipegang.", ""],
+  [["requirement", "requirements"], "Pernyataan tentang kemampuan sistem dalam mendukung goal pengguna dalam konteks tertentu. Requirement = alasan.", "Pengguna harus dapat membandingkan produk."],
+  [["feature"], "Cara sebuah kebutuhan diwujudkan dalam sistem. Feature = bentuk.", "Tombol 'Compare' dengan tabel."],
+  [["context of use", "context-of-use"], "Kondisi tempat interaksi terjadi: fisik, sosial, teknis, organisasi.", "Ruang operasi vs ruang administrasi."],
+  [["escrow"], "Dana pembeli ditahan pihak ketiga (platform) dan baru diteruskan ke penjual setelah barang dikonfirmasi diterima.", ""],
+  [["sosio-teknis"], "Gabungan unsur sosial (orang, aturan, kepercayaan) dan teknis (sistem) yang saling memengaruhi.", ""],
+  [["triangulasi"], "Memeriksa temuan dengan lebih dari satu sumber atau metode.", "Hasil wawancara dicek dengan data log."],
+  [["diary study"], "Metode riset: partisipan mencatat pengalamannya sendiri selama suatu periode.", ""],
+  [["focus group"], "Metode riset: diskusi kelompok yang dipandu.", ""],
+  [["stakeholder"], "Semua pihak yang berkepentingan terhadap sistem.", "Pengguna, manajer, developer."],
+  [["scenario"], "Narasi informal tentang seseorang menggunakan sistem dalam situasi nyata.", ""],
+  [["persona", "personas"], "Tokoh rekaan yang mewakili kelompok pengguna tipikal, disintesis dari riset terhadap orang nyata.", ""],
+  [["archetypical models"], "Model pola dasar: gambaran tipe pengguna yang dirangkum dari kesamaan banyak orang.", ""],
+  [["user story"], "Scenario minimal berformat 'As a [role], I want [goal], so that [reason/value]'.", ""],
+  [["use case"], "Deskripsi langkah demi langkah antara aktor dan sistem untuk mencapai goal.", ""],
+  [["essential use case"], "Gaya use case yang fokus pada niat pengguna dan tanggung jawab sistem. Abstrak tetapi terstruktur.", ""],
+  [["fully-dressed use case", "fully-dressed"], "Gaya use case yang rinci dan operasional, dengan langkah bernomor dan alur alternatif.", ""],
+  [["preconditions", "precondition"], "Hal yang harus sudah benar sebelum use case dimulai.", "Pengguna sudah login."],
+  [["postconditions", "postcondition"], "Keadaan sistem setelah use case selesai.", "Pesanan tercatat."],
+  [["alternative flows", "alternative flow"], "Cabang langkah ketika terjadi hal di luar alur utama.", "Tidak ada pengemudi tersedia."],
+  [["preskriptif"], "Menetapkan apa yang harus terjadi. Lawannya eksploratif.", ""],
+  [["eksploratif"], "Menjelajah untuk memperluas pemahaman, belum menetapkan.", ""],
+  [["kognisi reflektif"], "Berpikir yang sadar dan disengaja: menimbang, merencanakan, memutuskan.", ""],
+  [["clutter"], "Kekacauan visual karena terlalu banyak elemen di layar.", ""],
+  [["encoding", "encode"], "Tahap pertama memori: menentukan informasi mana yang diperhatikan dan bagaimana ditafsirkan.", ""],
+  [["MFA", "otentikasi multifaktor"], "Masuk dengan lebih dari satu bukti identitas.", "Kata sandi ditambah kode OTP."],
+  [["biometrik"], "Pengenalan lewat ciri tubuh, seperti sidik jari atau wajah.", ""],
+  [["haptic"], "Umpan balik lewat indra peraba, seperti getaran.", ""],
+  [["disleksia"], "Kesulitan memahami dan mengenali kata tertulis.", ""],
+  [["text-to-speech"], "Teknologi yang mengubah teks menjadi ucapan buatan.", ""],
+  [["pervasive"], "Meresap: komputasi yang hadir di banyak benda dan tempat, tidak hanya di komputer.", ""]
+];
+
+</script>
+<script>
+/* ===== catatan: data permainan memilah, widget khusus, kerangka halaman ===== */
+(function () {
+  'use strict';
+  var T = window.T, $ = T.$, $$ = T.$$, H = T.H;
+  var P = {};
+  P.ux = { t: 'Latihan: usability goal atau aspek UX?', b: ['Effectiveness', 'Efficiency', 'Safety', 'Utility', 'Learnability', 'Memorability', 'UX (bukan usability goal)'], items: [
+    ['9 dari 10 pengguna berhasil mengisi KRS tanpa salah memilih kelas.', 0, 'Mencapai tujuan secara akurat adalah effectiveness.'],
+    ['Pembayaran yang dulu butuh 9 ketukan kini selesai dalam 3 ketukan.', 1, 'Cepat dan upaya minimal adalah efficiency.'],
+    ['Sebelum menghapus akun muncul konfirmasi, dan ada waktu 30 hari untuk membatalkan.', 2, 'Kesalahan dicegah dan bisa dipulihkan: safety.'],
+    ['Aplikasi bank tidak punya fitur melihat mutasi, padahal itu yang paling dicari nasabah.', 3, 'Fitur yang dibutuhkan tidak tersedia: masalah utility.'],
+    ['Pengguna baru bisa memesan tiket pertamanya tanpa membaca panduan.', 4, 'Mudah bagi pengguna baru untuk mulai: learnability.'],
+    ['Setelah enam bulan tidak membuka aplikasi pajak, pengguna masih ingat cara melapor.', 5, 'Mudah digunakan kembali setelah jeda: memorability.'],
+    ['Pengguna merasa senang dan bangga saat melihat rangkuman tahunan musiknya.', 6, 'Emosi dan kepuasan adalah wilayah UX, bukan usability goal.'],
+    ['Pengguna merasa digurui oleh pesan-pesan aplikasi yang terlalu cerewet.', 6, 'Patronizing adalah undesirable aspect dari UX.']
+  ] };
+  P.prinsip = { t: 'Latihan: prinsip mana yang sedang bekerja atau dilanggar?', b: ['Affordance', 'Signifier', 'Mapping', 'Feedback', 'Constraint'], items: [
+    ['Pelat logam datar di sisi pintu memberi tahu bahwa pintu itu didorong di situ.', 1, 'Pelat itu sinyal yang menunjukkan di mana dan bagaimana bertindak: signifier.'],
+    ['Empat kenop kompor berjajar lurus, sedangkan tungkunya tersusun persegi. Orang sering salah menyalakan tungku.', 2, 'Hubungan kontrol dan efeknya tidak jelas: mapping buruk.'],
+    ['Tombol lift tidak menyala saat ditekan, sehingga orang menekannya berkali-kali.', 3, 'Tidak ada respons terhadap aksi: feedback buruk.'],
+    ['Kartu SIM hanya bisa masuk ke slot dengan satu orientasi karena salah satu sudutnya terpotong.', 4, 'Bentuk fisik membatasi aksi yang mungkin: physical constraint.'],
+    ['Tombol yang tampak timbul terasa bisa ditekan oleh jari.', 0, 'Sifat benda dan kemampuan pengguna memungkinkan aksi menekan: affordance.'],
+    ['Tombol pengatur kursi mobil berbentuk kursi mini: menggeser bagian sandaran menggerakkan sandaran.', 2, 'Kesesuaian spasial antara kontrol dan efek: natural mapping.'],
+    ['Jalan setapak di rumput yang gundul menunjukkan jalur pintas yang biasa dilewati orang.', 1, 'Bekas pakai adalah signifier yang tidak disengaja.'],
+    ['Tombol "Kirim" berwarna abu-abu dan tidak bisa ditekan sampai semua kolom wajib terisi.', 4, 'Aksi dibatasi sampai syarat terpenuhi: logical constraint.'],
+    ['Alarm microwave berbunyi keras lima kali setiap selesai, termasuk tengah malam.', 3, 'Feedback yang berlebihan juga masalah feedback.'],
+    ['Dinding kaca memungkinkan melihat ke dalam tetapi menghalangi orang lewat.', 0, 'Kaca affords melihat tembus, dan sekaligus anti-affordance untuk lewat.']
+  ] };
+  P.slip = { t: 'Latihan: slip atau mistake?', b: ['Slip', 'Mistake'], items: [
+    ['Ingin menekan "Simpan", jari terpeleset menekan "Hapus" di sebelahnya.', 0, 'Tujuannya benar, eksekusinya yang gagal.'],
+    ['Mengira tombol "Arsipkan" berarti menghapus permanen, lalu sengaja menekannya untuk menghapus.', 1, 'Rencananya dibangun dari pemahaman yang salah.'],
+    ['Menuang susu ke kopi, lalu menaruh cangkir kopinya di kulkas.', 0, 'Contoh slide: aksi benar, pelaksanaannya meleset.'],
+    ['Mengisi bahan bakar dengan satuan pound padahal seharusnya kilogram.', 1, 'Contoh slide (Gimli Glider): tujuan atau rencananya yang salah.'],
+    ['Mengetik kata sandi dengan Caps Lock menyala tanpa sadar.', 0, 'Niatnya benar, pelaksanaannya terganggu oleh mode yang tidak disadari.'],
+    ['Memilih paket "Premium" karena yakin itu paket termurah.', 1, 'Keputusan diambil dari pengetahuan yang keliru.'],
+    ['Disela telepon saat mengisi formulir, lalu lupa menekan "Kirim" dan menutup halaman.', 0, 'Memory-lapse slip: satu langkah terlupa karena interupsi.'],
+    ['Menerapkan aturan "geser ke kiri untuk menghapus" di aplikasi yang memakai geser kiri untuk mengarsipkan.', 1, 'Rule-based mistake: aturan yang salah dipakai untuk situasi ini.']
+  ] };
+  P.force = { t: 'Latihan: strategi pencegah kesalahan yang mana?', b: ['Interlock', 'Lock-in', 'Lockout', 'Undo', 'Sensibility check', 'Minimize mode errors', 'Support interruptions'], items: [
+    ['Microwave tidak mau menyala selama pintunya terbuka.', 0, 'Urutan dipaksakan: tutup pintu dulu.'],
+    ['Editor menampilkan "Simpan perubahan sebelum keluar?" dan tidak langsung menutup.', 1, 'Sistem dijaga tetap aktif sampai tugas selesai.'],
+    ['Tutup botol obat harus ditekan sambil diputar supaya anak kecil tidak bisa membukanya.', 2, 'Mencegah masuk atau bertindak.'],
+    ['Formulir transfer menolak nominal Rp 5.000.000.000 dari rekening pelajar dan meminta dicek ulang.', 4, 'Masukan yang tidak masuk akal ditolak.'],
+    ['Setelah email dihapus muncul tombol "Urungkan" selama beberapa detik.', 3, 'Aksi bisa dibatalkan dengan mudah.'],
+    ['Saat mode "Hapus massal" aktif, seluruh layar diberi bingkai merah dan label mode.', 5, 'Mode aktif dibuat sangat terlihat.'],
+    ['Formulir panjang menyimpan draf otomatis, dan saat dibuka lagi langsung kembali ke kolom terakhir.', 6, 'Konteks disimpan supaya pengguna mudah melanjutkan.'],
+    ['Mobil matik tidak bisa dipindah dari P sebelum rem diinjak.', 0, 'Urutan aksi dipaksakan.'],
+    ['Pagar di tangga darurat mencegah orang terus turun ke basement saat kebakaran.', 2, 'Mencegah orang masuk ke tempat yang salah.']
+  ] };
+  P.heur = { t: 'Latihan: heuristik Nielsen nomor berapa?', b: ['1 Visibility', '2 Match real world', '3 User control', '4 Consistency', '5 Error prevention', '6 Recognition', '7 Flexibility', '8 Minimalist', '9 Recover errors', '10 Help'], items: [
+    ['Saat mengunggah berkas besar tidak ada progress bar, layar hanya diam.', 0, 'Sistem tidak memberi tahu apa yang sedang terjadi.'],
+    ['Pesan kesalahan berbunyi "Exception 0x80040154 at module NET".', 8, 'Pesan error tidak jelas, tidak memakai bahasa pengguna, dan tanpa saran. Karena ini pesan kesalahan, yang paling tepat nomor 9.'],
+    ['Aplikasi kasir memakai istilah "commit transaksi" untuk "selesaikan pembayaran".', 1, 'Istilah teknis internal, bukan bahasa pengguna.'],
+    ['Setelah menekan "Bayar", tidak ada cara membatalkan atau kembali ke keranjang.', 2, 'Tidak ada jalan keluar yang jelas.'],
+    ['Tombol "Simpan" berada di kanan atas pada halaman profil, tetapi di kiri bawah pada halaman alamat.', 3, 'Hal yang sama tidak terlihat dan berperilaku sama.'],
+    ['Kolom tanggal lahir memakai pemilih tanggal sehingga format salah tidak mungkin terjadi.', 4, 'Kesalahan dicegah sebelum terjadi dengan constraint.'],
+    ['Kolom pencarian menampilkan riwayat pencarian terakhir saat diklik.', 5, 'Pengguna cukup mengenali, tidak perlu mengingat.'],
+    ['Pengguna mahir bisa menekan Ctrl+K untuk langsung membuka pencarian perintah.', 6, 'Akselerator untuk pengguna berpengalaman.'],
+    ['Halaman utama dipenuhi lima banner promosi yang menutupi tombol "Lacak pesanan".', 7, 'Informasi tidak relevan bersaing dengan yang penting.'],
+    ['Pesan "Nomor kartu harus 16 digit. Kamu memasukkan 15 digit." muncul di bawah kolom.', 8, 'Pesan kesalahan jelas, menyebut apa yang salah dan arah perbaikannya.'],
+    ['Ikon tanda tanya di tiap formulir membuka panduan langkah demi langkah untuk tugas itu.', 9, 'Bantuan mudah dicari, berorientasi tugas, berisi langkah konkret.'],
+    ['Sebelum menghapus seluruh data, muncul dialog konfirmasi.', 4, 'Konfirmasi untuk aksi berisiko adalah pencegahan.'],
+    ['Ikon keranjang belanja dipakai untuk tempat menampung barang yang akan dibeli.', 1, 'Mengikuti logika dunia nyata.'],
+    ['Aplikasi iOS memakai tombol kembali di kiri atas seperti aplikasi iOS lain.', 3, 'Konsisten dengan standar platform.'],
+    ['Tombol "Kirim" berubah menjadi "Mengirim..." lalu "Terkirim".', 0, 'Status sistem selalu terlihat.']
+  ] };
+  P.gta = { t: 'Latihan: goal, task, atau action?', b: ['Goal', 'Task', 'Action'], items: [
+    ['"Saya ingin uang sewa kos sampai ke ibu kos hari ini."', 0, 'Keadaan akhir, tidak menyebut antarmuka.'],
+    ['Mengisi formulir transfer.', 1, 'Aktivitas terstruktur yang mulai dipengaruhi sistem.'],
+    ['Mengetik angka 1500000 di kolom nominal.', 2, 'Operasi konkret pada antarmuka.'],
+    ['Menekan tombol "Submit".', 2, 'Sepenuhnya bergantung pada desain.'],
+    ['"Saya ingin memastikan tugas sudah terkumpul."', 0, 'Contoh goal dari slide.'],
+    ['Mengunggah file.', 1, 'Contoh task dari slide.'],
+    ['Memilih "BCA" dari dropdown bank.', 2, 'Memilih item dari dropdown adalah action.'],
+    ['Memeriksa status pesanan.', 1, 'Contoh task dari slide.'],
+    ['"Saya ingin tiba di bandara sebelum pukul 6."', 0, 'Berorientasi hasil.'],
+    ['Menggeser tombol jam ke 05.00 pada pemilih waktu.', 2, 'Operasi pada kontrol tertentu.'],
+    ['"Goal saya mengisi formulir pendaftaran."', 1, 'Jebakan slide: mengisi formulir adalah task, walau disebut goal oleh penggunanya.']
+  ] };
+  P.tipe = { t: 'Latihan: tipe interaksi yang mana?', b: ['Instructing', 'Conversing', 'Manipulating', 'Exploring', 'Responding'], items: [
+    ['Menekan tombol "Cetak" untuk mencetak dokumen.', 0, 'Memberi perintah ke sistem.'],
+    ['Bertanya kepada chatbot bank tentang cara membuka rekening.', 1, 'Berinteraksi seolah bercakap.'],
+    ['Menyeret foto ke dalam folder dan mencubit layar untuk memperbesar.', 2, 'Memanipulasi objek virtual.'],
+    ['Berjalan-jalan di museum virtual dengan kacamata VR.', 3, 'Bergerak melalui lingkungan virtual.'],
+    ['Jam tangan pintar bergetar dan memberi tahu target langkah harian tercapai.', 4, 'Sistem yang memulai, pengguna memilih merespons atau tidak.'],
+    ['Memilih minuman di mesin penjual otomatis.', 0, 'Memilih opsi adalah instructing. Contoh slide.'],
+    ['Mengayunkan pengontrol Wii untuk memukul bola tenis di layar.', 2, 'Pengontrol fisik untuk menggerakkan avatar.'],
+    ['Ponsel memberi tahu ada teman yang sedang berada di kafe terdekat.', 4, 'Contoh slide untuk responding.'],
+    ['Mengetik kata kunci di mesin pencari.', 1, 'Slide memasukkan search engine sebagai contoh conversing.'],
+    ['Menjelajahi visualisasi data tiga dimensi di dalam CAVE.', 3, 'Contoh slide untuk exploring.']
+  ] };
+  P.reqfeat = { t: 'Latihan: requirement atau feature?', b: ['Requirement', 'Feature'], items: [
+    ['Pengguna harus dapat membandingkan produk.', 0, 'Kapabilitas, tanpa menyebut bentuknya.'],
+    ['Tombol "Compare" dengan tabel.', 1, 'Bentuk realisasi tertentu.'],
+    ['Tambahkan kolom search di pojok kanan atas.', 1, 'Kontrol UI spesifik: langsung di solution space.'],
+    ['Sistem harus memungkinkan verifikasi status transaksi secara jelas.', 0, 'Contoh requirement dari slide.'],
+    ['Notifikasi push dengan suara lonceng saat paket tiba.', 1, 'Menyebut teknologi dan detail penyajian.'],
+    ['Sistem menyediakan status pengiriman yang dapat dipahami dan diperbarui konsisten.', 0, 'Contoh requirement dari slide.'],
+    ['Filter harga berupa slider dua ujung.', 1, 'Kontrol UI spesifik.'],
+    ['Sistem harus mengkomunikasikan mekanisme perlindungan transaksi.', 0, 'Requirement pada kasus Tokopedia.'],
+    ['Tampilan dua produk berdampingan dengan highlight perbedaan otomatis.', 1, 'Salah satu alternatif feature untuk requirement membandingkan.'],
+    ['Pengguna harus bisa menemukan barang yang pernah dilihatnya.', 0, 'Kebutuhan. Riwayat, wishlist, atau pencarian adalah feature-nya.']
+  ] };
+  P.jenisreq = { t: 'Latihan: jenis requirement yang mana?', b: ['Functional', 'Data', 'User characteristics', 'Context-of-use', 'Usability goal', 'UX goal'], items: [
+    ['Sistem harus memungkinkan mahasiswa mengajukan cuti kuliah.', 0, 'Mendukung task.'],
+    ['Sistem harus menampilkan sisa kuota kelas sebelum mahasiswa memilih.', 1, 'Informasi tersedia untuk pengambilan keputusan.'],
+    ['Sistem harus bisa dipakai lansia yang belum terbiasa dengan ponsel pintar.', 2, 'Selaras dengan kemampuan dan mental model pengguna.'],
+    ['Sistem harus tetap terbaca di bawah sinar matahari di lapangan proyek.', 3, 'Respons terhadap lingkungan fisik.'],
+    ['Minimal 95% pengguna menyelesaikan pendaftaran tanpa kesalahan.', 4, 'Efektivitas dan error rate.'],
+    ['Pengguna harus merasa yakin bahwa datanya aman.', 5, 'Trust dan confidence.'],
+    ['Sistem harus berjalan di tablet lama milik puskesmas.', 3, 'Konteks teknis.'],
+    ['Pembayaran harus bisa diselesaikan kurang dari satu menit.', 4, 'Efisiensi.'],
+    ['Sistem harus menyediakan riwayat transaksi tiga bulan terakhir.', 1, 'Kebutuhan informasi.'],
+    ['Pengguna harus merasa ingin kembali memakai aplikasi tiap hari.', 5, 'Engagement.']
+  ] };
+  P.isu = { t: 'Latihan: isu riset atau isu desain?', b: ['Isu riset', 'Isu desain'], items: [
+    ['Apakah pembeli di Belanda merasa perlu tahu kapan uangnya diteruskan ke penjual?', 0, 'Menanyakan apakah pemahaman kita benar.'],
+    ['Sebaiknya status escrow ditampilkan sebagai garis waktu atau sebagai teks?', 1, 'Menanyakan cara mewujudkan solusi.'],
+    ['Mengapa banyak pengguna berhenti di halaman pembayaran?', 0, 'Masih memahami masalah.'],
+    ['Di mana tombol "Lacak pesanan" paling mudah ditemukan?', 1, 'Kebutuhannya sudah diyakini, tinggal bentuknya.'],
+    ['Apakah dokter di ruang operasi benar-benar butuh riwayat lengkap pasien saat itu?', 0, 'Memvalidasi kebutuhan.'],
+    ['Setelah riset memastikan pengguna butuh perbandingan produk: pakai tabel atau kartu berdampingan?', 1, 'Sudah divalidasi, sekarang memilih realisasi.'],
+    ['Siapa sebenarnya yang paling sering memakai fitur ekspor laporan?', 0, 'Memahami pengguna.']
+  ] };
+  P.scuc = { t: 'Latihan: ciri scenario atau use case?', b: ['Scenario', 'Use case'], items: [
+    ['Berbentuk cerita tentang seseorang dalam situasi nyata.', 0, 'Scenario adalah narasi informal.'],
+    ['Memuat preconditions dan postconditions.', 1, 'Bagian dari struktur use case.'],
+    ['Bersifat eksploratif.', 0, 'Scenario memperluas pemahaman.'],
+    ['Bersifat preskriptif.', 1, 'Use case memastikan interaksi konsisten.'],
+    ['Dipakai saat problem space masih dieksplorasi.', 0, 'Kapan memakai scenario.'],
+    ['Dipakai saat alur perlu diuji kelengkapannya.', 1, 'Kapan memakai use case.'],
+    ['Memperlihatkan hujan, satu tangan memegang payung, anak sakit di rumah.', 0, 'Konteks fisik dan emosional hanya muncul di scenario.'],
+    ['"If no driver available → system notifies user."', 1, 'Alternative flow pada use case.'],
+    ['Memberi makna.', 0, 'Peran scenario dalam desain.'],
+    ['Memberi struktur.', 1, 'Peran use case dalam desain.'],
+    ['Berguna untuk diskusi lintas stakeholder.', 0, 'Cerita mudah dipahami semua pihak.'],
+    ['Berguna untuk komunikasi teknis dengan developer.', 1, 'Tanggung jawab sistem eksplisit.']
+  ] };
+  P.cepat = { t: 'Latihan slide: pemikiran cepat atau lambat?', b: ['Cepat', 'Lambat'], items: [
+    ['2 + 2 = ?', 0, 'Jawabannya muncul otomatis tanpa usaha.'],
+    ['21 × 29 = ?', 1, 'Butuh langkah hitung yang disengaja.'],
+    ['Apa warna mata Anda?', 0, 'Langsung diketahui.'],
+    ['Berapa banyak warna yang ada di pelangi?', 0, 'Bagi kebanyakan orang ini hafalan yang langsung keluar. Kalau harus menyebut satu per satu sambil menghitung, bergeser ke lambat.'],
+    ['Berapa bulan dalam setahun yang memiliki 31 hari?', 1, 'Biasanya harus menghitung satu per satu.'],
+    ['Apa nama sekolah pertama yang Anda masuki?', 1, 'Biasanya perlu menelusuri ingatan lama. Bagi sebagian orang bisa cepat.']
+  ] };
+  P.atensi = { t: 'Latihan: jenis atensi yang mana?', b: ['Focused', 'Divided', 'Selective'], items: [
+    ['Membaca label tombol "Submit" sebelum menekannya.', 0, 'Satu stimulus tertentu. Contoh slide.'],
+    ['Mendengarkan arahan suara GPS sambil melihat peta di layar.', 1, 'Dua tugas bersamaan. Contoh slide.'],
+    ['Mencari satu pesan penting di antara puluhan notifikasi.', 2, 'Memilih satu informasi di antara gangguan. Contoh slide.'],
+    ['Mengetik balasan chat sambil mengikuti rapat daring.', 1, 'Dua tugas bersamaan, rawan kesalahan.'],
+    ['Mencari nama sendiri di daftar hadir yang panjang.', 2, 'Menyaring satu hal dari banyak hal lain.'],
+    ['Memperhatikan satu angka OTP yang baru masuk untuk disalin.', 0, 'Merespons satu stimulus spesifik.']
+  ] };
+  P.proses = { t: 'Latihan: implikasi desain ini untuk proses kognitif yang mana?', b: ['Atensi', 'Persepsi', 'Memori', 'Learning', 'Reading/speaking/listening', 'Problem-solving dkk.'], items: [
+    ['Kurangi teks panjang, ikon berlebih, dan animasi yang tidak perlu.', 0, 'Membatasi beban visual supaya perhatian tidak terpecah.'],
+    ['Kuning pada hitam baik, kuning pada putih tidak baik.', 1, 'Teknik kontras warna supaya terbaca.'],
+    ['Utamakan pengenalan daripada mengingat.', 2, 'Implikasi desain untuk memori.'],
+    ['Rancang antarmuka yang mendorong eksplorasi.', 3, 'Orang lebih suka belajar sambil melakukan.'],
+    ['Menu dan instruksi berbasis ucapan harus singkat.', 4, 'Implikasi untuk listening.'],
+    ['Sediakan halaman informasi dan bantuan yang mudah diakses.', 5, 'Mendukung kognisi reflektif.'],
+    ['Ikon harus mudah dibedakan artinya.', 1, 'Representasi yang siap dipahami.'],
+    ['Beri cara melabeli berkas dengan warna, kategori, dan timestamp.', 2, 'Membantu mengenali kembali informasi.'],
+    ['Jadikan informasi menonjol tepat ketika perlu diperhatikan.', 0, 'Implikasi desain atensi (konteks).'],
+    ['Beri peluang membuat teks menjadi besar di layar.', 4, 'Implikasi untuk reading.'],
+    ['Batasi dan pandu peserta didik.', 3, 'Implikasi desain learning.'],
+    ['Gunakan fungsi yang sederhana dan mudah diingat untuk mendukung keputusan.', 5, 'Implikasi untuk decision-making dan planning.']
+  ] };
+
+  /* ---------- kalkulator Fitts dan Hick ---------- */
+  function fitts() {
+    var D = $('#fDr'), S = $('#fSr'); if (!D) return;
+    function upd() {
+      var d = +D.value, s = +S.value, id = Math.log2(d / s + 1), t = 50 + 150 * id;
+      $('#fD').textContent = d; $('#fS').textContent = s;
+      var x0 = 30, x1 = x0 + d * 0.6, w = Math.max(4, s * 0.6);
+      $('#fSvg').innerHTML = '<path d="M' + x0 + ' 20 l0 26 l7 -7 l6 12 l5 -2 l-6 -12 l9 0 Z" fill="#263F77"/><line x1="' + (x0 + 14) + '" y1="35" x2="' + x1 + '" y2="35" stroke="#8FC5EA" stroke-width="2" stroke-dasharray="5 4"/><rect x="' + x1 + '" y="' + (35 - Math.min(30, w / 2)) + '" width="' + w + '" height="' + Math.min(60, w) + '" rx="4" fill="#E0DE50" stroke="#263F77" stroke-width="1.5"/><text x="' + ((x0 + x1) / 2) + '" y="28" text-anchor="middle" font-size="11" fill="#55657F">D = ' + d + '</text>';
+      $('#fOut').innerHTML = 'Indeks kesulitan = log₂(' + d + ' / ' + s + ' + 1) = <b>' + id.toFixed(2) + '</b> bit. Waktu ≈ 50 + 150 × ' + id.toFixed(2) + ' = <b>' + Math.round(t) + ' ms</b>.<br><span class="muted">' + (id > 4 ? 'Target jauh atau kecil: sulit dicapai.' : id < 1.5 ? 'Target dekat atau besar: sangat mudah dicapai.' : 'Coba gandakan ukuran target, lalu lihat waktunya turun.') + '</span>';
+    }
+    D.addEventListener('input', upd); S.addEventListener('input', upd); upd();
+  }
+  function hick() {
+    var N = $('#hNr'); if (!N) return;
+    function upd() {
+      var n = +N.value, b = Math.log2(n + 1), t = 50 + 150 * b; $('#hN').textContent = n;
+      var bars = ''; [1, 3, 7, 15, 31].forEach(function (k) { var tt = 50 + 150 * Math.log2(k + 1); bars += '<div style="display:flex;align-items:center;gap:8px;margin:3px 0"><span style="width:74px" class="small">' + k + ' pilihan</span><div style="height:12px;border-radius:6px;background:' + (k === n ? '#263F77' : '#8FC5EA') + ';width:' + (tt / 8) + 'px"></div><span class="small muted">' + Math.round(tt) + ' ms</span></div>'; });
+      $('#hOut').innerHTML = 'log₂(' + n + ' + 1) = <b>' + b.toFixed(2) + '</b>. Waktu memutuskan ≈ 50 + 150 × ' + b.toFixed(2) + ' = <b>' + Math.round(t) + ' ms</b>.' + bars + '<span class="muted">Dari 1 ke 31 pilihan (31 kali lipat) waktunya hanya naik sekitar 4 kali. Itulah arti pertumbuhan logaritmik.</span>';
+    }
+    N.addEventListener('input', upd); upd();
+  }
+
+  /* ---------- latihan diagnosis gulf ---------- */
+  function diag() {
+    var box = $('#diagBox'); if (!box) return;
+    var K = [
+      ['Pengguna ingin mengganti foto profil, tetapi tidak menemukan cara melakukannya. Ternyata harus menekan lama foto itu.', 0, 'Goal dan task jelas, tetapi action tidak ditemukan dan pengguna harus menebak. Jembatannya: signifier.'],
+      ['Pengguna menekan "Bayar", layar kembali ke beranda tanpa pesan apa pun. Ia tidak tahu pembayarannya berhasil atau tidak.', 1, 'Action sudah dilakukan, tetapi status goal tidak bisa dinilai. Jembatannya: feedback dan status.'],
+      ['Di aplikasi kamera ada ikon bergambar tiga lingkaran bertumpuk. Pengguna tidak tahu ikon itu untuk apa.', 0, 'Hubungan niat dan aksi tidak jelas.'],
+      ['Setelah mengunggah tugas, halaman menampilkan tulisan "Status: 2". Mahasiswa tidak tahu apakah tugasnya sudah diterima.', 1, 'Respons ada, tetapi maknanya tidak bisa ditafsirkan.'],
+      ['Pengguna ingin menyalakan tungku kiri belakang, tetapi tidak yakin kenop mana yang mengaturnya.', 0, 'Mapping kontrol ke efek tidak jelas.'],
+      ['Lampu indikator pada mesin cuci berkedip merah dua kali. Pengguna tidak tahu apa artinya.', 1, 'Perubahan keadaan sistem tidak bisa ditafsirkan.']
+    ], i = 0, sc = 0;
+    function show() {
+      if (i >= K.length) { box.innerHTML = '<div class="msg">Selesai. Skor <b>' + sc + ' dari ' + K.length + '</b>. <button class="btn" type="button" id="dgR">Ulangi</button></div>'; $('#dgR').addEventListener('click', function () { i = 0; sc = 0; show(); }); return; }
+      var k = K[i]; box.innerHTML = '<div class="small muted">Kasus ' + (i + 1) + ' dari ' + K.length + '</div><div class="msg nogl" style="margin-top:4px">' + k[0] + '</div><div class="opts" style="margin-top:8px"><button type="button">Gulf of execution</button><button type="button">Gulf of evaluation</button></div><div class="msg small" hidden></div><div class="ctl"><button class="btn pri" type="button" hidden>Kasus berikutnya ›</button></div>';
+      var bs = $$('.opts button', box), msg = $$('.msg', box)[1], nx = $('.btn.pri', box);
+      bs.forEach(function (b, j) { b.addEventListener('click', function () { if (b.disabled) return; var ok = j === k[1]; if (ok) sc++; bs.forEach(function (x, jj) { x.disabled = true; if (jj === k[1]) x.classList.add('right'); else if (x === b) x.classList.add('wrong'); }); msg.hidden = false; msg.innerHTML = (ok ? '<b class="good">Benar.</b> ' : '<b class="bad">Belum tepat.</b> ') + k[2]; nx.hidden = false; }); });
+      nx.addEventListener('click', function () { i++; show(); });
+    }
+    show();
+  }
+
+  /* ---------- mesin requirement ---------- */
+  function ctx() {
+    var G = $('#cxG'), C = $('#cxC'); if (!G) return;
+    var D = {
+      'Dokter mengakses data pasien': { 'Ruang operasi': 'Informasi harus muncul cepat dan minim distraksi. Hanya data yang kritis saat itu, bisa dibaca dari jarak tertentu, tanpa perlu banyak sentuhan. (slide)', 'Ruang administrasi': 'Informasi harus detail dengan dokumentasi lengkap. Boleh banyak kolom dan riwayat. (slide)', 'Kunjungan rumah di desa': 'Harus tetap bisa dibuka saat sinyal lemah, dan layar terbaca di luar ruangan.' },
+      'Pembeli membeli produk dengan aman': { 'Marketplace Indonesia': 'Sistem harus mengkomunikasikan mekanisme perlindungan transaksi (escrow) secara eksplisit. Trust lewat transparansi. (slide)', 'Toko daring Belanda': 'Sistem harus menyediakan prosedur pengembalian yang jelas. Trust lewat kejelasan prosedural. (slide)', 'Pasar tradisional dengan QRIS': 'Pembeli dan penjual harus bisa memastikan pembayaran masuk saat itu juga, di tempat ramai dan bising.' },
+      'Penumpang mendapat kendaraan pulang': { 'Hujan deras, satu tangan memegang payung': 'Kontrol harus besar dan bisa dicapai ibu jari. Estimasi kedatangan harus jelas dan terbaca sekilas. (dari scenario Rina di slide 03b)', 'Bandara, baru mendarat di kota asing': 'Titik jemput harus mudah dikenali walau pengguna tidak mengenal tempat itu, dan estimasi tarif harus muncul sebelum memesan.', 'Tengah malam, baterai hampir habis': 'Pemesanan harus selesai dengan langkah sesedikit mungkin dan status pesanan tetap bisa diketahui tanpa layar terus menyala.' }
+    };
+    Object.keys(D).forEach(function (g) { G.appendChild(H('option', null, g)); });
+    function fill() { C.innerHTML = ''; Object.keys(D[G.value]).forEach(function (c) { C.appendChild(H('option', null, c)); }); out(); }
+    function out() { $('#cxOut').innerHTML = '<b>Goal:</b> ' + G.value + '<br><b>Konteks:</b> ' + C.value + '<br><b>Requirement yang muncul:</b> ' + D[G.value][C.value] + '<br><span class="muted">Ganti konteksnya dan lihat requirement berubah padahal goal-nya tetap.</span>'; }
+    G.addEventListener('change', fill); C.addEventListener('change', out); fill();
+  }
+
+  /* ---------- perakit user story ---------- */
+  function story() {
+    var W = $('#usW'); if (!W) return; var A = $('#usA'), Y = $('#usY');
+    var who = ['commuter and parent', 'traveler', 'travel agent', 'mahasiswa tingkat akhir'], what = ['to see an accurate arrival time for my ride', 'to save my favorite airline for all my flights', 'my special discount rates to be displayed to me', 'melihat sisa SKS yang harus diambil'], why = ['I can estimate when I will reach home and take care of my child', 'I will be able to collect air miles', 'I can offer my clients competitive rates', 'saya bisa merencanakan kapan lulus'];
+    [[W, who], [A, what], [Y, why]].forEach(function (p) { p[1].forEach(function (x, i) { var o = H('option', null, x); o.value = i; p[0].appendChild(o); }); });
+    function out() { var ok = W.value === A.value && A.value === Y.value; $('#usOut').innerHTML = '<i>As a</i> <b>' + who[W.value] + '</b>, <i>I want</i> <b>' + what[A.value] + '</b>, <i>so that</i> <b>' + why[Y.value] + '</b>.<br>' + (ok ? '<span class="good"><b>Koheren.</b></span> Who, what, dan why saling mendukung.' : '<span class="bad"><b>Belum koheren.</b></span> Peran, keinginan, dan alasannya belum berasal dari orang yang sama. User story yang baik harus masuk akal sebagai satu kalimat.') + '<br><span class="muted">Perhatikan apa yang tidak ada di kalimat ini: cuaca, tempat, tekanan waktu. Itulah yang hilang dibanding scenario.</span>'; }
+    [W, A, Y].forEach(function (s) { s.addEventListener('change', out); }); out();
+  }
+
+  /* ---------- percobaan cari (Tullis) ---------- */
+  function cari() {
+    var box = $('#cariBox'); if (!box) return;
+    var kota = ['Bandung', 'Cimahi', 'Garut'], hotel = ['Aston', 'Ibis', 'Santika', 'Amaris', 'Novotel', 'Harris'], rows = [];
+    kota.forEach(function (k, a) { hotel.forEach(function (h, b) { rows.push({ k: k, h: h, s: 300 + ((a * 7 + b * 13) % 9) * 35, d: 420 + ((a * 5 + b * 11) % 9) * 45 }); }); });
+    var t0 = 0, target = null, mode = 0;
+    function start(m) {
+      mode = m; target = rows[Math.floor(Math.random() * rows.length)];
+      $('#cariQ').innerHTML = 'Temukan harga kamar <b>dobel</b> di <b>' + target.h + ' ' + target.k + '</b>, lalu klik angkanya.';
+      var h = '';
+      if (m === 1) { h = '<div style="background:#1F2A44;color:#EAF3FB;font-family:var(--mono);font-size:.74rem;padding:10px;border-radius:10px;line-height:1.5">'; rows.forEach(function (r) { h += r.k + ' ' + r.h + ' (022) 55' + r.s + ' S: <span class="pr" data-v="' + r.s + '" style="cursor:pointer">Rp' + r.s + 'rb</span> D: <span class="pr" data-v="' + r.d + '" data-ok="' + (r === target ? 1 : 0) + '" style="cursor:pointer">Rp' + r.d + 'rb</span> '; }); h += '</div>'; }
+      else { h = '<div class="tw"><table style="font-family:var(--mono);font-size:.76rem"><tr><th>Kota</th><th>Hotel</th><th>Single</th><th>Dobel</th></tr>'; rows.forEach(function (r, i) { h += '<tr><td>' + (i % hotel.length === 0 ? '<b>' + r.k + '</b>' : '') + '</td><td>' + r.h + '</td><td><span class="pr" data-v="' + r.s + '" style="cursor:pointer">Rp' + r.s + 'rb</span></td><td><span class="pr" data-v="' + r.d + '" data-ok="' + (r === target ? 1 : 0) + '" style="cursor:pointer">Rp' + r.d + 'rb</span></td></tr>'; }); h += '</table></div>'; }
+      box.innerHTML = h; $('#cariOut').textContent = 'Waktu berjalan...'; t0 = Date.now(); T.fit();
+    }
+    $$('#wCari [data-m]').forEach(function (b) { b.addEventListener('click', function () { start(+b.getAttribute('data-m')); }); });
+    var best = {};
+    box.addEventListener('click', function (e) { var s = e.target.closest('.pr'); if (!s || !t0) return; if (s.getAttribute('data-ok') === '1') { var dt = (Date.now() - t0) / 1000; t0 = 0; best[mode] = dt; s.style.background = '#E0DE50'; s.style.color = '#263F77'; $('#cariOut').innerHTML = '<b class="good">Ketemu dalam ' + dt.toFixed(1) + ' detik</b> pada layar ' + (mode === 1 ? 'menggumpal' : 'berkolom') + '.' + (best[1] && best[2] ? ' Hasilmu: menggumpal <b>' + best[1].toFixed(1) + ' dtk</b>, berkolom <b>' + best[2].toFixed(1) + ' dtk</b>. Tullis mendapat 5,5 dan 3,2 detik.' : ' Sekarang coba layar yang satunya.'); } else { $('#cariOut').innerHTML = '<span class="bad">Bukan yang itu.</span> Cari lagi, waktu masih berjalan.'; } });
+  }
+
+  /* ---------- kombinasi warna ---------- */
+  function warna() {
+    var bt = $('#wnBtn'); if (!bt) return;
+    var K = [['Kuning pada hitam', '#E8E000', '#000', 1], ['Kuning pada biru', '#E8E000', '#1F3FBF', 1], ['Kuning pada hijau', '#E8E000', '#2FA84F', 0], ['Kuning pada putih', '#E8E000', '#fff', 0]];
+    K.forEach(function (k, i) { var b = H('button', { class: 'btn', type: 'button' }, k[0]); b.addEventListener('click', function () { $$('button', bt).forEach(function (x) { x.classList.toggle('on', x === b); }); var bx = $('#wnBox'); bx.style.color = k[1]; bx.style.background = k[2]; $('#wnOut').innerHTML = k[3] ? '<b class="good">Baik-baik saja</b> menurut slide: kontrasnya cukup sehingga teks terbaca.' : '<b class="bad">Tidak baik</b> menurut slide: kontrasnya terlalu rendah sehingga teks sulit dibaca.'; }); bt.appendChild(b); if (i === 0) setTimeout(function () { b.click(); }, 0); });
+  }
+
+  /* ---------- recall vs recognition ---------- */
+  function mem() {
+    var box = $('#memBox'); if (!box) return;
+    var W = ['payung', 'kereta', 'garam', 'jendela', 'sepatu', 'lilin', 'kamus', 'pagar'], L = ['meja', 'piring', 'kunci', 'lampu', 'tikar', 'ember', 'gelas', 'pintu'];
+    function s1() { box.innerHTML = '<p class="small">Kamu akan melihat <b>8 kata</b> selama 8 detik. Hafalkan.</p><button class="btn pri" type="button">Mulai</button>'; $('button', box).addEventListener('click', s2); }
+    function s2() { box.innerHTML = '<div class="flow nogl">' + W.map(function (w) { return '<span>' + w + '</span>'; }).join('') + '</div><p class="small muted">Menghafal... <b id="memT">8</b></p>'; var t = 8, iv = setInterval(function () { t--; var el = $('#memT'); if (el) el.textContent = t; if (t <= 0) { clearInterval(iv); s3(); } }, 1000); }
+    function s3() { box.innerHTML = '<p class="small"><b>Tahap recall.</b> Tulis semua kata yang kamu ingat, pisahkan dengan spasi atau koma.</p><textarea id="memIn" rows="2" style="width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:8px"></textarea><div class="ctl"><button class="btn pri" type="button">Lanjut ke recognition</button></div>'; $('button', box).addEventListener('click', function () { var typed = $('#memIn').value.toLowerCase().split(/[\s,]+/).filter(Boolean), r = W.filter(function (w) { return typed.indexOf(w) >= 0; }).length; s4(r); }); }
+    function s4(r) { var all = T.shuffle(W.concat(L)); box.innerHTML = '<p class="small"><b>Tahap recognition.</b> Klik semua kata yang tadi kamu lihat.</p><div class="opts nogl">' + all.map(function (w) { return '<button type="button" data-w="' + w + '">' + w + '</button>'; }).join('') + '</div><div class="ctl"><button class="btn pri" type="button" id="memDone">Selesai</button></div>'; $$('.opts button', box).forEach(function (b) { b.addEventListener('click', function () { b.classList.toggle('right'); }); }); $('#memDone').addEventListener('click', function () { var hit = 0, fa = 0; $$('.opts button.right', box).forEach(function (b) { if (W.indexOf(b.getAttribute('data-w')) >= 0) hit++; else fa++; }); box.innerHTML = '<div class="msg">Recall: <b>' + r + ' dari 8</b>. Recognition: <b>' + hit + ' dari 8</b> benar' + (fa ? ', dengan ' + fa + ' salah pilih' : '') + '.<br>' + (hit > r ? 'Seperti kata slide: mengenali jauh lebih mudah daripada mengingat. Itu sebabnya menu dan ikon lebih ramah daripada baris perintah.' : 'Hasilmu tidak mengikuti pola umum kali ini. Pada kebanyakan orang, recognition lebih tinggi daripada recall.') + '</div><div class="ctl"><button class="btn" type="button">Ulangi</button></div>'; $('button', box).addEventListener('click', s1); }); }
+    s1();
+  }
+
+  /* ---------- kerangka ---------- */
+  var KEY = 'ii3131.done';
+  function frame() {
+    var done = T.store.get(KEY, {});
+    $$('.panel').forEach(function (p) {
+      var toc = $('.toc', p), tabBtn = $('nav.tabs button[data-tab="' + p.id + '"]'), cards = $$('details.topic', p);
+      function count() { var n = cards.filter(function (c) { return done[c.id]; }).length; var sm = $('small', tabBtn); if (!sm) { sm = H('small'); tabBtn.appendChild(sm); } sm.textContent = n + '/' + cards.length; }
+      cards.forEach(function (c) {
+        var sum = $('summary', c), lab = H('label', { class: 'done' }, '<input type="checkbox"> selesai'), cb = $('input', lab); cb.checked = !!done[c.id];
+        lab.addEventListener('click', function (e) { e.stopPropagation(); }); sum.appendChild(lab);
+        var a = H('a', { href: '#' + c.id }, '<i></i>' + $('h3', c).textContent); if (toc) toc.appendChild(a); a.classList.toggle('done', !!done[c.id]);
+        a.addEventListener('click', function () { c.open = true; });
+        cb.addEventListener('change', function () { done[c.id] = cb.checked ? 1 : 0; T.store.set(KEY, done); a.classList.toggle('done', cb.checked); count(); });
+      });
+      count();
+    });
+    $('#openAll').addEventListener('change', function (e) { $$('.panel.on details.topic').forEach(function (d) { d.open = e.target.checked; }); T.fit(); });
+    document.addEventListener('toggle', function () { setTimeout(T.fit, 60); }, true);
+    window.addEventListener('resize', function () { setTimeout(T.fit, 80); });
+  }
+  window.NT = { P: P };
+  window.addEventListener('DOMContentLoaded', function () {
+    T.tips(); frame(); T.mcq(); T.sw(); T.steps(); T.picks(P);
+    fitts(); hick(); diag(); ctx(); story(); cari(); warna(); mem();
+    T.gloss('details.topic > .body, .intro .lead');
+    T.tabs('ii3131.tab', function () { $('#openAll').checked = false; });
+    setTimeout(T.fit, 100);
+  });
+})();
+
+</script>
+</body>
+</html>
